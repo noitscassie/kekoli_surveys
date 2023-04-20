@@ -10,13 +10,27 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static InputBorder border = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10.0),
+    borderSide: const BorderSide(width: 0, color: Colors.transparent),
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Kekoldi Surveys',
       theme: ThemeData(
-        primarySwatch: Colors.lightGreen,
-      ),
+          primarySwatch: Colors.lightGreen,
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: Colors.lightGreen[100],
+            border: border,
+            focusedBorder: border,
+            enabledBorder: border,
+            errorBorder: border,
+            disabledBorder: border,
+            labelStyle: Theme.of(context).textTheme.bodySmall,
+          )),
       home: const MyHomePage(),
     );
   }
