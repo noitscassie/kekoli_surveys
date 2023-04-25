@@ -27,6 +27,7 @@ class LeadersInputField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          textCapitalization: TextCapitalization.words,
           decoration: InputDecoration(
               border: const UnderlineInputBorder(),
               labelText: 'First leader',
@@ -48,6 +49,7 @@ class LeadersInputField extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   autofocus: true,
+                  textCapitalization: TextCapitalization.words,
                   decoration: InputDecoration(
                       border: const UnderlineInputBorder(),
                       labelText: 'Second leader',
