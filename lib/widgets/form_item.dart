@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SurveyItemFormFieldWrapper extends StatelessWidget {
+class FormItem extends StatelessWidget {
   final String label;
   final Widget child;
 
-  const SurveyItemFormFieldWrapper({
+  const FormItem({
     super.key,
     required this.label,
     required this.child,

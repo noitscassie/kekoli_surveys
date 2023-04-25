@@ -5,7 +5,7 @@ import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
-import 'package:kekoldi_surveys/widgets/survey_item_form_field_wrapper.dart';
+import 'package:kekoldi_surveys/widgets/form_item.dart';
 
 class AddSurveyPage extends StatefulWidget {
   final Function(Survey survey) onCreateSurvey;
@@ -55,7 +55,7 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
         child: ListView(
           controller: _controller,
           children: [
-            SurveyItemFormFieldWrapper(
+            FormItem(
                 key: const Key('0'),
                 label: 'Select a trail',
                 child: TrailInputField(onChange: (value) {
@@ -63,7 +63,7 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
                     selectedTrail = value;
                   });
                 })),
-            SurveyItemFormFieldWrapper(
+            FormItem(
               key: const Key('1'),
               label: 'Add leader(s)',
               child: LeadersInputField(
@@ -75,7 +75,7 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
                 value: leaders,
               ),
             ),
-            SurveyItemFormFieldWrapper(
+            FormItem(
               key: const Key('2'),
               label: 'Add a scribe',
               child: ScribeInputField(
@@ -86,7 +86,7 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
                 },
               ),
             ),
-            SurveyItemFormFieldWrapper(
+            FormItem(
               key: const Key('3'),
               label: 'Add participants',
               child: ParticipantsInputField(
