@@ -6,8 +6,8 @@ import 'package:kekoldi_surveys/constants/mammals.dart';
 import 'package:kekoldi_surveys/constants/reptiles.dart';
 import 'package:kekoldi_surveys/models/species.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details_page.dart';
-import 'package:kekoldi_surveys/widgets/selectable_species_list_item.dart';
+import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
+import 'package:kekoldi_surveys/pages/choose_species/selectable_species_list_item.dart';
 
 class ChooseSpeciesPage extends StatefulWidget {
   const ChooseSpeciesPage({super.key, required this.survey});
@@ -31,12 +31,12 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
 
   String searchTerm = '';
 
-  void navigateToAddDetails(Species species) => Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) =>
-          AddSightingDetailsPage(
-            survey: widget.survey,
-            species: species,
-          )));
+  void navigateToAddDetails(Species species) =>
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => AddSightingDetailsPage(
+                survey: widget.survey,
+                species: species,
+              )));
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,8 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
                 children: List.from(visibleSpecies
                     .map((Species species) => SelectableSpeciesListItem(
                           species: species,
-                          onSelect: (Species species) => navigateToAddDetails(species),
+                          onSelect: (Species species) =>
+                              navigateToAddDetails(species),
                         ))),
               ),
             ),

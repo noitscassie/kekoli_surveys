@@ -1,11 +1,11 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/widgets/leaders_input_field.dart';
-import 'package:kekoldi_surveys/widgets/participants_input_field.dart';
-import 'package:kekoldi_surveys/widgets/scribe_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
 import 'package:kekoldi_surveys/widgets/survey_item_form_field_wrapper.dart';
-import 'package:kekoldi_surveys/widgets/trail_input_field.dart';
 
 class AddSurveyPage extends StatefulWidget {
   final Function(Survey survey) onCreateSurvey;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/pages/add_survey_page.dart';
-import 'package:kekoldi_surveys/pages/surveys_tab.dart';
-import 'package:kekoldi_surveys/pages/trails_tab.dart';
+import 'package:kekoldi_surveys/pages/add_survey/add_survey_page.dart';
+import 'package:kekoldi_surveys/pages/home/surveys_tab.dart';
+import 'package:kekoldi_surveys/pages/home/trails_tab.dart';
 
 class HomePage extends StatefulWidget {
   final Function(Survey survey) onCreateSurvey;
