@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/home_page.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,17 +19,25 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Kekoldi Surveys',
       theme: ThemeData(
-          primarySwatch: Colors.lightGreen,
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true,
-            fillColor: Colors.lightGreen[100],
-            border: border,
-            focusedBorder: border,
-            enabledBorder: border,
-            errorBorder: border,
-            disabledBorder: border,
-            labelStyle: Theme.of(context).textTheme.bodySmall,
-          )),
+              primarySwatch: Colors.lightGreen,
+              inputDecorationTheme: InputDecorationTheme(
+                filled: true,
+                fillColor: Colors.lightGreen[100],
+                border: border,
+                focusedBorder: border,
+                enabledBorder: border,
+                errorBorder: border,
+                disabledBorder: border,
+                labelStyle: Theme.of(context).textTheme.bodySmall,
+              ))
+          .copyWith(
+              colorScheme:
+                  ColorScheme.fromSwatch(primarySwatch: Colors.lightGreen)
+                      .copyWith(
+                          surface: Colors.lightGreen[100],
+                          onSurface: Colors.black,
+                          onSurfaceVariant: Colors.lightGreen.shade800,
+                          onError: Colors.grey.shade500)),
       home: const MyHomePage(),
     );
   }
@@ -44,21 +51,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Survey? currentSurvey;
+  List<Survey> surveys = [];
 
   void onCreateSurvey(Survey survey) {
     Navigator.pop(context);
     setState(() {
-      currentSurvey = survey;
+      surveys = [...surveys, survey];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (currentSurvey != null) {
-      return OngoingSurveyPage(survey: currentSurvey!);
-    } else {
-      return HomePage(onCreateSurvey: onCreateSurvey);
-    }
+    return HomePage(onCreateSurvey: onCreateSurvey, surveys: surveys);
   }
 }
