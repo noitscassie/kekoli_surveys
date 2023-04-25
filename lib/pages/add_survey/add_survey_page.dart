@@ -55,50 +55,35 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
         child: ListView(
           controller: _controller,
           children: [
-            FormItem(
-                key: const Key('0'),
-                label: 'Select a trail',
-                child: TrailInputField(onChange: (value) {
-                  setState(() {
-                    selectedTrail = value;
-                  });
-                })),
-            FormItem(
-              key: const Key('1'),
-              label: 'Add leader(s)',
-              child: LeadersInputField(
-                onChange: (value) {
-                  setState(() {
-                    leaders = value;
-                  });
-                },
-                value: leaders,
-              ),
+            TrailInputField(onChange: (value) {
+              setState(() {
+                selectedTrail = value;
+              });
+            }),
+            LeadersInputField(
+              onChange: (value) {
+                setState(() {
+                  leaders = value;
+                });
+              },
+              value: leaders,
             ),
-            FormItem(
-              key: const Key('2'),
-              label: 'Add a scribe',
-              child: ScribeInputField(
-                onChange: (value) {
-                  setState(() {
-                    scribe = value;
-                  });
-                },
-              ),
+            ScribeInputField(
+              onChange: (value) {
+                setState(() {
+                  scribe = value;
+                });
+              },
             ),
-            FormItem(
-              key: const Key('3'),
-              label: 'Add participants',
-              child: ParticipantsInputField(
-                onChange: (value) {
-                  setState(() {
-                    participants = value;
-                  });
-                  _scrollToBottom();
-                },
-                value: participants,
-                onAddNewParticipant: _scrollToBottom,
-              ),
+            ParticipantsInputField(
+              onChange: (value) {
+                setState(() {
+                  participants = value;
+                });
+                _scrollToBottom();
+              },
+              value: participants,
+              onAddNewParticipant: _scrollToBottom,
             ),
           ],
         ),

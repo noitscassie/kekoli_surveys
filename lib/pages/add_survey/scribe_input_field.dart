@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/widgets/form_item.dart';
 
 class ScribeInputField extends StatelessWidget {
   final Function(String value) onChange;
@@ -7,18 +8,21 @@ class ScribeInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: TextFormField(
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(
-          border: const UnderlineInputBorder(),
-          labelText: 'Scribe',
-          labelStyle: Theme.of(context).textTheme.bodySmall,
+    return FormItem(
+      label: 'Add a scribe',
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: TextFormField(
+          textCapitalization: TextCapitalization.words,
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: 'Scribe',
+            labelStyle: Theme.of(context).textTheme.bodySmall,
+          ),
+          onChanged: (String value) {
+            onChange(value);
+          },
         ),
-        onChanged: (String value) {
-          onChange(value);
-        },
       ),
     );
   }
