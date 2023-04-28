@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/models/sighting.dart';
 
 enum SurveyState { unstarted, inProgress, completed }
 
@@ -11,6 +12,7 @@ class Survey with DiagnosticableTreeMixin {
   final List<String> participants;
   final String trail;
   SurveyState state;
+  List<Sighting> sightings;
 
   Survey(
       {required this.trail,
@@ -20,12 +22,15 @@ class Survey with DiagnosticableTreeMixin {
       this.startAt,
       this.endAt,
       this.weather,
-      this.state = SurveyState.unstarted});
+      this.state = SurveyState.unstarted,
+      this.sightings = const []});
 
   void start() {
     startAt = DateTime.now();
     state = SurveyState.inProgress;
   }
+
+  void addSighting(Sighting sighting) => sightings = [sighting, ...sightings];
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
