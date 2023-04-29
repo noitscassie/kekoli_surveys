@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
 import 'package:kekoldi_surveys/utils/date_formats.dart';
+import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class SurveyTile extends StatefulWidget {
   final Survey survey;
@@ -56,43 +57,27 @@ class _SurveyTileState extends State<SurveyTile> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Led by ',
-                            style: Theme.of(context).textTheme.bodySmall),
-                        TextSpan(
-                            text: widget.survey.leaders.join(' and '),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(fontWeight: FontWeight.bold))
-                      ]),
+                    PartlyBoldedText(
+                        style: Theme.of(context).textTheme.bodySmall,
+                        textParts: [
+                          RawText('Led by '),
+                          RawText(widget.survey.leaders.join(' and '),
+                              bold: true)
+                        ]),
+                    PartlyBoldedText(
+                      style: Theme.of(context).textTheme.bodySmall,
+                      textParts: [
+                        RawText('Scribed by '),
+                        RawText(widget.survey.scribe, bold: true)
+                      ],
                     ),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: 'Scribed by ',
-                          style: Theme.of(context).textTheme.bodySmall),
-                      TextSpan(
-                          text: widget.survey.scribe,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(fontWeight: FontWeight.bold)),
-                    ])),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: 'Participated in by ',
-                          style: Theme.of(context).textTheme.bodySmall),
-                      TextSpan(
-                          text: widget.survey.participants.join(', '),
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(fontWeight: FontWeight.bold)),
-                    ])),
+                    PartlyBoldedText(
+                        style: Theme.of(context).textTheme.bodySmall,
+                        textParts: [
+                          RawText('Participated in by '),
+                          RawText(widget.survey.participants.join(', '),
+                              bold: true),
+                        ]),
                   ],
                 ),
                 IconButton(

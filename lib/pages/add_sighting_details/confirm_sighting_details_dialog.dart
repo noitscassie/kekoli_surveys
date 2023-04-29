@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
+import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class ConfirmSightingDetailsDialog extends StatefulWidget {
   final Survey survey;
@@ -40,98 +41,62 @@ class _ConfirmSightingDetailsDialogState
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Quantity: ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: widget.sighting.quantity.toString(),
-                    style: Theme.of(context).textTheme.bodyMedium)
-              ]),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Quantity: ', bold: true),
+                RawText(widget.sighting.quantity.toString()),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Height: ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: widget.sighting.height,
-                    style: Theme.of(context).textTheme.bodyMedium)
-              ]),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Height: ', bold: true),
+                RawText(widget.sighting.height),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Substrate: ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: widget.sighting.substrate,
-                    style: Theme.of(context).textTheme.bodyMedium)
-              ]),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Substrate: ', bold: true),
+                RawText(widget.sighting.substrate),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Sex: ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: widget.sighting.sex,
-                    style: Theme.of(context).textTheme.bodyMedium)
-              ]),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Sex: ', bold: true),
+                RawText(widget.sighting.sex),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Observation Type: ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: widget.sighting.observationType,
-                    style: Theme.of(context).textTheme.bodyMedium)
-              ]),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Observation Type: ', bold: true),
+                RawText(widget.sighting.observationType),
+              ],
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                    text: 'Age: ',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold)),
-                TextSpan(
-                    text: widget.sighting.age,
-                    style: Theme.of(context).textTheme.bodyMedium)
-              ]),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Age: ', bold: true),
+                RawText(widget.sighting.age),
+              ],
             ),
           ),
         ],

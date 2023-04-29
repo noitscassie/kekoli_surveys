@@ -62,7 +62,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
         title: widget.species.name,
         fabLabel: Row(
           children: [
-            Text('Add `${widget.species.name}'),
+            Text('Add ${widget.species.name}'),
             const Icon(Icons.add),
           ],
         ),
