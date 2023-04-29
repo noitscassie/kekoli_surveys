@@ -8,6 +8,7 @@ import 'package:kekoldi_surveys/models/species.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/pages/choose_species/selectable_species_list_item.dart';
+import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class ChooseSpeciesPage extends StatefulWidget {
   const ChooseSpeciesPage({super.key, required this.survey});
@@ -40,13 +41,8 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Choose a species'),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+    return PageScaffold(
+        title: 'Choose a species',
         child: Column(
           children: [
             Padding(
@@ -74,8 +70,6 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
               ),
             ),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

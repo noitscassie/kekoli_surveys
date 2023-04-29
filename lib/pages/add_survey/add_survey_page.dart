@@ -5,7 +5,7 @@ import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
-import 'package:kekoldi_surveys/widgets/form_item.dart';
+import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddSurveyPage extends StatefulWidget {
   final Function(Survey survey) onCreateSurvey;
@@ -43,8 +43,57 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
       scribe.isNotEmpty &&
       participants.whereNotNull().any((participant) => participant.isNotEmpty);
 
+  void createSurvey() => widget.onCreateSurvey(Survey(
+      trail: selectedTrail,
+      leaders: leaders,
+      scribe: scribe,
+      participants: formattedParticipants));
+
   @override
   Widget build(BuildContext context) {
+    return PageScaffold(
+      title: 'Add New Survey',
+      fabLabel: Row(
+        children: const [Text('Add Survey'), Icon(Icons.add)],
+      ),
+      isFabValid: valid,
+      onFabPress: createSurvey,
+      child: ListView(
+        controller: _controller,
+        children: [
+          TrailInputField(onChange: (value) {
+            setState(() {
+              selectedTrail = value;
+            });
+          }),
+          LeadersInputField(
+            onChange: (value) {
+              setState(() {
+                leaders = value;
+              });
+            },
+            value: leaders,
+          ),
+          ScribeInputField(
+            onChange: (value) {
+              setState(() {
+                scribe = value;
+              });
+            },
+          ),
+          ParticipantsInputField(
+            onChange: (value) {
+              setState(() {
+                participants = value;
+              });
+              _scrollToBottom();
+            },
+            value: participants,
+            onAddNewParticipant: _scrollToBottom,
+          ),
+        ],
+      ),
+    );
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(

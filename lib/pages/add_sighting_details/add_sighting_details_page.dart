@@ -12,6 +12,7 @@ import 'package:kekoldi_surveys/pages/add_sighting_details/observation_type_inpu
 import 'package:kekoldi_surveys/pages/add_sighting_details/quantity_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/sex_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/substrate_input_field.dart';
+import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddSightingDetailsPage extends StatefulWidget {
   final Survey survey;
@@ -38,15 +39,35 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
       selectedObservationType != null &&
       selectedAge != null;
 
+  void showConfirmationDialog() => showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => ConfirmSightingDetailsDialog(
+            survey: widget.survey,
+            sighting: Sighting(
+                species: widget.species,
+                quantity: selectedQuantity!,
+                sex: selectedSex!,
+                observationType: selectedObservationType!,
+                age: selectedAge!,
+                height: selectedHeight,
+                substrate: selectedSubstrate),
+          ));
+
+  void doNothing() {}
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.species.name),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+    return PageScaffold(
+        title: widget.species.name,
+        fabLabel: Row(
+          children: [
+            Text('Add `${widget.species.name}'),
+            const Icon(Icons.add),
+          ],
+        ),
+        isFabValid: valid,
+        onFabPress: showConfirmationDialog,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100),
           child: ListView(
@@ -95,36 +116,6 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
                   currentAge: selectedAge ?? ''),
             ],
           ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        label: Row(
-          children: [
-            Text('Add ${widget.species.name}'),
-            const Icon(Icons.add),
-          ],
-        ),
-        onPressed: valid
-            ? () => showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) => ConfirmSightingDetailsDialog(
-                      survey: widget.survey,
-                      sighting: Sighting(
-                          species: widget.species,
-                          quantity: selectedQuantity!,
-                          sex: selectedSex!,
-                          observationType: selectedObservationType!,
-                          age: selectedAge!,
-                          height: selectedHeight,
-                          substrate: selectedSubstrate),
-                    ))
-            : () {},
-        backgroundColor: valid
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.onError,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-    );
+        ));
   }
 }

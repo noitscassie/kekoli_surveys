@@ -87,7 +87,7 @@ class _SurveyTileState extends State<SurveyTile> {
                           text: 'Participated in by ',
                           style: Theme.of(context).textTheme.bodySmall),
                       TextSpan(
-                          text: widget.survey.participants.join(','),
+                          text: widget.survey.participants.join(', '),
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
