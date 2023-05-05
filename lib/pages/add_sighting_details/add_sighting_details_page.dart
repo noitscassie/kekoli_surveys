@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/heights.dart';
 import 'package:kekoldi_surveys/constants/substrates.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/species.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/age_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
@@ -16,7 +15,7 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddSightingDetailsPage extends StatefulWidget {
   final Survey survey;
-  final Species species;
+  final String species;
 
   const AddSightingDetailsPage(
       {super.key, required this.survey, required this.species});
@@ -26,7 +25,7 @@ class AddSightingDetailsPage extends StatefulWidget {
 }
 
 class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
-  int? selectedQuantity;
+  String? selectedQuantity;
   String? selectedSex;
   String? selectedObservationType;
   String? selectedAge;
@@ -59,10 +58,10 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-        title: widget.species.name,
+        title: widget.species,
         fabLabel: Row(
           children: [
-            Text('Add ${widget.species.name}'),
+            Text('Add ${widget.species}'),
             const Icon(Icons.add),
           ],
         ),
@@ -73,7 +72,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
           child: ListView(
             children: [
               QuantityInputField(
-                onChange: (int? quantity) {
+                onChange: (String? quantity) {
                   setState(() {
                     selectedQuantity = quantity;
                   });

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
@@ -36,69 +37,21 @@ class _ConfirmSightingDetailsDialogState
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.sighting.species.name,
+            widget.sighting.species,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: PartlyBoldedText(
-              style: Theme.of(context).textTheme.bodyMedium,
-              textParts: [
-                RawText('Quantity: ', bold: true),
-                RawText(widget.sighting.quantity.toString()),
-              ],
+          ...widget.sighting.attributes.entries.mapIndexed(
+            (index, entry) => Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: PartlyBoldedText(
+                style: Theme.of(context).textTheme.bodyMedium,
+                textParts: [
+                  RawText('${entry.key}: ', bold: true),
+                  RawText(entry.value),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: PartlyBoldedText(
-              style: Theme.of(context).textTheme.bodyMedium,
-              textParts: [
-                RawText('Height: ', bold: true),
-                RawText(widget.sighting.height),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: PartlyBoldedText(
-              style: Theme.of(context).textTheme.bodyMedium,
-              textParts: [
-                RawText('Substrate: ', bold: true),
-                RawText(widget.sighting.substrate),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: PartlyBoldedText(
-              style: Theme.of(context).textTheme.bodyMedium,
-              textParts: [
-                RawText('Sex: ', bold: true),
-                RawText(widget.sighting.sex),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: PartlyBoldedText(
-              style: Theme.of(context).textTheme.bodyMedium,
-              textParts: [
-                RawText('Observation Type: ', bold: true),
-                RawText(widget.sighting.observationType),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: PartlyBoldedText(
-              style: Theme.of(context).textTheme.bodyMedium,
-              textParts: [
-                RawText('Age: ', bold: true),
-                RawText(widget.sighting.age),
-              ],
-            ),
-          ),
+          )
         ],
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,

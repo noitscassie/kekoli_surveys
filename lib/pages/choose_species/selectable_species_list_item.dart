@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/species.dart';
 
 class SelectableSpeciesListItem extends StatelessWidget {
-  final Species species;
-  final Function(Species value) onSelect;
+  final String species;
+  final Function(String value) onSelect;
 
   const SelectableSpeciesListItem(
       {super.key, required this.species, required this.onSelect});
@@ -13,7 +12,7 @@ class SelectableSpeciesListItem extends StatelessWidget {
     return GestureDetector(
       onTap: () => onSelect(species),
       child: ListTile(
-        title: Text(species.name),
+        title: Text(species),
         trailing: const Icon(Icons.arrow_forward_outlined),
       ),
     );

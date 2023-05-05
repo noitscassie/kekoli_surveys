@@ -4,7 +4,6 @@ import 'package:kekoldi_surveys/constants/amphibians.dart';
 import 'package:kekoldi_surveys/constants/birds.dart';
 import 'package:kekoldi_surveys/constants/mammals.dart';
 import 'package:kekoldi_surveys/constants/reptiles.dart';
-import 'package:kekoldi_surveys/models/species.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/pages/choose_species/selectable_species_list_item.dart';
@@ -20,19 +19,30 @@ class ChooseSpeciesPage extends StatefulWidget {
 }
 
 class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
-  List<Species> get allSpecies =>
+  List<String> get allSpecies =>
       [...mammals, ...amphibians, ...reptiles, ...birds];
 
-  List<Species> get visibleSpecies => (searchTerm.isEmpty
+  bool matchesSearchTerm(String species) {
+    final searchableName = species.toLowerCase();
+    final searchableInitials = searchableName
+        .split(' ')
+        .map((String word) => word.split('')[0])
+        .join();
+
+    return searchableName.contains(searchTerm) ||
+        searchableInitials.contains(searchTerm);
+  }
+
+  List<String> get visibleSpecies => (searchTerm.isEmpty
           ? allSpecies
-          : List.from(allSpecies.where(
-              (Species species) => species.matchesSearchTerm(searchTerm))))
-      .sortedBy((species) => species.name)
+          : List.from(
+              allSpecies.where((String species) => matchesSearchTerm(species))))
+      .sorted()
       .cast();
 
   String searchTerm = '';
 
-  void navigateToAddDetails(Species species) =>
+  void navigateToAddDetails(String species) =>
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => AddSightingDetailsPage(
                 survey: widget.survey,
@@ -62,9 +72,9 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
             Expanded(
               child: ListView(
                 children: List.from(visibleSpecies
-                    .map((Species species) => SelectableSpeciesListItem(
+                    .map((String species) => SelectableSpeciesListItem(
                           species: species,
-                          onSelect: (Species species) =>
+                          onSelect: (String species) =>
                               navigateToAddDetails(species),
                         ))),
               ),
