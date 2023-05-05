@@ -30,7 +30,16 @@ class Survey with DiagnosticableTreeMixin {
     state = SurveyState.inProgress;
   }
 
-  void addSighting(Sighting sighting) => sightings = [sighting, ...sightings];
+  void addSighting(Sighting sighting) {
+    sightings = [sighting, ...sightings];
+  }
+
+  void removeSightingMatchingJson(String json) {
+    final index =
+        sightings.indexWhere((Sighting sighting) => sighting.toJson() == json);
+
+    sightings.removeAt(index);
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

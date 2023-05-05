@@ -6,6 +6,7 @@ class PageScaffold extends StatelessWidget {
   final Widget? fabLabel;
   final VoidCallback? onFabPress;
   final bool isFabValid;
+  final List<Widget> actions;
 
   const PageScaffold(
       {super.key,
@@ -13,12 +14,16 @@ class PageScaffold extends StatelessWidget {
       this.fabLabel,
       this.onFabPress,
       this.isFabValid = true,
+      this.actions = const [],
       required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+        title: Text(title),
+        actions: actions,
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
