@@ -22,10 +22,10 @@ class _HomePageState extends State<HomePage> {
         SurveysTab(
           surveys: widget.surveys,
         ),
-        const TrailsTab(),
+        TrailsTab(onCreateSurvey: widget.onCreateSurvey),
       ];
 
-  List<Widget> get floatingActionButtons => [
+  List<Widget?> get floatingActionButtons => [
         FloatingActionButton.extended(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
@@ -36,12 +36,7 @@ class _HomePageState extends State<HomePage> {
             children: const [Text('Create New Survey'), Icon(Icons.add)],
           ),
         ),
-        FloatingActionButton.extended(
-          onPressed: () {},
-          label: Row(
-            children: const [Text('Add New Trail'), Icon(Icons.add)],
-          ),
-        ),
+        null,
       ];
 
   @override

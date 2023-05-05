@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/trails.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
@@ -9,14 +10,17 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddSurveyPage extends StatefulWidget {
   final Function(Survey survey) onCreateSurvey;
-  const AddSurveyPage({super.key, required this.onCreateSurvey});
+  final String? initialTrail;
+
+  const AddSurveyPage(
+      {super.key, required this.onCreateSurvey, this.initialTrail});
 
   @override
   State<AddSurveyPage> createState() => _AddSurveyPageState();
 }
 
 class _AddSurveyPageState extends State<AddSurveyPage> {
-  String selectedTrail = 'Ocelot';
+  late String selectedTrail = widget.initialTrail ?? trails.first;
   List<String> leaders = [
     '',
   ];
@@ -61,11 +65,13 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
       child: ListView(
         controller: _controller,
         children: [
-          TrailInputField(onChange: (value) {
-            setState(() {
-              selectedTrail = value;
-            });
-          }),
+          TrailInputField(
+              onChange: (value) {
+                setState(() {
+                  selectedTrail = value;
+                });
+              },
+              initialTrail: selectedTrail),
           LeadersInputField(
             onChange: (value) {
               setState(() {

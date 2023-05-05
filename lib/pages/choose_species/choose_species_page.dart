@@ -73,7 +73,7 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
               child: ListView(
                 children: List.from(visibleSpecies
                     .map((String species) => SelectableSpeciesListItem(
-                          species: species,
+                          text: species,
                           onSelect: (String species) =>
                               navigateToAddDetails(species),
                         ))),
