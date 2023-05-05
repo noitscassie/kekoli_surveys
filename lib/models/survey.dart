@@ -6,7 +6,7 @@ enum SurveyState { unstarted, inProgress, completed }
 class Survey with DiagnosticableTreeMixin {
   DateTime? startAt;
   DateTime? endAt;
-  final String? weather;
+  String? weather;
   final List<String> leaders;
   final String scribe;
   final List<String> participants;
@@ -30,6 +30,15 @@ class Survey with DiagnosticableTreeMixin {
     state = SurveyState.inProgress;
   }
 
+  void end() {
+    endAt = DateTime.now();
+    state = SurveyState.completed;
+  }
+
+  void setWeather(String newWeather) {
+    weather = newWeather;
+  }
+
   void addSighting(Sighting sighting) {
     sightings = [sighting, ...sightings];
   }
@@ -44,8 +53,6 @@ class Survey with DiagnosticableTreeMixin {
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    // list all the properties of your class here.
-    // See the documentation of debugFillProperties for more information.
     properties.add(StringProperty('startAt', startAt.toString()));
     properties.add(StringProperty('endAt', endAt?.toString()));
     properties.add(IterableProperty('leaders', leaders));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
-import 'package:kekoldi_surveys/utils/date_formats.dart';
+import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class SurveyTile extends StatefulWidget {

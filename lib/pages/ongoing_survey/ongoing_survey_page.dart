@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/choose_species/choose_species_page.dart';
+import 'package:kekoldi_surveys/pages/ongoing_survey/complete_survey_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_tile.dart';
-import 'package:kekoldi_surveys/utils/date_formats.dart';
+import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class OngoingSurveyPage extends StatefulWidget {
@@ -27,7 +28,13 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
   Map<String, List<Sighting>> get groupedSightings =>
       widget.survey.sightings.groupBy((sighting) => sighting.species);
 
-  void onCompleteSurvey() {}
+  void onCompleteSurvey() => showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CompleteSurveyModal(
+            survey: widget.survey,
+            onChangeSurvey: updateSurvey,
+          ));
 
   void updateSurvey(Survey survey) {
     setState(() {
@@ -44,7 +51,9 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
           children: const [Text('Add New Sighting'), Icon(Icons.add)],
         ),
         onFabPress: () => navigateToChooseSpeciesPage(context),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.check))],
+        actions: [
+          IconButton(onPressed: onCompleteSurvey, icon: const Icon(Icons.check))
+        ],
         child: ListView(
           children:
               List.from(groupedSightings.entries.map((group) => SightingTile(
