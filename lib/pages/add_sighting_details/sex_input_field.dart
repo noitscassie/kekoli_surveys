@@ -14,7 +14,7 @@ class SexInputField extends StatelessWidget {
     return FormItem(
       label: 'Sex',
       child: RadioButtons(
-        options: const ['Female', 'Male', 'Unknown'],
+        options: const ['Female', 'Male', 'Mixed', 'Unknown'],
         onChange: (String value) => onChange(value),
         selectedOption: currentSex,
       ),
