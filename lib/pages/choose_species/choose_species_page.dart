@@ -25,6 +25,7 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
   bool matchesSearchTerm(String species) {
     final searchableName = species.toLowerCase();
     final searchableInitials = searchableName
+        .replaceAll('-', ' ')
         .split(' ')
         .map((String word) => word.split('')[0])
         .join();
@@ -60,8 +61,8 @@ class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
               child: TextField(
                 autofocus: true,
                 autocorrect: false,
-                decoration:
-                    const InputDecoration(hintText: 'Search for a species'),
+                decoration: const InputDecoration(
+                    hintText: 'Search by full name or initials...'),
                 onChanged: (String? newValue) {
                   setState(() {
                     searchTerm = newValue ?? '';
