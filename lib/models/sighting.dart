@@ -28,11 +28,11 @@ class Sighting with DiagnosticableTreeMixin {
   Sighting.fromMap(Map<String, dynamic> map)
       : id = map['id'],
         quantity = map['quantity'] ?? unknown,
-        sex = map['height'] ?? unknown,
-        observationType = map['substrate'] ?? unknown,
-        age = map['sex'] ?? unknown,
-        height = map['observation'] ?? unknown,
-        substrate = map['age'] ?? unknown,
+        sex = map['sex'] ?? unknown,
+        observationType = map['observationType'] ?? unknown,
+        age = map['age'] ?? unknown,
+        height = map['height'] ?? unknown,
+        substrate = map['substrate'] ?? unknown,
         species = map['species'] ?? unknown;
 
   String toJson() => json.encode(attributes);
