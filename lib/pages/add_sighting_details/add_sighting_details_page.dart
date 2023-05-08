@@ -39,21 +39,19 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
       selectedAge != null;
 
   void showConfirmationDialog() => showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => ConfirmSightingDetailsDialog(
-            survey: widget.survey,
-            sighting: Sighting(
-                species: widget.species,
-                quantity: selectedQuantity!,
-                sex: selectedSex!,
-                observationType: selectedObservationType!,
-                age: selectedAge!,
-                height: selectedHeight,
-                substrate: selectedSubstrate),
-          ));
-
-  void doNothing() {}
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => ConfirmSightingDetailsDialog(
+              survey: widget.survey,
+              sighting: Sighting(
+                  species: widget.species,
+                  quantity: selectedQuantity!,
+                  sex: selectedSex!,
+                  observationType: selectedObservationType!,
+                  age: selectedAge!,
+                  height: selectedHeight,
+                  substrate: selectedSubstrate),
+            ));
 
   @override
   Widget build(BuildContext context) {

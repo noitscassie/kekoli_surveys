@@ -6,14 +6,13 @@ import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
+import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddSurveyPage extends StatefulWidget {
-  final Function(Survey survey) onCreateSurvey;
   final String? initialTrail;
 
-  const AddSurveyPage(
-      {super.key, required this.onCreateSurvey, this.initialTrail});
+  const AddSurveyPage({super.key, this.initialTrail});
 
   @override
   State<AddSurveyPage> createState() => _AddSurveyPageState();
@@ -47,11 +46,21 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
       scribe.isNotEmpty &&
       participants.whereNotNull().any((participant) => participant.isNotEmpty);
 
-  void createSurvey() => widget.onCreateSurvey(Survey(
-      trail: selectedTrail,
-      leaders: leaders,
-      scribe: scribe,
-      participants: formattedParticipants));
+  Future<void> createSurvey() async {
+    await Survey.create(
+        trail: selectedTrail,
+        leaders: leaders,
+        scribe: scribe,
+        participants: formattedParticipants);
+
+    if (context.mounted) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => const HomePage()),
+          (route) => false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

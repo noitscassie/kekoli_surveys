@@ -40,7 +40,7 @@ class _ConfirmSightingDetailsDialogState
             widget.sighting.species,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...widget.sighting.attributes.entries.mapIndexed(
+          ...widget.sighting.displayAttributes.entries.mapIndexed(
             (index, entry) => Padding(
               padding: const EdgeInsets.only(top: 8),
               child: PartlyBoldedText(

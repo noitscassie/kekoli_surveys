@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/add_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/surveys_tab.dart';
 import 'package:kekoldi_surveys/pages/home/trails_tab.dart';
 
 class HomePage extends StatefulWidget {
-  final Function(Survey survey) onCreateSurvey;
-  final List<Survey> surveys;
-
-  const HomePage(
-      {super.key, required this.onCreateSurvey, required this.surveys});
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -18,19 +13,21 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int navigationBarIndex = 0;
 
+  List<String> get titles => [
+        'Surveys',
+        'Trails',
+      ];
+
   List<Widget> get tabs => [
-        SurveysTab(
-          surveys: widget.surveys,
-        ),
-        TrailsTab(onCreateSurvey: widget.onCreateSurvey),
+        SurveysTab(),
+        const TrailsTab(),
       ];
 
   List<Widget?> get floatingActionButtons => [
         FloatingActionButton.extended(
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    AddSurveyPage(onCreateSurvey: widget.onCreateSurvey)));
+                builder: (BuildContext context) => const AddSurveyPage()));
           },
           label: Row(
             children: const [Text('Create New Survey'), Icon(Icons.add)],
@@ -44,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
-        title: const Text('Surveys'),
+        title: Text(titles[navigationBarIndex]),
       ),
       body: tabs[navigationBarIndex],
       bottomNavigationBar: BottomNavigationBar(

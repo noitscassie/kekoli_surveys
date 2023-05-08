@@ -23,17 +23,18 @@ class SpeciesSightingsList extends StatelessWidget {
       attributes.filter((entry) => entry.value != Sighting.unknown);
 
   String get attributeString {
-    final quantity = presentAttributes[Sighting.quantityTitle];
+    final quantity = presentAttributes['Quantity'];
     final location = [
-      presentAttributes[Sighting.heightTitle],
-      presentAttributes[Sighting.substrateTitle],
+      presentAttributes['Height'],
+      presentAttributes['Substrate'],
     ].whereNotNull().join(' ');
-    final sex = presentAttributes[Sighting.sexTitle];
-    final observation = presentAttributes[Sighting.observationTitle];
-    final age = presentAttributes[Sighting.ageTitle];
+    final sex = presentAttributes['Sex'];
+    final observation = presentAttributes['Observation'];
+    final age = presentAttributes['Age'];
 
-    return [quantity, location, sex, age, observation]
-        .whereNotNull()
+    return List<String>.from(
+            [quantity, location, sex, age, observation].whereNotNull())
+        .where((String part) => part.isNotEmpty)
         .join(', ');
   }
 

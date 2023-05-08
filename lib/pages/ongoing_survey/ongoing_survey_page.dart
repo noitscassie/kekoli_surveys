@@ -23,7 +23,7 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
   void navigateToChooseSpeciesPage(BuildContext context) =>
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) =>
-              ChooseSpeciesPage(survey: widget.survey)));
+              ChooseSpeciesPage(survey: statefulSurvey)));
 
   Map<String, List<Sighting>> get groupedSightings =>
       widget.survey.sightings.groupBy((sighting) => sighting.species);
@@ -45,23 +45,24 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-        title:
-            '${statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(statefulSurvey.startAt!)}',
-        fabLabel: Row(
-          children: const [Text('Add New Sighting'), Icon(Icons.add)],
-        ),
-        onFabPress: () => navigateToChooseSpeciesPage(context),
-        actions: [
-          IconButton(onPressed: onCompleteSurvey, icon: const Icon(Icons.check))
-        ],
-        child: ListView(
-          children:
-              List.from(groupedSightings.entries.map((group) => SightingTile(
-                    speciesName: group.key,
-                    sightings: group.value,
-                    survey: statefulSurvey,
-                    onChangeSurvey: (Survey survey) => updateSurvey(survey),
-                  ))),
-        ));
+      title:
+          '${statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(statefulSurvey.startAt!)}',
+      fabLabel: Row(
+        children: const [Text('Add New Sighting'), Icon(Icons.add)],
+      ),
+      onFabPress: () => navigateToChooseSpeciesPage(context),
+      actions: [
+        IconButton(onPressed: onCompleteSurvey, icon: const Icon(Icons.check))
+      ],
+      child: ListView(
+        children:
+            List.from(groupedSightings.entries.map((group) => SightingTile(
+                  speciesName: group.key,
+                  sightings: group.value,
+                  survey: statefulSurvey,
+                  onChangeSurvey: (Survey survey) => updateSurvey(survey),
+                ))),
+      ),
+    );
   }
 }

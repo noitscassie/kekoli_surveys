@@ -1,9 +1,11 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class ModifyTallyModal extends StatelessWidget {
+  final Survey survey;
   final String title;
   final String primaryCta;
   final VoidCallback onConfirm;
@@ -14,7 +16,8 @@ class ModifyTallyModal extends StatelessWidget {
       required this.sighting,
       required this.onConfirm,
       required this.title,
-      required this.primaryCta});
+      required this.primaryCta,
+      required this.survey});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class ModifyTallyModal extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...sighting.attributes.entries.mapIndexed(
+          ...sighting.displayAttributes.entries.mapIndexed(
             (index, entry) => Padding(
               padding: const EdgeInsets.only(top: 8),
               child: PartlyBoldedText(

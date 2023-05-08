@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/main.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_weather_page.dart';
+import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 
 class CompleteSurveyModal extends StatefulWidget {
@@ -16,16 +16,15 @@ class CompleteSurveyModal extends StatefulWidget {
 }
 
 class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
-  // TODO: find out how to get a duration between two datetimes
-  Duration get surveyLength => const Duration(hours: 0, minutes: 63);
+  int get surveyLength =>
+      DateTime.now().difference(widget.survey.startAt!).inMinutes;
 
   void onAddWeather(String weather) {
     widget.survey.setWeather(weather);
     widget.onChangeSurvey(widget.survey);
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-            builder: (BuildContext context) => const MyHomePage()),
+        MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
         (route) => false);
   }
 
@@ -52,7 +51,7 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: Text(
-              'Survey has been running for ${DurationFormats.hoursAndMinutes(surveyLength)}',
+              'Survey has been running for ${TimeFormats.hoursAndMinutesFromMinutes(surveyLength)}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

@@ -38,32 +38,33 @@ class _SightingTileState extends State<SightingTile> {
             },
             title: 'Add ${sighting.species} tally?',
             primaryCta: 'Add',
+            survey: widget.survey,
           ));
 
-  void onDecrement(String sightingJson, int numberOfSightings) {
-    final sighting = Sighting.fromMap(jsonDecode(sightingJson));
-
+  void onDecrement(List<Sighting> sightings) {
+    final sighting = sightings.last;
     final title =
-        'Remove ${sighting.species}${numberOfSightings == 1 ? '' : ' tally'}?';
+        'Remove ${sighting.species}${sightings.length == 1 ? '' : ' tally'}?';
 
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => ModifyTallyModal(
-              sighting: Sighting.fromMap(jsonDecode(sightingJson)),
+              sighting: sighting,
               onConfirm: () {
-                widget.survey.removeSightingMatchingJson(sightingJson);
+                widget.survey.removeSighting(sighting);
                 widget.onChangeSurvey(widget.survey);
 
                 Navigator.of(context).pop();
               },
               title: title,
               primaryCta: 'Remove',
+              survey: widget.survey,
             ));
   }
 
-  Map<String, List<Sighting>> get groupedSightings =>
-      widget.sightings.groupBy((sighting) => sighting.toJson());
+  Map<String, List<Sighting>> get groupedSightings => widget.sightings
+      .groupBy((sighting) => jsonEncode(sighting.displayAttributes));
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +85,8 @@ class _SightingTileState extends State<SightingTile> {
           child: SpeciesSightingsList(
             sightings: entry.value,
             key: Key('${entry.key}_sighting_list_${index.toString()}'),
-            onIncrement: () =>
-                onIncrement(Sighting.fromMap(jsonDecode(entry.key))),
-            onDecrement: () => onDecrement(entry.key, entry.value.length),
+            onIncrement: () => onIncrement(entry.value.last.duplicate()),
+            onDecrement: () => onDecrement(entry.value),
             json: entry.key,
           ),
         ),
