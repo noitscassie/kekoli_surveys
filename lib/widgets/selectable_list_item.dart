@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 class SelectableListItem extends StatelessWidget {
   final String text;
   final Function(String value) onSelect;
+  final IconData icon;
 
   const SelectableListItem(
-      {super.key, required this.text, required this.onSelect});
+      {super.key,
+      required this.text,
+      required this.onSelect,
+      this.icon = Icons.arrow_forward_outlined});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +17,7 @@ class SelectableListItem extends StatelessWidget {
       onTap: () => onSelect(text),
       child: ListTile(
         title: Text(text),
-        trailing: const Icon(Icons.arrow_forward_outlined),
+        trailing: Icon(icon),
       ),
     );
   }
