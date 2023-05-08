@@ -4,8 +4,10 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/modify_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/species_sightings_list.dart';
+import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
 class SightingTile extends StatefulWidget {
   final Survey survey;
@@ -63,6 +65,13 @@ class _SightingTileState extends State<SightingTile> {
             ));
   }
 
+  void navigateToChooseSpeciesPage() =>
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => AddSightingDetailsPage(
+                survey: widget.survey,
+                species: widget.speciesName,
+              )));
+
   Map<String, List<Sighting>> get groupedSightings => widget.sightings
       .groupBy((sighting) => jsonEncode(sighting.displayAttributes));
 
@@ -71,26 +80,35 @@ class _SightingTileState extends State<SightingTile> {
     return ExpansionTile(
       title: Text(widget.speciesName),
       childrenPadding: const EdgeInsets.symmetric(horizontal: 15),
-      expandedAlignment: Alignment.centerLeft,
-      children: List.from(groupedSightings.entries.mapIndexed(
-        (index, entry) => Container(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          decoration: BoxDecoration(
-              border: Border(
-                  top: index == 0
-                      ? BorderSide.none
-                      : BorderSide(
-                          color:
-                              Theme.of(context).colorScheme.onSurfaceVariant))),
-          child: SpeciesSightingsList(
-            sightings: entry.value,
-            key: Key('${entry.key}_sighting_list_${index.toString()}'),
-            onIncrement: () => onIncrement(entry.value.last.duplicate()),
-            onDecrement: () => onDecrement(entry.value),
-            json: entry.key,
+      expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        ...groupedSightings.entries.mapIndexed(
+          (index, entry) => Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            decoration: BoxDecoration(
+                border: Border(
+                    top: index == 0
+                        ? BorderSide.none
+                        : BorderSide(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onSurfaceVariant))),
+            child: SpeciesSightingsList(
+              sightings: entry.value,
+              key: Key('${entry.key}_sighting_list_${index.toString()}'),
+              onIncrement: () => onIncrement(entry.value.last.duplicate()),
+              onDecrement: () => onDecrement(entry.value),
+              json: entry.key,
+            ),
           ),
         ),
-      )),
+        SelectableListItem(
+          text: 'Add new observation',
+          onSelect: (String _) => navigateToChooseSpeciesPage(),
+          icon: Icons.add,
+          padding: EdgeInsets.zero,
+        ),
+      ],
     );
   }
 }
