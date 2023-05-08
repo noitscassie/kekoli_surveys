@@ -102,11 +102,14 @@ class _SightingTileState extends State<SightingTile> {
             ),
           ),
         ),
-        SelectableListItem(
-          text: 'Add new observation',
-          onSelect: (String _) => navigateToChooseSpeciesPage(),
-          icon: Icons.add,
-          padding: EdgeInsets.zero,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 4),
+          child: SelectableListItem(
+            text: 'Add new ${widget.speciesName} observation',
+            onSelect: (String _) => navigateToChooseSpeciesPage(),
+            icon: Icons.add,
+            padding: EdgeInsets.zero,
+          ),
         ),
       ],
     );
