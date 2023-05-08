@@ -1,7 +1,7 @@
 const heights = [
   'Ground',
   'Low',
-  'Medium',
+  'Mid',
   'High',
   'Flying',
   'Unknown',
