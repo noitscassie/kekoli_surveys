@@ -4,4 +4,5 @@ const List<String> trails = [
   'River',
   'Scorpion',
   'Snake',
+  'Waterfall',
 ];
