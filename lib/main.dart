@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const KekoldiSurveys());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class KekoldiSurveys extends StatelessWidget {
+  const KekoldiSurveys({super.key});
 
   static InputBorder border = OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
@@ -38,30 +37,7 @@ class MyApp extends StatelessWidget {
                           onSurface: Colors.black,
                           onSurfaceVariant: Colors.lightGreen.shade800,
                           onError: Colors.grey.shade500)),
-      home: const MyHomePage(),
+      home: const HomePage(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  List<Survey> surveys = [];
-
-  void onCreateSurvey(Survey survey) {
-    Navigator.pop(context);
-    setState(() {
-      surveys = [...surveys, survey];
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return HomePage(onCreateSurvey: onCreateSurvey, surveys: surveys);
   }
 }
