@@ -11,5 +11,5 @@ class TimeFormats {
   }
 
   static timeHoursAndMinutes(DateTime time) =>
-      '${time.hour}:${time.minute < 10 ? '0' + time.minute.toString() : time.minute}';
+      '${time.hour}:${time.minute < 10 ? '0${time.minute}' : time.minute}';
 }

@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
@@ -69,8 +70,9 @@ class ViewSurveyPage extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 8),
                 child: ListView(
                   // shrinkWrap: true,
-                  children: List.from(survey.sightings.map(
-                      (Sighting sighting) =>
+                  children: List.from(survey.sightings
+                      .sortedBy((Sighting sighting) => sighting.species)
+                      .map((Sighting sighting) =>
                           SightingListItem(sighting: sighting))),
                 ),
               ),

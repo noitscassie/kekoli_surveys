@@ -30,7 +30,7 @@ class ModifyTallyModal extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...sighting.displayAttributes.entries.mapIndexed(
+          ...sighting.displayAttributes.entries.filter((entry) => entry.value.isNotEmpty).mapIndexed(
             (index, entry) => Padding(
               padding: const EdgeInsets.only(top: 8),
               child: PartlyBoldedText(

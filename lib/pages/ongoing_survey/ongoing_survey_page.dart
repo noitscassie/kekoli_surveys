@@ -55,8 +55,9 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
         IconButton(onPressed: onCompleteSurvey, icon: const Icon(Icons.check))
       ],
       child: ListView(
-        children:
-            List.from(groupedSightings.entries.map((group) => SightingTile(
+        children: List.from(groupedSightings.entries
+            .sortedBy((entry) => entry.key)
+            .map((group) => SightingTile(
                   speciesName: group.key,
                   sightings: group.value,
                   survey: statefulSurvey,
