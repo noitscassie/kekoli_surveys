@@ -10,5 +10,6 @@ class TimeFormats {
     return '${hours > 0 ? '$hours ${hours == 1 ? 'hour' : 'hours'} and ' : ''}$minutes ${minutes == 1 ? 'minute' : 'minutes'}';
   }
 
-  static timeHoursAndMinutes(DateTime time) => '${time.hour}:${time.minute}';
+  static timeHoursAndMinutes(DateTime time) =>
+      '${time.hour}:${time.minute < 10 ? '0' + time.minute.toString() : time.minute}';
 }
