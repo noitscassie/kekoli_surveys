@@ -39,6 +39,10 @@ dependencies:
   dartx: ^1.1.0
   localstorage: ^4.0.0+1
   uuid: ^3.0.7
+  csv: ^5.0.2
+  flutter_email_sender: ^5.2.0
+  external_path: ^1.0.3
+  intl: ^0.18.1
 
 
 dev_dependencies:
