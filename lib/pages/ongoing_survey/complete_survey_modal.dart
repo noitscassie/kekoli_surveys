@@ -51,7 +51,7 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
           Padding(
             padding: const EdgeInsets.only(top: 16),
             child: Text(
-              'Survey has been running for ${TimeFormats.hoursAndMinutesFromMinutes(surveyLength)}',
+              'Survey has been running for ${TimeFormats.hoursAndMinutesFromMinutes(widget.survey.lengthInMinutes(fromNow: true))}',
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

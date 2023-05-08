@@ -82,6 +82,9 @@ class Survey with DiagnosticableTreeMixin {
             List.from(sightings.map((Sighting sighting) => sighting.toJson()))
       };
 
+  int lengthInMinutes({fromNow = false}) =>
+      (fromNow ? DateTime.now() : endAt!).difference(startAt!).inMinutes;
+
   Future<void> start() async {
     startAt = DateTime.now();
     state = SurveyState.inProgress;

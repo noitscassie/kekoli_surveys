@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
+import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
@@ -16,9 +17,38 @@ class SurveyTile extends StatefulWidget {
 class _SurveyTileState extends State<SurveyTile> {
   void startSurveyAndNavigate() {
     widget.survey.start();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context) =>
-            OngoingSurveyPage(survey: widget.survey)));
+    navigateToOngoingSurvey();
+  }
+
+  void navigateToOngoingSurvey() =>
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              OngoingSurveyPage(survey: widget.survey)));
+
+  void viewSurveyDetails() => Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) =>
+          ViewSurveyPage(survey: widget.survey)));
+
+  IconData get icon {
+    switch (widget.survey.state) {
+      case SurveyState.unstarted:
+        return Icons.play_circle_fill;
+      case SurveyState.inProgress:
+        return Icons.arrow_forward;
+      case SurveyState.completed:
+        return Icons.info_outline;
+    }
+  }
+
+  VoidCallback get onIconPress {
+    switch (widget.survey.state) {
+      case SurveyState.unstarted:
+        return startSurveyAndNavigate;
+      case SurveyState.inProgress:
+        return navigateToOngoingSurvey;
+      case SurveyState.completed:
+        return viewSurveyDetails;
+    }
   }
 
   @override
@@ -82,11 +112,11 @@ class _SurveyTileState extends State<SurveyTile> {
                 ),
                 IconButton(
                   icon: Icon(
-                    Icons.play_circle_fill,
+                    icon,
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   padding: EdgeInsets.zero,
-                  onPressed: startSurveyAndNavigate,
+                  onPressed: onIconPress,
                   iconSize: 60,
                 )
               ],

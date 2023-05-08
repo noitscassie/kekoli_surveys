@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -57,7 +58,32 @@ class Sighting with DiagnosticableTreeMixin {
         'Age': age,
       };
 
-  Sighting duplicate() => Sighting(quantity: quantity, sex: sex, observationType: observationType, age: age, height: height, substrate: substrate, species: species);
+  String get attributesString {
+    final presentAttributes =
+        attributes.filter((entry) => entry.value != Sighting.unknown);
+    final quantity = presentAttributes['Quantity'];
+    final location = [
+      presentAttributes['Height'],
+      presentAttributes['Substrate'],
+    ].whereNotNull().join(' ');
+    final sex = presentAttributes['Sex'];
+    final observation = presentAttributes['Observation'];
+    final age = presentAttributes['Age'];
+
+    return List<String>.from(
+            [quantity, location, sex, age, observation].whereNotNull())
+        .where((String part) => part.isNotEmpty)
+        .join(', ');
+  }
+
+  Sighting duplicate() => Sighting(
+      quantity: quantity,
+      sex: sex,
+      observationType: observationType,
+      age: age,
+      height: height,
+      substrate: substrate,
+      species: species);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

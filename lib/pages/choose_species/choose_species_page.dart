@@ -1,9 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/amphibians.dart';
-import 'package:kekoldi_surveys/constants/birds.dart';
-import 'package:kekoldi_surveys/constants/mammals.dart';
-import 'package:kekoldi_surveys/constants/reptiles.dart';
+import 'package:kekoldi_surveys/constants/species.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/pages/choose_species/selectable_species_list_item.dart';
@@ -19,8 +16,7 @@ class ChooseSpeciesPage extends StatefulWidget {
 }
 
 class _ChooseSpeciesPageState extends State<ChooseSpeciesPage> {
-  List<String> get allSpecies =>
-      [...mammals, ...amphibians, ...reptiles, ...birds];
+  List<String> get allSpecies => species;
 
   bool matchesSearchTerm(String species) {
     final searchableName = species.toLowerCase();

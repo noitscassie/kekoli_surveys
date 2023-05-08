@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/utils/string_utils.dart';
 
 class SpeciesSightingsList extends StatelessWidget {
   final String json;
@@ -22,21 +23,7 @@ class SpeciesSightingsList extends StatelessWidget {
   Map<String, dynamic> get presentAttributes =>
       attributes.filter((entry) => entry.value != Sighting.unknown);
 
-  String get attributeString {
-    final quantity = presentAttributes['Quantity'];
-    final location = [
-      presentAttributes['Height'],
-      presentAttributes['Substrate'],
-    ].whereNotNull().join(' ');
-    final sex = presentAttributes['Sex'];
-    final observation = presentAttributes['Observation'];
-    final age = presentAttributes['Age'];
-
-    return List<String>.from(
-            [quantity, location, sex, age, observation].whereNotNull())
-        .where((String part) => part.isNotEmpty)
-        .join(', ');
-  }
+  String get attributeString => sightingAttributesString(presentAttributes);
 
   Widget _totalTallyCount(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
