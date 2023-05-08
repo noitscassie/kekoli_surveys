@@ -18,25 +18,24 @@ class KekoldiSurveys extends StatelessWidget {
     return MaterialApp(
       title: 'Kekoldi Surveys',
       theme: ThemeData(
-              primarySwatch: Colors.lightGreen,
-              inputDecorationTheme: InputDecorationTheme(
-                filled: true,
-                fillColor: Colors.lightGreen[100],
-                border: border,
-                focusedBorder: border,
-                enabledBorder: border,
-                errorBorder: border,
-                disabledBorder: border,
-                labelStyle: Theme.of(context).textTheme.bodySmall,
-              ))
-          .copyWith(
-              colorScheme:
-                  ColorScheme.fromSwatch(primarySwatch: Colors.lightGreen)
-                      .copyWith(
-                          surface: Colors.lightGreen[100],
-                          onSurface: Colors.black,
-                          onSurfaceVariant: Colors.lightGreen.shade800,
-                          onError: Colors.grey.shade500)),
+        primarySwatch: Colors.lightGreen,
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.lightGreen[100],
+          border: border,
+          focusedBorder: border,
+          enabledBorder: border,
+          errorBorder: border,
+          disabledBorder: border,
+          labelStyle: Theme.of(context).textTheme.bodySmall,
+        ),
+      ).copyWith(
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightGreen)
+              .copyWith(
+                  surface: Colors.lightGreen[100],
+                  onSurface: Colors.black,
+                  onSurfaceVariant: Colors.lightGreen.shade800,
+                  onError: Colors.grey.shade500)),
       home: const HomePage(),
     );
   }
