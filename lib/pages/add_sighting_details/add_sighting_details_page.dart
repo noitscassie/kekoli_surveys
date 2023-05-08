@@ -5,6 +5,7 @@ import 'package:kekoldi_surveys/constants/substrates.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/age_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_sighting_details/comments_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/height_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/observation_type_input_field.dart';
@@ -31,6 +32,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
   String? selectedAge;
   String selectedHeight = heights.first;
   String selectedSubstrate = substrates.sorted().first;
+  String comments = '';
 
   bool get valid =>
       selectedQuantity != null &&
@@ -39,19 +41,20 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
       selectedAge != null;
 
   void showConfirmationDialog() => showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) => ConfirmSightingDetailsDialog(
-              survey: widget.survey,
-              sighting: Sighting(
-                  species: widget.species,
-                  quantity: selectedQuantity!,
-                  sex: selectedSex!,
-                  observationType: selectedObservationType!,
-                  age: selectedAge!,
-                  height: selectedHeight,
-                  substrate: selectedSubstrate),
-            ));
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => ConfirmSightingDetailsDialog(
+            survey: widget.survey,
+            sighting: Sighting(
+                species: widget.species,
+                quantity: selectedQuantity!,
+                sex: selectedSex!,
+                observationType: selectedObservationType!,
+                age: selectedAge!,
+                height: selectedHeight,
+                substrate: selectedSubstrate,
+                comments: comments),
+          ));
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +114,13 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
                     });
                   },
                   currentAge: selectedAge ?? ''),
+              CommentsInputField(
+                onChange: (String value) {
+                  setState(() {
+                    comments = value;
+                  });
+                },
+              )
             ],
           ),
         ));

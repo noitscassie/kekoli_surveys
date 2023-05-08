@@ -28,7 +28,18 @@ class SightingListItem extends StatelessWidget {
                 .textTheme
                 .bodySmall
                 ?.copyWith(fontStyle: FontStyle.italic, fontSize: 12),
-          )
+          ),
+          if (sighting.comments?.isNotEmpty == true)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                sighting.comments!,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(fontStyle: FontStyle.italic, fontSize: 12),
+              ),
+            )
         ],
       ),
     );

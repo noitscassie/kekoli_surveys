@@ -23,7 +23,8 @@ class SpeciesSightingsList extends StatelessWidget {
   Map<String, dynamic> get presentAttributes =>
       attributes.filter((entry) => entry.value != Sighting.unknown);
 
-  String get attributeString => sightingAttributesString(presentAttributes);
+  String get attributeString =>
+      sightingAttributesString(presentAttributes, includeComments: true);
 
   Widget _totalTallyCount(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -66,7 +67,6 @@ class SpeciesSightingsList extends StatelessWidget {
           ),
         ),
         Column(
-          // key: Key('${widget.speciesName}_${index}_tally'),
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

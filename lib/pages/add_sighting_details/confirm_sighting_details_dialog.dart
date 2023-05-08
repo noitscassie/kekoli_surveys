@@ -1,4 +1,4 @@
-import 'package:collection/collection.dart';
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
@@ -40,18 +40,20 @@ class _ConfirmSightingDetailsDialogState
             widget.sighting.species,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...widget.sighting.displayAttributes.entries.mapIndexed(
-            (index, entry) => Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: PartlyBoldedText(
-                style: Theme.of(context).textTheme.bodyMedium,
-                textParts: [
-                  RawText('${entry.key}: ', bold: true),
-                  RawText(entry.value),
-                ],
-              ),
-            ),
-          )
+          ...widget.sighting.displayAttributes.entries
+              .filter((entry) => entry.value.isNotEmpty)
+              .mapIndexed(
+                (index, entry) => Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: PartlyBoldedText(
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    textParts: [
+                      RawText('${entry.key}: ', bold: true),
+                      RawText(entry.value),
+                    ],
+                  ),
+                ),
+              )
         ],
       ),
       actionsAlignment: MainAxisAlignment.spaceBetween,

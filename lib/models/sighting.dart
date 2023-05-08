@@ -13,6 +13,7 @@ class Sighting with DiagnosticableTreeMixin {
   final String age;
   final String height;
   final String substrate;
+  final String? comments;
 
   static const unknown = 'Unknown';
 
@@ -23,7 +24,8 @@ class Sighting with DiagnosticableTreeMixin {
       required this.age,
       required this.height,
       required this.substrate,
-      required this.species})
+      required this.species,
+      required this.comments})
       : id = const Uuid().v4();
 
   Sighting.fromMap(Map<String, dynamic> map)
@@ -34,7 +36,8 @@ class Sighting with DiagnosticableTreeMixin {
         age = map['age'] ?? unknown,
         height = map['height'] ?? unknown,
         substrate = map['substrate'] ?? unknown,
-        species = map['species'] ?? unknown;
+        species = map['species'] ?? unknown,
+        comments = map['comments'];
 
   String toJson() => json.encode(attributes);
 
@@ -47,6 +50,7 @@ class Sighting with DiagnosticableTreeMixin {
         'observationType': observationType,
         'age': age,
         'species': species,
+        'comments': comments ?? '',
       };
 
   Map<String, String> get displayAttributes => {
@@ -56,6 +60,7 @@ class Sighting with DiagnosticableTreeMixin {
         'Sex': sex,
         'Observation': observationType,
         'Age': age,
+        'Comments': comments ?? '',
       };
 
   String get attributesString {
@@ -83,7 +88,8 @@ class Sighting with DiagnosticableTreeMixin {
       age: age,
       height: height,
       substrate: substrate,
-      species: species);
+      species: species,
+      comments: comments);
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -98,5 +104,6 @@ class Sighting with DiagnosticableTreeMixin {
     properties.add(StringProperty('height', height));
     properties.add(StringProperty('substrate', substrate));
     properties.add(StringProperty('id', id));
+    properties.add(StringProperty('comments', comments));
   }
 }
