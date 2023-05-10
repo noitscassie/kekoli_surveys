@@ -1,7 +1,4 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/heights.dart';
-import 'package:kekoldi_surveys/constants/substrates.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/age_input_field.dart';
@@ -26,12 +23,12 @@ class AddSightingDetailsPage extends StatefulWidget {
 }
 
 class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
-  String? selectedQuantity;
-  String? selectedSex;
+  String selectedQuantity = '1';
+  String selectedSex = Sighting.unknown;
   String? selectedObservationType;
-  String? selectedAge;
-  String selectedHeight = heights.first;
-  String selectedSubstrate = substrates.sorted().first;
+  String selectedAge = Sighting.unknown;
+  String selectedHeight = Sighting.unknown;
+  String selectedSubstrate = Sighting.unknown;
   String comments = '';
 
   bool get valid =>
@@ -47,10 +44,10 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
             survey: widget.survey,
             sighting: Sighting(
                 species: widget.species,
-                quantity: selectedQuantity!,
-                sex: selectedSex!,
+                quantity: selectedQuantity,
+                sex: selectedSex,
                 observationType: selectedObservationType!,
-                age: selectedAge!,
+                age: selectedAge,
                 height: selectedHeight,
                 substrate: selectedSubstrate,
                 comments: comments),
@@ -73,7 +70,8 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
           child: ListView(
             children: [
               QuantityInputField(
-                onChange: (String? quantity) {
+                initialValue: selectedQuantity,
+                onChange: (String quantity) {
                   setState(() {
                     selectedQuantity = quantity;
                   });
@@ -100,13 +98,6 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
                     });
                   },
                   currentSex: selectedSex ?? ''),
-              ObservationTypeInputField(
-                  onChange: (String value) {
-                    setState(() {
-                      selectedObservationType = value;
-                    });
-                  },
-                  currentObservationType: selectedObservationType ?? ''),
               AgeInputField(
                   onChange: (String value) {
                     setState(() {
@@ -114,6 +105,13 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
                     });
                   },
                   currentAge: selectedAge ?? ''),
+              ObservationTypeInputField(
+                  onChange: (String value) {
+                    setState(() {
+                      selectedObservationType = value;
+                    });
+                  },
+                  currentObservationType: selectedObservationType ?? ''),
               CommentsInputField(
                 onChange: (String value) {
                   setState(() {

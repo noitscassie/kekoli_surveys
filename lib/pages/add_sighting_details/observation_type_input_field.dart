@@ -16,7 +16,7 @@ class ObservationTypeInputField extends StatelessWidget {
     return FormItem(
       label: 'Type Of Observation',
       child: RadioButtons(
-        options: const ['Audio', 'Audio and Visual', 'Visual'],
+        options: const ['Audio', 'Audio + Visual', 'Visual'],
         onChange: (String value) => onChange(value),
         selectedOption: currentObservationType,
       ),
