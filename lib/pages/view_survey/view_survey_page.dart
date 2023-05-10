@@ -37,14 +37,10 @@ class ViewSurveyPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 DataTile(
-                    data: survey.sightings.length.toString(),
+                    data: survey.totalObservations.toString(),
                     label: 'Total Observations'),
                 DataTile(
-                    data: survey.sightings
-                        .map((Sighting sighting) => sighting.species)
-                        .distinct()
-                        .length
-                        .toString(),
+                    data: survey.uniqueSpecies.toString(),
                     label: 'Unique Species'),
               ],
             ),

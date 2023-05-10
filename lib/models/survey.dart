@@ -4,6 +4,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:uuid/uuid.dart';
 
 enum SurveyState { unstarted, inProgress, completed }
@@ -81,6 +82,13 @@ class Survey with DiagnosticableTreeMixin {
         'sightings':
             List.from(sightings.map((Sighting sighting) => sighting.toJson()))
       };
+
+  String get filename =>
+      '${trail.toLowerCase()}_survey_${DateFormats.ddmmyyyyNoBreaks(startAt ?? DateTime.now())}';
+
+  int get totalObservations => sightings.length;
+  int get uniqueSpecies =>
+      sightings.map((Sighting sighting) => sighting.species).distinct().length;
 
   int lengthInMinutes({fromNow = false}) =>
       (fromNow ? DateTime.now() : endAt!).difference(startAt!).inMinutes;

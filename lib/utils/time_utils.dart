@@ -1,5 +1,9 @@
+import 'package:intl/intl.dart';
+
 class DateFormats {
-  static ddmmyyyy(DateTime date) => '${date.day}/${date.month}/${date.year}';
+  static ddmmyyyy(DateTime date) => DateFormat('dd/MM/y').format(date);
+
+  static ddmmyyyyNoBreaks(DateTime date) => DateFormat('ddMMy').format(date);
 }
 
 class TimeFormats {
@@ -8,6 +12,13 @@ class TimeFormats {
     final minutes = totalMinutes % Duration.minutesPerHour;
 
     return '${hours > 0 ? '$hours ${hours == 1 ? 'hour' : 'hours'} and ' : ''}$minutes ${minutes == 1 ? 'minute' : 'minutes'}';
+  }
+
+  static hmFromMinutes(int totalMinutes) {
+    final hours = (totalMinutes ~/ Duration.minutesPerHour);
+    final minutes = totalMinutes % Duration.minutesPerHour;
+
+    return '${hours > 0 ? '$hours${hours == 1 ? 'hr' : 'hr'}' : ''} $minutes${minutes == 1 ? 'm' : 'm'}';
   }
 
   static timeHoursAndMinutes(DateTime time) =>
