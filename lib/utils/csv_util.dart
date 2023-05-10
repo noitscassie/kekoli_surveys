@@ -49,9 +49,6 @@ class CsvUtil {
     file.createSync(recursive: true);
     await file.writeAsString(csv);
 
-    final thing = file.readAsStringSync();
-    print(thing);
-
     return file.path;
   }
 }

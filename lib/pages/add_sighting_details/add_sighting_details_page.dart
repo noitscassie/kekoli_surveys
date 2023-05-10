@@ -31,11 +31,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
   String selectedSubstrate = Sighting.unknown;
   String comments = '';
 
-  bool get valid =>
-      selectedQuantity != null &&
-      selectedSex != null &&
-      selectedObservationType != null &&
-      selectedAge != null;
+  bool get valid => selectedObservationType != null;
 
   void showConfirmationDialog() => showDialog(
       context: context,
@@ -97,14 +93,14 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
                       selectedSex = value;
                     });
                   },
-                  currentSex: selectedSex ?? ''),
+                  currentSex: selectedSex),
               AgeInputField(
                   onChange: (String value) {
                     setState(() {
                       selectedAge = value;
                     });
                   },
-                  currentAge: selectedAge ?? ''),
+                  currentAge: selectedAge),
               ObservationTypeInputField(
                   onChange: (String value) {
                     setState(() {
