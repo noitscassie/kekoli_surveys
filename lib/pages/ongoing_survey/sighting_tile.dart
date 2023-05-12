@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
+import 'package:kekoldi_surveys/pages/edit_species/edit_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/modify_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/species_sightings_list.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
@@ -65,6 +66,15 @@ class _SightingTileState extends State<SightingTile> {
             ));
   }
 
+  void onEdit(Sighting sighting) {
+    // Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => EditSpeciesPage(
+              survey: widget.survey,
+              sighting: sighting,
+            )));
+  }
+
   void navigateToChooseSpeciesPage() =>
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => AddSightingDetailsPage(
@@ -82,12 +92,12 @@ class _SightingTileState extends State<SightingTile> {
         widget.speciesName,
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 18),
       ),
-      childrenPadding: const EdgeInsets.symmetric(horizontal: 15),
+      childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...groupedSightings.entries.mapIndexed(
           (index, entry) => Container(
-            padding: const EdgeInsets.symmetric(vertical: 8),
+            padding: const EdgeInsets.only(bottom: 8),
             decoration: BoxDecoration(
                 border: Border(
                     top: index == 0
@@ -101,6 +111,7 @@ class _SightingTileState extends State<SightingTile> {
               key: Key('${entry.key}_sighting_list_${index.toString()}'),
               onIncrement: () => onIncrement(entry.value.last.duplicate()),
               onDecrement: () => onDecrement(entry.value),
+              onEdit: () => onEdit(entry.value.last),
               json: entry.key,
             ),
           ),

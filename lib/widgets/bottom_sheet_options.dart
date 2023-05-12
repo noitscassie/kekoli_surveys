@@ -4,13 +4,9 @@ class BottomSheetOption {
   final String text;
   final VoidCallback onPress;
   final IconData? leadingIcon;
-  final IconData? trailingIcon;
 
   BottomSheetOption(
-      {required this.text,
-      required this.onPress,
-      this.leadingIcon,
-      this.trailingIcon});
+      {required this.text, required this.onPress, this.leadingIcon});
 }
 
 class BottomSheetOptions extends StatelessWidget {
@@ -35,12 +31,10 @@ class BottomSheetOptions extends StatelessWidget {
                         option.leadingIcon,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                trailing: option.trailingIcon == null
-                    ? null
-                    : Icon(
-                        option.trailingIcon,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                trailing: Icon(
+                  Icons.arrow_right_alt,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
             ))),
       ),

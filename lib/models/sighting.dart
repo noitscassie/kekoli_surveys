@@ -6,14 +6,14 @@ import 'package:uuid/uuid.dart';
 
 class Sighting with DiagnosticableTreeMixin {
   final String id;
-  final String species;
-  final String quantity;
-  final String sex;
-  final String observationType;
-  final String age;
-  final String height;
-  final String substrate;
-  final String? comments;
+  String species;
+  String quantity;
+  String sex;
+  String observationType;
+  String age;
+  String height;
+  String substrate;
+  String comments;
 
   static const unknown = 'Unknown';
 
@@ -25,7 +25,7 @@ class Sighting with DiagnosticableTreeMixin {
       required this.height,
       required this.substrate,
       required this.species,
-      required this.comments})
+      this.comments = ''})
       : id = const Uuid().v4();
 
   Sighting.fromMap(Map<String, dynamic> map)
@@ -37,7 +37,7 @@ class Sighting with DiagnosticableTreeMixin {
         height = map['height'] ?? unknown,
         substrate = map['substrate'] ?? unknown,
         species = map['species'] ?? unknown,
-        comments = map['comments'];
+        comments = map['comments'] ?? '';
 
   String toJson() => json.encode(attributes);
 
@@ -50,7 +50,7 @@ class Sighting with DiagnosticableTreeMixin {
         'observationType': observationType,
         'age': age,
         'species': species,
-        'comments': comments ?? '',
+        'comments': comments,
       };
 
   Map<String, String> get displayAttributes => {
@@ -60,7 +60,7 @@ class Sighting with DiagnosticableTreeMixin {
         'Sex': sex,
         'Observation': observationType,
         'Age': age,
-        'Comments': comments ?? '',
+        'Comments': comments,
       };
 
   String get attributesString {
@@ -90,6 +90,17 @@ class Sighting with DiagnosticableTreeMixin {
       substrate: substrate,
       species: species,
       comments: comments);
+
+  void update(Map<String, String> data) {
+    species = data['species'] ?? species;
+    quantity = data['quantity'] ?? quantity;
+    sex = data['sex'] ?? sex;
+    observationType = data['observationType'] ?? observationType;
+    age = data['age'] ?? age;
+    height = data['height'] ?? height;
+    substrate = data['substrate'] ?? substrate;
+    comments = data['comments'] ?? comments;
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

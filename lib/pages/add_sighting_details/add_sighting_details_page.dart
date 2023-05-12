@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/age_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/comments_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/height_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/observation_type_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/quantity_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/sex_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/substrate_input_field.dart';
-import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
 class AddSightingDetailsPage extends StatefulWidget {
   final Survey survey;
@@ -23,15 +16,33 @@ class AddSightingDetailsPage extends StatefulWidget {
 }
 
 class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
-  String selectedQuantity = '1';
-  String selectedSex = Sighting.unknown;
-  String? selectedObservationType;
-  String selectedAge = Sighting.unknown;
-  String selectedHeight = Sighting.unknown;
-  String selectedSubstrate = Sighting.unknown;
+  String quantity = '1';
+  String sex = Sighting.unknown;
+  String? observationType;
+  String age = Sighting.unknown;
+  String height = Sighting.unknown;
+  String substrate = Sighting.unknown;
   String comments = '';
 
-  bool get valid => selectedObservationType != null;
+  void onQuantityChange(String newQuantity) =>
+      setState(() => quantity = newQuantity);
+
+  void onSexChange(String newSex) => setState(() => sex = newSex);
+
+  void onObservationTypeChange(String newObservationType) =>
+      setState(() => observationType = newObservationType);
+
+  void onAgeChange(String newAge) => setState(() => age = newAge);
+
+  void onHeightChange(String newHeight) => setState(() => height = newHeight);
+
+  void onSubstrateChange(String newSubstrate) =>
+      setState(() => substrate = newSubstrate);
+
+  void onCommentsChange(String newComments) =>
+      setState(() => comments = newComments);
+
+  bool get valid => observationType != null;
 
   void showConfirmationDialog() => showDialog(
       context: context,
@@ -40,83 +51,40 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
             survey: widget.survey,
             sighting: Sighting(
                 species: widget.species,
-                quantity: selectedQuantity,
-                sex: selectedSex,
-                observationType: selectedObservationType!,
-                age: selectedAge,
-                height: selectedHeight,
-                substrate: selectedSubstrate,
+                quantity: quantity,
+                sex: sex,
+                observationType: observationType!,
+                age: age,
+                height: height,
+                substrate: substrate,
                 comments: comments),
           ));
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
-        title: widget.species,
+    return SightingDetailsForm(
+        species: widget.species,
         fabLabel: Row(
           children: [
             Text('Add ${widget.species}'),
             const Icon(Icons.add),
           ],
         ),
-        isFabValid: valid,
         onFabPress: showConfirmationDialog,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: ListView(
-            children: [
-              QuantityInputField(
-                initialValue: selectedQuantity,
-                onChange: (String quantity) {
-                  setState(() {
-                    selectedQuantity = quantity;
-                  });
-                },
-              ),
-              HeightInputField(
-                  currentHeight: selectedHeight,
-                  onChange: (String newHeight) {
-                    setState(() {
-                      selectedHeight = newHeight;
-                    });
-                  }),
-              SubstrateInputField(
-                  currentSubstrate: selectedSubstrate,
-                  onChange: (String newSubstrate) {
-                    setState(() {
-                      selectedSubstrate = newSubstrate;
-                    });
-                  }),
-              SexInputField(
-                  onChange: (String value) {
-                    setState(() {
-                      selectedSex = value;
-                    });
-                  },
-                  currentSex: selectedSex),
-              AgeInputField(
-                  onChange: (String value) {
-                    setState(() {
-                      selectedAge = value;
-                    });
-                  },
-                  currentAge: selectedAge),
-              ObservationTypeInputField(
-                  onChange: (String value) {
-                    setState(() {
-                      selectedObservationType = value;
-                    });
-                  },
-                  currentObservationType: selectedObservationType ?? ''),
-              CommentsInputField(
-                onChange: (String value) {
-                  setState(() {
-                    comments = value;
-                  });
-                },
-              )
-            ],
-          ),
-        ));
+        isFabValid: valid,
+        initialQuantity: quantity,
+        onQuantityChange: onQuantityChange,
+        initialSex: sex,
+        onSexChange: onSexChange,
+        initialObservationType: observationType ?? '',
+        onObservationTypeChange: onObservationTypeChange,
+        initialAge: age,
+        onAgeChange: onAgeChange,
+        initialHeight: height,
+        onHeightChange: onHeightChange,
+        initialSubstrate: substrate,
+        onSubstrateChange: onSubstrateChange,
+        initialComments: comments,
+        onCommentsChange: onCommentsChange);
   }
 }
