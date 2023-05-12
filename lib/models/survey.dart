@@ -14,10 +14,10 @@ class Survey with DiagnosticableTreeMixin {
   DateTime? startAt;
   DateTime? endAt;
   String? weather;
-  final List<String> leaders;
-  final String scribe;
-  final List<String> participants;
-  final String trail;
+  List<String> leaders;
+  String scribe;
+  List<String> participants;
+  String trail;
   SurveyState state;
   List<Sighting> sightings;
 
@@ -92,6 +92,19 @@ class Survey with DiagnosticableTreeMixin {
 
   int lengthInMinutes({fromNow = false}) =>
       (fromNow ? DateTime.now() : endAt!).difference(startAt!).inMinutes;
+
+  Future<void> update(
+      {String? updatedTrail,
+      List<String>? updatedLeaders,
+      String? updatedScribe,
+      List<String>? updatedParticipants}) async {
+    trail = updatedTrail ?? trail;
+    leaders = updatedLeaders ?? leaders;
+    scribe = updatedScribe ?? scribe;
+    participants = updatedParticipants ?? participants;
+
+    _db.updateSurvey(this);
+  }
 
   Future<void> start() async {
     startAt = DateTime.now();

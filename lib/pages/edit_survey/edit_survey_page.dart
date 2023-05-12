@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/trails.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
@@ -9,22 +8,20 @@ import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
-class AddSurveyPage extends StatefulWidget {
-  final String? initialTrail;
+class EditSurveyPage extends StatefulWidget {
+  final Survey survey;
 
-  const AddSurveyPage({super.key, this.initialTrail});
+  const EditSurveyPage({super.key, required this.survey});
 
   @override
-  State<AddSurveyPage> createState() => _AddSurveyPageState();
+  State<EditSurveyPage> createState() => _EditSurveyPageState();
 }
 
-class _AddSurveyPageState extends State<AddSurveyPage> {
-  late String selectedTrail = widget.initialTrail ?? trails.first;
-  List<String> leaders = [
-    '',
-  ];
-  String scribe = '';
-  List<String?> participants = [''];
+class _EditSurveyPageState extends State<EditSurveyPage> {
+  late String selectedTrail = widget.survey.trail;
+  late List<String> leaders = widget.survey.leaders;
+  late String scribe = widget.survey.scribe;
+  late List<String?> participants = widget.survey.participants;
 
   List<String> get formattedLeaders =>
       List.from(leaders.map((leader) => leader.trim()));
@@ -46,12 +43,12 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
       scribe.isNotEmpty &&
       participants.whereNotNull().any((participant) => participant.isNotEmpty);
 
-  Future<void> createSurvey() async {
-    await Survey.create(
-        trail: selectedTrail,
-        leaders: leaders,
-        scribe: scribe,
-        participants: formattedParticipants);
+  Future<void> updateSurvey() async {
+    await widget.survey.update(
+        updatedTrail: selectedTrail,
+        updatedLeaders: leaders,
+        updatedScribe: scribe,
+        updatedParticipants: formattedParticipants);
 
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
@@ -65,12 +62,12 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-      title: 'Add New Survey',
-      fabLabel: Row(
-        children: const [Text('Add Survey'), Icon(Icons.add)],
+      title: 'Edit Survey',
+      fabLabel: const Row(
+        children: [Text('Save Changes'), Icon(Icons.save_alt)],
       ),
       isFabValid: valid,
-      onFabPress: createSurvey,
+      onFabPress: updateSurvey,
       child: ListView(
         controller: _controller,
         children: [

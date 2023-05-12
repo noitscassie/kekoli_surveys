@@ -30,6 +30,7 @@ class LeadersInputField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           TextFormField(
+            initialValue: value.first,
             textCapitalization: TextCapitalization.words,
             decoration: InputDecoration(
                 border: const UnderlineInputBorder(),
@@ -42,8 +43,8 @@ class LeadersInputField extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 16),
                   child: GestureDetector(
                       onTap: addLeader,
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(Icons.add),
                           Text('Add a second leader')
                         ],
@@ -51,6 +52,7 @@ class LeadersInputField extends StatelessWidget {
               : Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: TextFormField(
+                    initialValue: value.length == 2 ? value.last : null,
                     autofocus: true,
                     textCapitalization: TextCapitalization.words,
                     decoration: InputDecoration(

@@ -38,6 +38,7 @@ class ParticipantsInputField extends StatelessWidget {
                         key: Key(index.toString()),
                         padding: EdgeInsets.only(top: index == 0 ? 0 : 16),
                         child: TextFormField(
+                          initialValue: participant,
                           textCapitalization: TextCapitalization.words,
                           decoration: InputDecoration(
                               labelText: 'Participant',

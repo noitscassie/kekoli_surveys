@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/pages/home/completed_bottom_sheet.dart';
+import 'package:kekoldi_surveys/pages/home/in_progress_bottom_sheet.dart';
+import 'package:kekoldi_surveys/pages/home/unstarted_bottom_sheet.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
 import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
@@ -15,9 +18,19 @@ class SurveyTile extends StatefulWidget {
 }
 
 class _SurveyTileState extends State<SurveyTile> {
-  void startSurveyAndNavigate() {
-    widget.survey.start();
-    navigateToOngoingSurvey();
+  void onTap() {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          switch (widget.survey.state) {
+            case SurveyState.unstarted:
+              return UnstartedBottomSheet(survey: widget.survey);
+            case SurveyState.inProgress:
+              return InProgressBottomSheet(survey: widget.survey);
+            case SurveyState.completed:
+              return CompletedBottomSheet(survey: widget.survey);
+          }
+        });
   }
 
   void navigateToOngoingSurvey() =>
@@ -29,97 +42,69 @@ class _SurveyTileState extends State<SurveyTile> {
       builder: (BuildContext context) =>
           ViewSurveyPage(survey: widget.survey)));
 
-  IconData get icon {
-    switch (widget.survey.state) {
-      case SurveyState.unstarted:
-        return Icons.play_circle_fill;
-      case SurveyState.inProgress:
-        return Icons.arrow_forward;
-      case SurveyState.completed:
-        return Icons.info_outline;
-    }
-  }
-
-  VoidCallback get onIconPress {
-    switch (widget.survey.state) {
-      case SurveyState.unstarted:
-        return startSurveyAndNavigate;
-      case SurveyState.inProgress:
-        return navigateToOngoingSurvey;
-      case SurveyState.completed:
-        return viewSurveyDetails;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Material(
-        color: Colors.transparent,
-        elevation: 8,
-        child: Card(
-          color: Theme.of(context).colorScheme.surface,
-          shape: const RoundedRectangleBorder(
-            side: BorderSide(
-              style: BorderStyle.none,
+      child: InkWell(
+        onTap: onTap,
+        child: Material(
+          color: Colors.transparent,
+          elevation: 8,
+          child: Card(
+            color: Theme.of(context).colorScheme.surface,
+            shape: const RoundedRectangleBorder(
+              side: BorderSide(
+                style: BorderStyle.none,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('${widget.survey.trail} Survey',
-                        style: Theme.of(context).textTheme.headlineSmall),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
-                      child: Text(
-                        widget.survey.startAt == null
-                            ? 'Unstarted'
-                            : 'On ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
-                        style: Theme.of(context).textTheme.bodySmall,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('${widget.survey.trail} Survey',
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: Text(
+                          widget.survey.startAt == null
+                              ? 'Unstarted'
+                              : 'On ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
-                    ),
-                    PartlyBoldedText(
+                      PartlyBoldedText(
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textParts: [
+                            RawText('Led by '),
+                            RawText(widget.survey.leaders.join(' and '),
+                                bold: true)
+                          ]),
+                      PartlyBoldedText(
                         style: Theme.of(context).textTheme.bodySmall,
                         textParts: [
-                          RawText('Led by '),
-                          RawText(widget.survey.leaders.join(' and '),
-                              bold: true)
-                        ]),
-                    PartlyBoldedText(
-                      style: Theme.of(context).textTheme.bodySmall,
-                      textParts: [
-                        RawText('Scribed by '),
-                        RawText(widget.survey.scribe, bold: true)
-                      ],
-                    ),
-                    PartlyBoldedText(
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textParts: [
-                          RawText('Participated in by '),
-                          RawText(widget.survey.participants.join(', '),
-                              bold: true),
-                        ]),
-                  ],
-                ),
-                IconButton(
-                  icon: Icon(
-                    icon,
-                    color: Theme.of(context).colorScheme.primary,
+                          RawText('Scribed by '),
+                          RawText(widget.survey.scribe, bold: true)
+                        ],
+                      ),
+                      PartlyBoldedText(
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textParts: [
+                            RawText('Participated in by '),
+                            RawText(widget.survey.participants.join(', '),
+                                bold: true),
+                          ]),
+                    ],
                   ),
-                  padding: EdgeInsets.zero,
-                  onPressed: onIconPress,
-                  iconSize: 60,
-                )
-              ],
+                ],
+              ),
             ),
           ),
         ),
