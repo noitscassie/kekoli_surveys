@@ -15,11 +15,14 @@ class CompletedBottomSheet extends StatelessWidget {
       options: [
         BottomSheetOption(
           text: 'View Survey',
-          onPress: () => Navigator.of(context).pushAndRemoveUntil(
+          onPress: () {
+            Navigator.of(context).pop();
+            Navigator.of(context).push(
               MaterialPageRoute(
                   builder: (BuildContext context) =>
                       ViewSurveyPage(survey: survey)),
-              (route) => false),
+            );
+          },
           leadingIcon: Icons.start,
         ),
         BottomSheetOption(
