@@ -56,8 +56,7 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => const HomePage()),
+          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
           (route) => false);
     }
   }

@@ -36,7 +36,7 @@ class KekoldiSurveys extends StatelessWidget {
                   onSurface: Colors.black,
                   onSurfaceVariant: Colors.lightGreen.shade800,
                   onError: Colors.grey.shade500)),
-      home: const HomePage(),
+      home: HomePage(),
     );
   }
 }

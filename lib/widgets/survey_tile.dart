@@ -42,15 +42,26 @@ class _SurveyTileState extends State<SurveyTile> {
       builder: (BuildContext context) =>
           ViewSurveyPage(survey: widget.survey)));
 
+  String get surveyState {
+    switch (widget.survey.state) {
+      case SurveyState.unstarted:
+        return 'Unstarted';
+      case SurveyState.inProgress:
+        return 'In progress - started on ${DateFormats.ddmmyyyy(widget.survey.startAt!)}';
+      case SurveyState.completed:
+        return 'Finished on ${DateFormats.ddmmyyyy(widget.survey.endAt!)}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 8.0),
       child: InkWell(
         onTap: onTap,
         child: Material(
-          color: Colors.transparent,
           elevation: 8,
+          color: Colors.transparent,
           child: Card(
             color: Theme.of(context).colorScheme.surface,
             shape: const RoundedRectangleBorder(
@@ -73,11 +84,16 @@ class _SurveyTileState extends State<SurveyTile> {
                           style: Theme.of(context).textTheme.headlineSmall),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Text(
-                          widget.survey.startAt == null
-                              ? 'Unstarted'
-                              : 'On ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
-                          style: Theme.of(context).textTheme.bodySmall,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              surveyState,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                            Text('Tap for options',
+                                style: Theme.of(context).textTheme.bodySmall),
+                          ],
                         ),
                       ),
                       PartlyBoldedText(
