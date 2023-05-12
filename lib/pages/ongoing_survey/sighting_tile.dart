@@ -78,7 +78,10 @@ class _SightingTileState extends State<SightingTile> {
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
-      title: Text(widget.speciesName),
+      title: Text(
+        widget.speciesName,
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 18),
+      ),
       childrenPadding: const EdgeInsets.symmetric(horizontal: 15),
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
