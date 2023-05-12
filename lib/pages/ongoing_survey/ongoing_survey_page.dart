@@ -47,22 +47,25 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
     return PageScaffold(
       title:
           '${statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(statefulSurvey.startAt!)}',
-      fabLabel: Row(
-        children: const [Text('Add New Sighting'), Icon(Icons.add)],
+      fabLabel: const Row(
+        children: [Text('Add New Sighting'), Icon(Icons.add)],
       ),
       onFabPress: () => navigateToChooseSpeciesPage(context),
       actions: [
         IconButton(onPressed: onCompleteSurvey, icon: const Icon(Icons.check))
       ],
-      child: ListView(
-        children: List.from(groupedSightings.entries
-            .sortedBy((entry) => entry.key)
-            .map((group) => SightingTile(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 100),
+        child: ListView(children: [
+          ...groupedSightings.entries.sortedBy((entry) => entry.key).map(
+                (group) => SightingTile(
                   speciesName: group.key,
                   sightings: group.value,
                   survey: statefulSurvey,
                   onChangeSurvey: (Survey survey) => updateSurvey(survey),
-                ))),
+                ),
+              )
+        ]),
       ),
     );
   }
