@@ -31,36 +31,36 @@ class SpeciesSightingsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () => showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context) => BottomSheetOptions(options: [
-                    BottomSheetOption(
-                        text: 'Add Tally',
-                        leadingIcon: Icons.exposure_plus_1,
-                        onPress: () {
-                          Navigator.of(context).pop();
-                          onIncrement();
-                        }),
-                    BottomSheetOption(
-                        text: 'Remove Tally',
-                        leadingIcon: Icons.exposure_minus_1,
-                        onPress: () {
-                          Navigator.of(context).pop();
-                          onDecrement();
-                        }),
-                    BottomSheetOption(
-                        text: 'Edit',
-                        leadingIcon: Icons.edit,
-                        onPress: () {
-                          Navigator.of(context).pop();
-                          onEdit();
-                        }),
-                  ])),
-          child: Padding(
+    return InkWell(
+      onTap: () => showModalBottomSheet(
+          context: context,
+          builder: (BuildContext context) => BottomSheetOptions(options: [
+                BottomSheetOption(
+                    text: 'Add Tally',
+                    leadingIcon: Icons.exposure_plus_1,
+                    onPress: () {
+                      Navigator.of(context).pop();
+                      onIncrement();
+                    }),
+                BottomSheetOption(
+                    text: 'Remove Tally',
+                    leadingIcon: Icons.exposure_minus_1,
+                    onPress: () {
+                      Navigator.of(context).pop();
+                      onDecrement();
+                    }),
+                BottomSheetOption(
+                    text: 'Edit',
+                    leadingIcon: Icons.edit,
+                    onPress: () {
+                      Navigator.of(context).pop();
+                      onEdit();
+                    }),
+              ])),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
@@ -84,31 +84,31 @@ class SpeciesSightingsList extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: CircleAvatar(
-                      radius: 25,
-                      child: Text(
-                        sightings.length.toString(),
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      )),
-                ),
-              ],
-            ),
-            Text(
-              'Count',
-              style: Theme.of(context).textTheme.bodySmall,
-            )
-          ],
-        )
-      ],
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: CircleAvatar(
+                        radius: 25,
+                        child: Text(
+                          sightings.length.toString(),
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        )),
+                  ),
+                ],
+              ),
+              Text(
+                'Count',
+                style: Theme.of(context).textTheme.bodySmall,
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 }

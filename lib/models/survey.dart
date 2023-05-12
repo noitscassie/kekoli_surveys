@@ -142,6 +142,12 @@ class Survey with DiagnosticableTreeMixin {
     _db.updateSurvey(this);
   }
 
+  Future<void> addSightings(List<Sighting> newSightings) async {
+    sightings = [...newSightings, ...sightings];
+
+    _db.updateSurvey(this);
+  }
+
   Future<void> removeSighting(Sighting sightingToRemove) async {
     sightings = List.from(sightings
         .whereNot((Sighting sighting) => sighting.id == sightingToRemove.id));
