@@ -66,8 +66,8 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       title: 'Add New Survey',
-      fabLabel: Row(
-        children: const [Text('Add Survey'), Icon(Icons.add)],
+      fabLabel: const Row(
+        children: [Text('Add Survey'), Icon(Icons.add)],
       ),
       isFabValid: valid,
       onFabPress: createSurvey,

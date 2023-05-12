@@ -23,8 +23,8 @@ class ViewSurveyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageScaffold(
       title: '${survey.trail} Survey, ${DateFormats.ddmmyyyy(survey.startAt!)}',
-      fabLabel: Row(
-        children: const [Text('Export Data'), Icon(Icons.download)],
+      fabLabel: const Row(
+        children: [Text('Export Data'), Icon(Icons.download)],
       ),
       onFabPress: () => Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => ExportSurveyPage(survey: survey))),

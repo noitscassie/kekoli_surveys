@@ -56,8 +56,8 @@ class ParticipantsInputField extends StatelessWidget {
               Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: GestureDetector(
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Icon(Icons.add),
                           Text('Add new participant')
                         ],

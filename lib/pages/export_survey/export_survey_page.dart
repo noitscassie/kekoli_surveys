@@ -49,8 +49,8 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       title: 'Export Survey Data',
-      fabLabel: Row(
-        children: const [Text('Send Email'), Icon(Icons.email)],
+      fabLabel: const Row(
+        children: [Text('Send Email'), Icon(Icons.email)],
       ),
       isFabValid: isEmailValid,
       onFabPress: generateAndEmailCsv,

@@ -20,8 +20,8 @@ class _AddWeatherPageState extends State<AddWeatherPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       title: 'Add Weather',
-      fabLabel: Row(
-        children: const [Text('Finish Survey'), Icon(Icons.check)],
+      fabLabel: const Row(
+        children: [Text('Finish Survey'), Icon(Icons.check)],
       ),
       isFabValid: weather.isNotEmpty,
       onFabPress: () => widget.onAddWeather(weather),

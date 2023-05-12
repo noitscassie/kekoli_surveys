@@ -29,8 +29,8 @@ class _HomePageState extends State<HomePage> {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => const AddSurveyPage()));
           },
-          label: Row(
-            children: const [Text('Create New Survey'), Icon(Icons.add)],
+          label: const Row(
+            children: [Text('Create New Survey'), Icon(Icons.add)],
           ),
         ),
         null,
