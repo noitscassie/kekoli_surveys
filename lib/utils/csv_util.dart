@@ -10,6 +10,13 @@ class CsvUtil {
   static Future<String> generateFromSurvey(Survey survey) async {
     final headers = [
       'Species',
+      'scientific name',
+      'family',
+      'order',
+      'class',
+      'IUCN status',
+      'Migratory',
+      'Habitat Preferred',
       '#',
       'Height',
       'Substrate',
@@ -18,8 +25,16 @@ class CsvUtil {
       'Type of Obs'
     ];
 
+    // empty rows match auto-populated fields on the google sheet
     final sightingRows = survey.sightings.map((Sighting sighting) => [
           sighting.species,
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
+          '',
           sighting.quantity,
           sighting.height,
           sighting.substrate,
