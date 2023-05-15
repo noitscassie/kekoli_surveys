@@ -14,6 +14,7 @@ class Sighting with DiagnosticableTreeMixin {
   String height;
   String substrate;
   String comments;
+  DateTime? seenAt;
 
   static const unknown = 'Unknown';
 
@@ -26,7 +27,8 @@ class Sighting with DiagnosticableTreeMixin {
       required this.substrate,
       required this.species,
       this.comments = ''})
-      : id = const Uuid().v4();
+      : id = const Uuid().v4(),
+        seenAt = DateTime.now();
 
   Sighting.fromMap(Map<String, dynamic> map)
       : id = map['id'],
@@ -37,7 +39,8 @@ class Sighting with DiagnosticableTreeMixin {
         height = map['height'] ?? unknown,
         substrate = map['substrate'] ?? unknown,
         species = map['species'] ?? unknown,
-        comments = map['comments'] ?? '';
+        comments = map['comments'] ?? '',
+        seenAt = map['seenAt'] == '' ? null : DateTime.parse(map['seenAt']);
 
   String toJson() => json.encode(attributes);
 
@@ -51,6 +54,7 @@ class Sighting with DiagnosticableTreeMixin {
         'age': age,
         'species': species,
         'comments': comments,
+        'seenAt': seenAt?.toIso8601String() ?? '',
       };
 
   Map<String, String> get displayAttributes => {
@@ -114,5 +118,6 @@ class Sighting with DiagnosticableTreeMixin {
     properties.add(StringProperty('substrate', substrate));
     properties.add(StringProperty('id', id));
     properties.add(StringProperty('comments', comments));
+    properties.add(DiagnosticsProperty<DateTime?>('seenAt', seenAt));
   }
 }
