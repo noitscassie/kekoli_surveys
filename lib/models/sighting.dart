@@ -67,16 +67,14 @@ class Sighting with DiagnosticableTreeMixin {
     final presentAttributes =
         attributes.filter((entry) => entry.value != Sighting.unknown);
     final quantity = presentAttributes['Quantity'];
-    final location = [
-      presentAttributes['Height'],
-      presentAttributes['Substrate'],
-    ].whereNotNull().join(' ');
+    final height = presentAttributes['Height'];
+    final substrate = presentAttributes['Substrate'];
     final sex = presentAttributes['Sex'];
     final observation = presentAttributes['Observation'];
     final age = presentAttributes['Age'];
 
-    return List<String>.from(
-            [quantity, location, sex, age, observation].whereNotNull())
+    return [quantity, height, substrate, sex, age, observation]
+        .whereNotNull()
         .where((String part) => part.isNotEmpty)
         .join(', ');
   }
