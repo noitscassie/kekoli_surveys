@@ -15,7 +15,7 @@ class Db {
     await _ready;
 
     final surveysData = _storage.getItem(_surveysKey) ?? [];
-    final surveys = [survey.toJson(), ...surveysData];
+    final surveys = [...surveysData, survey.toJson()];
 
     _insert(_surveysKey, surveys);
   }
