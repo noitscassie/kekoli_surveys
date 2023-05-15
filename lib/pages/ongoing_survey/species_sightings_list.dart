@@ -29,6 +29,18 @@ class SpeciesSightingsList extends StatelessWidget {
   String get attributeString =>
       sightingAttributesString(presentAttributes, includeComments: true);
 
+  Widget _modifyTallyIcon(
+          {required VoidCallback onTap, required IconData icon}) =>
+      InkWell(
+        onTap: onTap,
+        child: CircleAvatar(
+            radius: 15,
+            child: Icon(
+              icon,
+              size: 15,
+            )),
+      );
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -90,6 +102,8 @@ class SpeciesSightingsList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  _modifyTallyIcon(
+                      icon: Icons.exposure_minus_1, onTap: onDecrement),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: CircleAvatar(
@@ -99,6 +113,8 @@ class SpeciesSightingsList extends StatelessWidget {
                           style: Theme.of(context).textTheme.headlineSmall,
                         )),
                   ),
+                  _modifyTallyIcon(
+                      icon: Icons.exposure_plus_1, onTap: onIncrement),
                 ],
               ),
               Text(
