@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/age_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/comments_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/height_input_field.dart';
@@ -13,27 +14,8 @@ class SightingDetailsForm extends StatelessWidget {
   final Widget fabLabel;
   final VoidCallback onFabPress;
   final bool isFabValid;
-
-  final String initialQuantity;
-  final Function(String newQuantity) onQuantityChange;
-
-  final String initialSex;
-  final Function(String newSex) onSexChange;
-
-  final String initialObservationType;
-  final Function(String newObservationType) onObservationTypeChange;
-
-  final String initialAge;
-  final Function(String newAge) onAgeChange;
-
-  final String initialHeight;
-  final Function(String newHeight) onHeightChange;
-
-  final String initialSubstrate;
-  final Function(String newSubstrate) onSubstrateChange;
-
-  final String initialComments;
-  final Function(String newComments) onCommentsChange;
+  final Map<String, String> attributes;
+  final Function(Map<String, String> newAttribute) onAttributeChange;
 
   const SightingDetailsForm({
     super.key,
@@ -41,20 +23,8 @@ class SightingDetailsForm extends StatelessWidget {
     required this.fabLabel,
     required this.onFabPress,
     required this.isFabValid,
-    required this.initialQuantity,
-    required this.onQuantityChange,
-    required this.initialSex,
-    required this.onSexChange,
-    required this.initialObservationType,
-    required this.onObservationTypeChange,
-    required this.initialAge,
-    required this.onAgeChange,
-    required this.initialHeight,
-    required this.onHeightChange,
-    required this.initialSubstrate,
-    required this.onSubstrateChange,
-    required this.initialComments,
-    required this.onCommentsChange,
+    required this.attributes,
+    required this.onAttributeChange,
   });
 
   @override
@@ -74,22 +44,34 @@ class SightingDetailsForm extends StatelessWidget {
           child: ListView(
             children: [
               QuantityInputField(
-                initialValue: initialQuantity,
-                onChange: onQuantityChange,
+                initialValue: attributes['quantity'] ?? Sighting.unknown,
+                onChange: (String newQuantity) =>
+                    onAttributeChange({'quantity': newQuantity}),
               ),
               HeightInputField(
-                  currentHeight: initialHeight, onChange: onHeightChange),
+                  currentHeight: attributes['height'] ?? Sighting.unknown,
+                  onChange: (String newHeight) =>
+                      onAttributeChange({'height': newHeight})),
               SubstrateInputField(
-                  currentSubstrate: initialSubstrate,
-                  onChange: onSubstrateChange),
-              SexInputField(onChange: onSexChange, currentSex: initialSex),
-              AgeInputField(onChange: onAgeChange, currentAge: initialAge),
+                  currentSubstrate: attributes['substrate'] ?? Sighting.unknown,
+                  onChange: (String newHeight) =>
+                      onAttributeChange({'substrate': newHeight})),
+              SexInputField(
+                  onChange: (String newSex) =>
+                      onAttributeChange({'sex': newSex}),
+                  currentSex: attributes['sex'] ?? Sighting.unknown),
+              AgeInputField(
+                  onChange: (String newAge) =>
+                      onAttributeChange({'age': newAge}),
+                  currentAge: attributes['age'] ?? Sighting.unknown),
               ObservationTypeInputField(
-                  onChange: onObservationTypeChange,
-                  currentObservationType: initialObservationType),
+                  onChange: (String newObservationType) => onAttributeChange(
+                      {'observationType': newObservationType}),
+                  currentObservationType: attributes['observationType'] ?? ''),
               CommentsInputField(
-                onChange: onCommentsChange,
-                initialComments: initialComments,
+                onChange: (String newComments) =>
+                    onAttributeChange({'comments': newComments}),
+                initialComments: attributes['comments'] ?? '',
               )
             ],
           ),

@@ -7,64 +7,52 @@ import 'package:uuid/uuid.dart';
 class Sighting with DiagnosticableTreeMixin {
   final String id;
   String species;
-  String quantity;
-  String sex;
-  String observationType;
-  String age;
-  String height;
-  String substrate;
-  String comments;
+  Map<String, String> data;
   DateTime? seenAt;
 
   static const unknown = 'Unknown';
 
-  Sighting(
-      {required this.quantity,
-      required this.sex,
-      required this.observationType,
-      required this.age,
-      required this.height,
-      required this.substrate,
-      required this.species,
-      this.comments = ''})
+  Sighting({required this.species, required this.data})
       : id = const Uuid().v4(),
         seenAt = DateTime.now();
 
   Sighting.fromMap(Map<String, dynamic> map)
       : id = map['id'],
-        quantity = map['quantity'] ?? unknown,
-        sex = map['sex'] ?? unknown,
-        observationType = map['observationType'] ?? unknown,
-        age = map['age'] ?? unknown,
-        height = map['height'] ?? unknown,
-        substrate = map['substrate'] ?? unknown,
-        species = map['species'] ?? unknown,
-        comments = map['comments'] ?? '',
+        species = map['species'],
+        data = {
+          'quantity': map['quantity'] ?? unknown,
+          'sex': map['sex'] ?? unknown,
+          'age': map['age'] ?? unknown,
+          'observationType': map['observationType'] ?? unknown,
+          'height': map['height'] ?? unknown,
+          'substrate': map['substrate'] ?? unknown,
+          'comments': map['substrate'] ?? '',
+        },
         seenAt = map['seenAt'] == '' ? null : DateTime.parse(map['seenAt']);
 
   String toJson() => json.encode(attributes);
 
   Map<String, String> get attributes => {
         'id': id,
-        'quantity': quantity,
-        'height': height,
-        'substrate': substrate,
-        'sex': sex,
-        'observationType': observationType,
-        'age': age,
+        'quantity': data['quantity'] ?? unknown,
+        'height': data['height'] ?? unknown,
+        'substrate': data['substrate'] ?? unknown,
+        'sex': data['sex'] ?? unknown,
+        'observationType': data['observationType'] ?? unknown,
+        'age': data['age'] ?? unknown,
         'species': species,
-        'comments': comments,
+        'comments': data['comments'] ?? '',
         'seenAt': seenAt?.toIso8601String() ?? '',
       };
 
   Map<String, String> get displayAttributes => {
-        'Quantity': quantity,
-        'Height': height,
-        'Substrate': substrate,
-        'Sex': sex,
-        'Observation': observationType,
-        'Age': age,
-        'Comments': comments,
+        'Quantity': data['quantity'] ?? unknown,
+        'Height': data['height'] ?? unknown,
+        'Substrate': data['substrate'] ?? unknown,
+        'Sex': data['sex'] ?? unknown,
+        'Observation': data['observationType'] ?? unknown,
+        'Age': data['age'] ?? unknown,
+        'Comments': data['comments'] ?? '',
       };
 
   String get attributesString {
@@ -84,24 +72,23 @@ class Sighting with DiagnosticableTreeMixin {
   }
 
   Sighting duplicate() => Sighting(
-      quantity: quantity,
-      sex: sex,
-      observationType: observationType,
-      age: age,
-      height: height,
-      substrate: substrate,
-      species: species,
-      comments: comments);
+        species: species,
+        data: {
+          'quantity': data['quantity'] ?? unknown,
+          'sex': data['sex'] ?? unknown,
+          'observationType': data['observationType'] ?? unknown,
+          'age': data['age'] ?? unknown,
+          'height': data['height'] ?? unknown,
+          'substrate': data['substrate'] ?? unknown,
+          'comments': data['comments'] ?? '',
+        },
+      );
 
-  void update(Map<String, String> data) {
-    species = data['species'] ?? species;
-    quantity = data['quantity'] ?? quantity;
-    sex = data['sex'] ?? sex;
-    observationType = data['observationType'] ?? observationType;
-    age = data['age'] ?? age;
-    height = data['height'] ?? height;
-    substrate = data['substrate'] ?? substrate;
-    comments = data['comments'] ?? comments;
+  void update(Map<String, String> updateData) {
+    final updatedSpecies = updateData['species'];
+    species = updatedSpecies ?? species;
+
+    data = {...data, ...updateData};
   }
 
   @override
@@ -110,14 +97,14 @@ class Sighting with DiagnosticableTreeMixin {
     // list all the properties of your class here.
     // See the documentation of debugFillProperties for more information.
     properties.add(StringProperty('name', species));
-    properties.add(StringProperty('quantity', quantity));
-    properties.add(StringProperty('sex', sex));
-    properties.add(StringProperty('observationType', observationType));
-    properties.add(StringProperty('age', age));
-    properties.add(StringProperty('height', height));
-    properties.add(StringProperty('substrate', substrate));
+    properties.add(StringProperty('quantity', data['quantity']));
+    properties.add(StringProperty('sex', data['sex']));
+    properties.add(StringProperty('observationType', data['observationType']));
+    properties.add(StringProperty('age', data['age']));
+    properties.add(StringProperty('height', data['height']));
+    properties.add(StringProperty('substrate', data['substrate']));
     properties.add(StringProperty('id', id));
-    properties.add(StringProperty('comments', comments));
+    properties.add(StringProperty('comments', data['comments']));
     properties.add(DiagnosticsProperty<DateTime?>('seenAt', seenAt));
   }
 }

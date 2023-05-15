@@ -17,42 +17,23 @@ class EditSightingDetailsPage extends StatefulWidget {
 }
 
 class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
-  late String quantity = widget.sighting.quantity;
-  late String sex = widget.sighting.sex;
-  late String observationType = widget.sighting.observationType;
-  late String age = widget.sighting.age;
-  late String height = widget.sighting.height;
-  late String substrate = widget.sighting.substrate;
-  late String comments = widget.sighting.comments;
+  late Map<String, String> attributes = {
+    'quantity': widget.sighting.data['quantity'] ?? Sighting.unknown,
+    'sex': widget.sighting.data['sex'] ?? Sighting.unknown,
+    'observationType':
+        widget.sighting.data['observationType'] ?? Sighting.unknown,
+    'age': widget.sighting.data['age'] ?? Sighting.unknown,
+    'height': widget.sighting.data['height'] ?? Sighting.unknown,
+    'substrate': widget.sighting.data['substrate'] ?? Sighting.unknown,
+    'comments': widget.sighting.data['comments'] ?? '',
+  };
 
-  void onQuantityChange(String newQuantity) =>
-      setState(() => quantity = newQuantity);
-
-  void onSexChange(String newSex) => setState(() => sex = newSex);
-
-  void onObservationTypeChange(String newObservationType) =>
-      setState(() => observationType = newObservationType);
-
-  void onAgeChange(String newAge) => setState(() => age = newAge);
-
-  void onHeightChange(String newHeight) => setState(() => height = newHeight);
-
-  void onSubstrateChange(String newSubstrate) =>
-      setState(() => substrate = newSubstrate);
-
-  void onCommentsChange(String newComments) =>
-      setState(() => comments = newComments);
+  void onAttributeChange(Map<String, String> newAttributes) => setState(() {
+        attributes = {...attributes, ...newAttributes};
+      });
 
   Future<void> updateSighting() async {
-    widget.sighting.update({
-      'quantity': quantity,
-      'sex': sex,
-      'observationType': observationType,
-      'age': age,
-      'height': height,
-      'substrate': substrate,
-      'comments': comments,
-    });
+    widget.sighting.update(attributes);
     await widget.survey.updateSighting(widget.sighting);
 
     if (context.mounted) {
@@ -67,28 +48,17 @@ class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return SightingDetailsForm(
-        species: widget.sighting.species,
-        fabLabel: const Row(
-          children: [
-            Text('Save Details'),
-            Icon(Icons.save_alt),
-          ],
-        ),
-        onFabPress: updateSighting,
-        isFabValid: true,
-        initialQuantity: quantity,
-        onQuantityChange: onQuantityChange,
-        initialSex: sex,
-        onSexChange: onSexChange,
-        initialObservationType: observationType,
-        onObservationTypeChange: onObservationTypeChange,
-        initialAge: age,
-        onAgeChange: onAgeChange,
-        initialHeight: height,
-        onHeightChange: onHeightChange,
-        initialSubstrate: substrate,
-        onSubstrateChange: onSubstrateChange,
-        initialComments: comments,
-        onCommentsChange: onCommentsChange);
+      species: widget.sighting.species,
+      fabLabel: const Row(
+        children: [
+          Text('Save Details'),
+          Icon(Icons.save_alt),
+        ],
+      ),
+      onFabPress: updateSighting,
+      isFabValid: true,
+      attributes: attributes,
+      onAttributeChange: onAttributeChange,
+    );
   }
 }

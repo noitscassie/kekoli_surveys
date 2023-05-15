@@ -29,11 +29,11 @@ class SightingListItem extends StatelessWidget {
                 .bodySmall
                 ?.copyWith(fontStyle: FontStyle.italic, fontSize: 12),
           ),
-          if (sighting.comments.isNotEmpty)
+          if (sighting.data['comments']?.isNotEmpty == true)
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                sighting.comments,
+                sighting.data['comments']!,
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall
