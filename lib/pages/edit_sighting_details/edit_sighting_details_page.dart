@@ -28,8 +28,8 @@ class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
     'comments': widget.sighting.data['comments'] ?? '',
   };
 
-  void onAttributeChange(Map<String, String> newAttributes) => setState(() {
-        attributes = {...attributes, ...newAttributes};
+  void onAttributeChange(String key, String value) => setState(() {
+        attributes[key] = value;
       });
 
   Future<void> updateSighting() async {
@@ -56,7 +56,6 @@ class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
         ],
       ),
       onFabPress: updateSighting,
-      isFabValid: true,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
     );

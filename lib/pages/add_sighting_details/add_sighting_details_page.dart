@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
@@ -16,21 +17,12 @@ class AddSightingDetailsPage extends StatefulWidget {
 }
 
 class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
-  Map<String, String> attributes = {
-    'quantity': '1',
-    'sex': Sighting.unknown,
-    'observationType': '',
-    'age': Sighting.unknown,
-    'height': Sighting.unknown,
-    'substrate': Sighting.unknown,
-    'comments': '',
-  };
+  final _config = SurveyConfiguration();
+  late Map<String, String> attributes = _config.asAttributes;
 
-  void onAttributeChange(Map<String, String> newAttributes) => setState(() {
-        attributes = {...attributes, ...newAttributes};
+  void onAttributeChange(String key, String value) => setState(() {
+        attributes[key] = value;
       });
-
-  bool get valid => attributes['observationType']?.isNotEmpty == true;
 
   void showConfirmationDialog() => showDialog(
       context: context,
@@ -39,16 +31,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
             survey: widget.survey,
             sighting: Sighting(
               species: widget.species,
-              data: {
-                'quantity': attributes['quantity'] ?? Sighting.unknown,
-                'sex': attributes['sex'] ?? Sighting.unknown,
-                'observationType':
-                    attributes['observationType'] ?? Sighting.unknown,
-                'age': attributes['age'] ?? Sighting.unknown,
-                'height': attributes['height'] ?? Sighting.unknown,
-                'substrate': attributes['substrate'] ?? Sighting.unknown,
-                'comments': attributes['comments'] ?? ''
-              },
+              data: attributes,
             ),
           ));
 
@@ -63,7 +46,6 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
         ],
       ),
       onFabPress: showConfirmationDialog,
-      isFabValid: valid,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
     );
