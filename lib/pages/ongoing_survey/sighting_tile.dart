@@ -60,8 +60,8 @@ class _SightingTileState extends State<SightingTile> {
                 species: widget.speciesName,
               )));
 
-  Map<String, List<Sighting>> get groupedSightings => widget.sightings
-      .groupBy((sighting) => jsonEncode(sighting.displayAttributes));
+  Map<String, List<Sighting>> get groupedSightings =>
+      widget.sightings.groupBy((sighting) => jsonEncode(sighting.data));
 
   @override
   Widget build(BuildContext context) {
