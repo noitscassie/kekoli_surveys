@@ -17,16 +17,7 @@ class EditSightingDetailsPage extends StatefulWidget {
 }
 
 class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
-  late Map<String, String> attributes = {
-    'quantity': widget.sighting.data['quantity'] ?? Sighting.unknown,
-    'sex': widget.sighting.data['sex'] ?? Sighting.unknown,
-    'observationType':
-        widget.sighting.data['observationType'] ?? Sighting.unknown,
-    'age': widget.sighting.data['age'] ?? Sighting.unknown,
-    'height': widget.sighting.data['height'] ?? Sighting.unknown,
-    'substrate': widget.sighting.data['substrate'] ?? Sighting.unknown,
-    'comments': widget.sighting.data['comments'] ?? '',
-  };
+  late Map<String, dynamic> attributes = widget.sighting.data;
 
   void onAttributeChange(String key, String value) => setState(() {
         attributes[key] = value;

@@ -40,7 +40,7 @@ class Sighting with DiagnosticableTreeMixin {
         data: data,
       );
 
-  void update(Map<String, String> updateData) {
+  void update(Map<String, dynamic> updateData) {
     final updatedSpecies = updateData['species'];
     species = updatedSpecies ?? species;
 

@@ -8,7 +8,7 @@ class SightingDetailsForm extends StatelessWidget {
   final String species;
   final Widget fabLabel;
   final VoidCallback onFabPress;
-  final Map<String, String> attributes;
+  final Map<String, dynamic> attributes;
   final Function(String key, String value) onAttributeChange;
 
   final _surveyConfig = SurveyConfiguration();

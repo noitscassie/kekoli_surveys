@@ -21,12 +21,12 @@ class CsvUtil {
           '',
           '',
           '',
-          sighting.data['quantity'],
-          sighting.data['height'],
-          sighting.data['substrate'],
-          sighting.data['sex'],
-          sighting.data['age'],
-          sighting.data['observationType'],
+          sighting.data['Quantity'],
+          sighting.data['Height'],
+          sighting.data['Substrate'],
+          sighting.data['Sex'],
+          sighting.data['Age'],
+          sighting.data['Type Of Observation'],
         ]);
 
     final rows = [
