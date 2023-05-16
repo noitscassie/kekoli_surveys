@@ -44,7 +44,8 @@ class _AddTallyModalState extends State<AddTallyModal> {
             'Add ${widget.sighting.species} tally?',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...widget.sighting.displayAttributes.entries
+          // TODO: order this in the same order as the form config
+          ...widget.sighting.data.entries
               .filter((entry) => entry.value.isNotEmpty)
               .mapIndexed(
                 (index, entry) => Padding(

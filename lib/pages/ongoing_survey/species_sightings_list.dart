@@ -1,12 +1,8 @@
-import 'dart:convert';
-
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/utils/string_utils.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
-class SpeciesSightingsList extends StatelessWidget {
+class SpeciesSightingsList extends StatefulWidget {
   final String json;
   final VoidCallback onEdit;
   final VoidCallback onIncrement;
@@ -21,13 +17,14 @@ class SpeciesSightingsList extends StatelessWidget {
       required this.json,
       required this.onEdit});
 
-  Map<String, dynamic> get attributes => jsonDecode(json);
+  @override
+  State<SpeciesSightingsList> createState() => _SpeciesSightingsListState();
+}
 
-  Map<String, dynamic> get presentAttributes =>
-      attributes.filter((entry) => entry.value != Sighting.unknown);
+class _SpeciesSightingsListState extends State<SpeciesSightingsList> {
+  late Sighting sighting = widget.sightings.last;
 
-  String get attributeString =>
-      sightingAttributesString(presentAttributes, includeComments: true);
+  Map<String, dynamic> get attributes => sighting.data;
 
   Widget _modifyTallyIcon(
           {required VoidCallback onTap, required IconData icon}) =>
@@ -52,21 +49,21 @@ class SpeciesSightingsList extends StatelessWidget {
                     leadingIcon: Icons.exposure_plus_1,
                     onPress: () {
                       Navigator.of(context).pop();
-                      onIncrement();
+                      widget.onIncrement();
                     }),
                 BottomSheetOption(
                     text: 'Remove Tally',
                     leadingIcon: Icons.exposure_minus_1,
                     onPress: () {
                       Navigator.of(context).pop();
-                      onDecrement();
+                      widget.onDecrement();
                     }),
                 BottomSheetOption(
                     text: 'Edit',
                     leadingIcon: Icons.edit,
                     onPress: () {
                       Navigator.of(context).pop();
-                      onEdit();
+                      widget.onEdit();
                     }),
               ])),
       child: Row(
@@ -80,7 +77,7 @@ class SpeciesSightingsList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    attributeString,
+                    sighting.attributesString,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8),
@@ -103,18 +100,18 @@ class SpeciesSightingsList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _modifyTallyIcon(
-                      icon: Icons.exposure_minus_1, onTap: onDecrement),
+                      icon: Icons.exposure_minus_1, onTap: widget.onDecrement),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: CircleAvatar(
                         radius: 25,
                         child: Text(
-                          sightings.length.toString(),
+                          widget.sightings.length.toString(),
                           style: Theme.of(context).textTheme.headlineSmall,
                         )),
                   ),
                   _modifyTallyIcon(
-                      icon: Icons.exposure_plus_1, onTap: onIncrement),
+                      icon: Icons.exposure_plus_1, onTap: widget.onIncrement),
                 ],
               ),
               Text(
