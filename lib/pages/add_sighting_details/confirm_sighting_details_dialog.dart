@@ -40,8 +40,10 @@ class _ConfirmSightingDetailsDialogState
             widget.sighting.species,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...widget.sighting.displayAttributes.entries
+          // TODO: order this in the same order as the form config
+          ...widget.sighting.data.entries
               .filter((entry) => entry.value.isNotEmpty)
+              .sortedBy((entry) => entry.key)
               .mapIndexed(
                 (index, entry) => Padding(
                   padding: const EdgeInsets.only(top: 8),

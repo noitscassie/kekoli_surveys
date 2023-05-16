@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:csv/csv.dart';
+import 'package:kekoldi_surveys/constants/columns.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
@@ -8,22 +9,7 @@ import 'package:path_provider/path_provider.dart';
 
 class CsvUtil {
   static Future<String> generateFromSurvey(Survey survey) async {
-    final headers = [
-      'Species',
-      'scientific name',
-      'family',
-      'order',
-      'class',
-      'IUCN status',
-      'Migratory',
-      'Habitat Preferred',
-      '#',
-      'Height',
-      'Substrate',
-      'Sex',
-      'Adult/Juvenile',
-      'Type of Obs'
-    ];
+    final headers = columns;
 
     // empty rows match auto-populated fields on the google sheet
     final sightingRows = survey.sightings.map((Sighting sighting) => [

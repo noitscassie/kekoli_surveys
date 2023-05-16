@@ -1,31 +1,29 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/age_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/comments_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/height_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/observation_type_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/quantity_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/sex_input_field.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/substrate_input_field.dart';
+import 'package:kekoldi_surveys/models/input_field_config.dart';
+import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class SightingDetailsForm extends StatelessWidget {
   final String species;
   final Widget fabLabel;
   final VoidCallback onFabPress;
-  final bool isFabValid;
   final Map<String, String> attributes;
-  final Function(Map<String, String> newAttribute) onAttributeChange;
+  final Function(String key, String value) onAttributeChange;
 
-  const SightingDetailsForm({
+  final _surveyConfig = SurveyConfiguration();
+
+  SightingDetailsForm({
     super.key,
     required this.species,
     required this.fabLabel,
     required this.onFabPress,
-    required this.isFabValid,
     required this.attributes,
     required this.onAttributeChange,
   });
+
+  bool get _valid => _surveyConfig.fields.all((InputFieldConfig config) =>
+      !config.required || attributes[config.label]?.isNotEmpty == true);
 
   @override
   Widget build(BuildContext context) {
@@ -37,43 +35,17 @@ class SightingDetailsForm extends StatelessWidget {
             const Icon(Icons.add),
           ],
         ),
-        isFabValid: isFabValid,
+        isFabValid: _valid,
         onFabPress: onFabPress,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100),
           child: ListView(
-            children: [
-              QuantityInputField(
-                initialValue: attributes['quantity'] ?? Sighting.unknown,
-                onChange: (String newQuantity) =>
-                    onAttributeChange({'quantity': newQuantity}),
-              ),
-              HeightInputField(
-                  currentHeight: attributes['height'] ?? Sighting.unknown,
-                  onChange: (String newHeight) =>
-                      onAttributeChange({'height': newHeight})),
-              SubstrateInputField(
-                  currentSubstrate: attributes['substrate'] ?? Sighting.unknown,
-                  onChange: (String newHeight) =>
-                      onAttributeChange({'substrate': newHeight})),
-              SexInputField(
-                  onChange: (String newSex) =>
-                      onAttributeChange({'sex': newSex}),
-                  currentSex: attributes['sex'] ?? Sighting.unknown),
-              AgeInputField(
-                  onChange: (String newAge) =>
-                      onAttributeChange({'age': newAge}),
-                  currentAge: attributes['age'] ?? Sighting.unknown),
-              ObservationTypeInputField(
-                  onChange: (String newObservationType) => onAttributeChange(
-                      {'observationType': newObservationType}),
-                  currentObservationType: attributes['observationType'] ?? ''),
-              CommentsInputField(
-                onChange: (String newComments) =>
-                    onAttributeChange({'comments': newComments}),
-                initialComments: attributes['comments'] ?? '',
-              )
-            ],
+            children: _surveyConfig.fields
+                .map((InputFieldConfig config) => config.inputField(
+                    value: attributes[config.label],
+                    onChange: (String value) =>
+                        onAttributeChange(config.label, value)))
+                .toList(),
           ),
         ));
   }

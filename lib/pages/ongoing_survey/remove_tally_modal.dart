@@ -35,7 +35,8 @@ class RemoveTallyModal extends StatelessWidget {
             'Remove ${sighting.species}${sightings.length == 1 ? '' : ' tally'}?',
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          ...sighting.displayAttributes.entries
+          // TODO: order this in the same order as the form config
+          ...sighting.data.entries
               .filter((entry) => entry.value.isNotEmpty)
               .mapIndexed(
                 (index, entry) => Padding(

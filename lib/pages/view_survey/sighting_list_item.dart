@@ -1,15 +1,14 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/utils/string_utils.dart';
 
 class SightingListItem extends StatelessWidget {
   final Sighting sighting;
 
   const SightingListItem({super.key, required this.sighting});
 
-  Map<String, String> get presentAttributes => sighting.displayAttributes
-      .filter((entry) => entry.value != Sighting.unknown);
+  Map<String, dynamic> get presentAttributes =>
+      sighting.data.filter((entry) => entry.value != Sighting.unknown);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class SightingListItem extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           Text(
-            sightingAttributesString(presentAttributes),
+            sighting.attributesString,
             style: Theme.of(context)
                 .textTheme
                 .bodySmall
