@@ -73,27 +73,29 @@ class _SightingTileState extends State<SightingTile> {
       childrenPadding: const EdgeInsets.symmetric(horizontal: 20),
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        ...groupedSightings.entries.mapIndexed(
-          (index, entry) => Container(
-            padding: const EdgeInsets.only(bottom: 8),
-            decoration: BoxDecoration(
-                border: Border(
-                    top: index == 0
-                        ? BorderSide.none
-                        : BorderSide(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onSurfaceVariant))),
-            child: SpeciesSightingsList(
-              sightings: entry.value,
-              key: Key('${entry.key}_sighting_list_${index.toString()}'),
-              onIncrement: () => onIncrement(entry.value.last),
-              onDecrement: () => onDecrement(entry.value),
-              onEdit: () => onEdit(entry.value.last),
-              json: entry.key,
+        ...groupedSightings.entries
+            .sortedBy((MapEntry<String, List<Sighting>> entry) => entry.key)
+            .mapIndexed(
+              (index, entry) => Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                decoration: BoxDecoration(
+                    border: Border(
+                        top: index == 0
+                            ? BorderSide.none
+                            : BorderSide(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .onSurfaceVariant))),
+                child: SpeciesSightingsList(
+                  sightings: entry.value,
+                  key: Key('${entry.key}_sighting_list_${index.toString()}'),
+                  onIncrement: () => onIncrement(entry.value.last),
+                  onDecrement: () => onDecrement(entry.value),
+                  onEdit: () => onEdit(entry.value.last),
+                  json: entry.key,
+                ),
+              ),
             ),
-          ),
-        ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 4),
           child: SelectableListItem(
