@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -11,7 +12,7 @@ class SightingDetailsForm extends StatelessWidget {
   final Map<String, dynamic> attributes;
   final Function(String key, String value) onAttributeChange;
 
-  final _surveyConfig = SurveyConfiguration();
+  final _surveyConfig = SurveyConfiguration(defaultSurveyFields);
 
   SightingDetailsForm({
     super.key,

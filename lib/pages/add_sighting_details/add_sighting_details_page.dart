@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
@@ -17,7 +18,7 @@ class AddSightingDetailsPage extends StatefulWidget {
 }
 
 class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
-  final _config = SurveyConfiguration();
+  final _config = SurveyConfiguration(defaultSurveyFields);
   late Map<String, String> attributes = _config.asAttributes;
 
   void onAttributeChange(String key, String value) => setState(() {

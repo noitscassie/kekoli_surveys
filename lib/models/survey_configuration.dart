@@ -1,6 +1,7 @@
-import 'package:dartx/dartx.dart';
-import 'package:kekoldi_surveys/constants/heights.dart';
-import 'package:kekoldi_surveys/constants/substrates.dart';
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 
