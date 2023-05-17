@@ -3,38 +3,31 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
-import 'package:kekoldi_surveys/models/sighting.dart';
 
-class SurveyConfiguration {
-  final List<InputFieldConfig> fields = [
-    InputFieldConfig.number(label: 'Quantity', required: true),
-    InputFieldConfig.select(
-        label: 'Height',
-        options: heights,
-        defaultValue: Sighting.unknown,
-        required: true),
-    InputFieldConfig.select(
-        label: 'Substrate',
-        options: substrates.sorted(),
-        defaultValue: Sighting.unknown,
-        required: true),
-    InputFieldConfig.radioButtons(
-        label: 'Sex',
-        options: ['Female', 'Male', 'Mixed', Sighting.unknown],
-        defaultValue: Sighting.unknown,
-        required: true),
-    InputFieldConfig.radioButtons(
-        label: 'Age',
-        options: ['Adult', 'Sub-Adult', 'Juvenile', Sighting.unknown],
-        defaultValue: Sighting.unknown,
-        required: true),
-    InputFieldConfig.radioButtons(
-        label: 'Type Of Observation',
-        options: ['Audio', 'Audio+Visual', 'Visual'],
-        required: true),
-    InputFieldConfig.multilineText(label: 'Comments'),
-  ];
+final defaultSurveyConfiguration = SurveyConfiguration(defaultSurveyFields);
+
+class SurveyConfiguration with DiagnosticableTreeMixin {
+  final List<InputFieldConfig> fields;
+
+  SurveyConfiguration(this.fields);
+
+  SurveyConfiguration.fromJson(Map<String, dynamic> json)
+      : fields = List<InputFieldConfig>.from(json['fields'].map((field) =>
+            InputFieldConfig.fromJson(
+                field.runtimeType == String ? jsonDecode(field) : field)));
+
+  String toJson() => jsonEncode(attributes);
+
+  Map<String, dynamic> get attributes => {
+        'fields':
+            fields.map((InputFieldConfig field) => field.toJson()).toList(),
+      };
 
   Map<String, String> get asAttributes =>
       {for (var config in fields) config.label: config.defaultValue};
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IterableProperty<InputFieldConfig>('fields', fields));
+  }
 }

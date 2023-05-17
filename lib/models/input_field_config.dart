@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/widgets/shared/multiline_text_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/number_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/radio_buttons_input_field.dart';
@@ -13,7 +16,7 @@ enum FieldType {
   select,
 }
 
-class InputFieldConfig {
+class InputFieldConfig with DiagnosticableTreeMixin {
   final String label;
   final FieldType type;
   final String defaultValue;
@@ -48,6 +51,23 @@ class InputFieldConfig {
       this.defaultValue = '',
       this.required = false})
       : type = FieldType.select;
+
+  InputFieldConfig.fromJson(Map<String, dynamic> json)
+      : label = json['label'],
+        type = FieldType.values.byName(json['type']),
+        defaultValue = json['defaultValue'],
+        options = List<String>.from(json['options']),
+        required = json['required'];
+
+  String toJson() => jsonEncode(attributes);
+
+  Map<String, dynamic> get attributes => {
+        'label': label,
+        'type': type.name,
+        'defaultValue': defaultValue,
+        'options': options,
+        'required': required,
+      };
 
   Widget inputField({required Function(String value) onChange, String? value}) {
     final fieldValue = value ?? defaultValue;
@@ -84,5 +104,15 @@ class InputFieldConfig {
             options: options,
             onChange: onChange);
     }
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(StringProperty('label', label));
+    properties.add(EnumProperty<FieldType>('type', type));
+    properties.add(StringProperty('defaultValue', defaultValue));
+    properties.add(IterableProperty<String>('options', options));
+    properties.add(DiagnosticsProperty<bool>('required', required));
   }
 }

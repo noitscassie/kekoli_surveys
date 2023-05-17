@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:localstorage/localstorage.dart';
 
 class Db {
   static const filePath = 'kekoldi_surveys.json';
   static const _surveysKey = 'surveys';
+  static const _surveyConfigurationKey = 'surveyConfiguration';
 
   final _storage = LocalStorage(filePath);
 
@@ -48,6 +51,21 @@ class Db {
         surveys.firstWhere((Survey survey) => survey.id == id);
 
     return survey;
+  }
+
+  Future<SurveyConfiguration> getSurveyConfiguration() async {
+    await _ready;
+
+    final configData = _storage.getItem(_surveyConfigurationKey);
+
+    if (configData == null) {
+      final config = defaultSurveyConfiguration;
+      _insert(_surveyConfigurationKey, config.toJson());
+
+      return config;
+    } else {
+      return SurveyConfiguration.fromJson(jsonDecode(configData));
+    }
   }
 
   Future<void> _insert(String key, dynamic data) async {
