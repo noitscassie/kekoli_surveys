@@ -63,6 +63,13 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     await _db.updateSurveyConfiguration(config);
 
     if (context.mounted) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 4),
+        content: Text('Saved survey format successfully'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
       Navigator.of(context).pop();
     }
   }
