@@ -34,6 +34,18 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     });
   }
 
+  void deleteField(InputFieldConfig fieldToDelete) {
+    final newFields = fields
+        .whereNot((InputFieldConfig field) => fieldToDelete.id == field.id)
+        .toList();
+
+    setState(() {
+      fields = newFields;
+    });
+
+    Navigator.of(context).pop();
+  }
+
   Future<void> onFabPress(BuildContext context) async {
     final config = await _db.getSurveyConfiguration();
     config.fields = fields;
@@ -63,10 +75,12 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
           child: ListView(
             children: List.from(fields.mapIndexed((index, field) {
               return ModifyInputField(
-                  key: Key(field.id),
-                  index: index,
-                  field: field,
-                  onChange: updateField);
+                key: Key(field.id),
+                index: index,
+                field: field,
+                onChange: updateField,
+                onDelete: deleteField,
+              );
             })),
           ),
         ));
