@@ -12,6 +12,7 @@ enum SurveyState { unstarted, inProgress, completed }
 
 class Survey with DiagnosticableTreeMixin {
   final String id;
+  final DateTime createdAt;
   DateTime? startAt;
   DateTime? endAt;
   String? weather;
@@ -36,7 +37,8 @@ class Survey with DiagnosticableTreeMixin {
       this.weather,
       this.state = SurveyState.unstarted,
       this.sightings = const []})
-      : id = const Uuid().v4();
+      : id = const Uuid().v4(),
+        createdAt = DateTime.now();
 
   Survey.fromJson(Map<String, dynamic> json)
       : id = json['id'],
@@ -56,7 +58,8 @@ class Survey with DiagnosticableTreeMixin {
         configuration = SurveyConfiguration.fromJson(
             json['configuration'].runtimeType == String
                 ? jsonDecode(json['configuration'])
-                : json['configuration']);
+                : json['configuration']),
+        createdAt = DateTime.parse(json['createdAt']);
 
   static Future<Survey> create(
       {required String trail,
@@ -91,6 +94,7 @@ class Survey with DiagnosticableTreeMixin {
         'sightings':
             List.from(sightings.map((Sighting sighting) => sighting.toJson())),
         'configuration': configuration.toJson(),
+        'createdAt': createdAt.toIso8601String(),
       };
 
   String get filename =>

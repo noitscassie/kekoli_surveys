@@ -8,7 +8,7 @@ class Sighting with DiagnosticableTreeMixin {
   final String id;
   String species;
   Map<String, dynamic> data;
-  DateTime? seenAt;
+  DateTime seenAt;
 
   static const unknown = 'Unknown';
 
@@ -20,14 +20,14 @@ class Sighting with DiagnosticableTreeMixin {
       : id = map['id'],
         species = map['species'],
         data = map['data'],
-        seenAt = map['seenAt'] == '' ? null : DateTime.parse(map['seenAt']);
+        seenAt = DateTime.parse(map['seenAt']);
 
   String toJson() => json.encode(attributes);
 
   Map<String, dynamic> get attributes => {
         'id': id,
         'species': species,
-        'seenAt': seenAt?.toIso8601String() ?? '',
+        'seenAt': seenAt.toIso8601String(),
         'data': data,
       };
 

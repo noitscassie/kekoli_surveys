@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
@@ -34,7 +35,9 @@ class HomePage extends StatelessWidget {
           builder:
               (BuildContext context, AsyncSnapshot<List<Survey>> snapshot) {
             if (snapshot.hasData) {
-              final surveys = snapshot.data as List<Survey>;
+              final surveys = snapshot.data!
+                  .sortedBy((Survey survey) => survey.createdAt)
+                  .reversed;
 
               return Center(
                 child: ListView(
