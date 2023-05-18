@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/models/input_field_config.dart';
+import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:uuid/uuid.dart';
 
 class Sighting with DiagnosticableTreeMixin {
@@ -46,11 +48,21 @@ class Sighting with DiagnosticableTreeMixin {
         data: data,
       );
 
-  void update(Map<String, dynamic> updateData) {
-    final updatedSpecies = updateData['species'];
+  Sighting update(Map<String, dynamic> updateData) {
+    final updatedSpecies = updateData.remove('species');
     species = updatedSpecies ?? species;
 
     data = {...data, ...updateData};
+
+    return this;
+  }
+
+  int abundance() {
+    try {
+      return int.parse(data['Quantity']);
+    } catch (e) {
+      return 1;
+    }
   }
 
   @override
