@@ -4,6 +4,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:uuid/uuid.dart';
 
@@ -20,6 +21,7 @@ class Survey with DiagnosticableTreeMixin {
   String trail;
   SurveyState state;
   List<Sighting> sightings;
+  final SurveyConfiguration configuration;
 
   static final Db _db = Db();
 
@@ -28,6 +30,7 @@ class Survey with DiagnosticableTreeMixin {
       required this.leaders,
       required this.scribe,
       required this.participants,
+      required this.configuration,
       this.startAt,
       this.endAt,
       this.weather,
@@ -49,18 +52,24 @@ class Survey with DiagnosticableTreeMixin {
             (sighting) => Sighting.fromMap(sighting.runtimeType == String
                 ? jsonDecode(sighting)
                 : sighting))),
-        weather = json['weather'];
+        weather = json['weather'],
+        configuration = SurveyConfiguration.fromJson(
+            json['configuration'].runtimeType == String
+                ? jsonDecode(json['configuration'])
+                : json['configuration']);
 
   static Future<Survey> create(
       {required String trail,
       required List<String> leaders,
       required String scribe,
-      required List<String> participants}) async {
+      required List<String> participants,
+      required SurveyConfiguration configuration}) async {
     final survey = Survey(
         trail: trail,
         leaders: leaders,
         scribe: scribe,
-        participants: participants);
+        participants: participants,
+        configuration: configuration);
 
     _db.createSurvey(survey);
 
@@ -80,7 +89,8 @@ class Survey with DiagnosticableTreeMixin {
         'trail': trail,
         'state': state.name,
         'sightings':
-            List.from(sightings.map((Sighting sighting) => sighting.toJson()))
+            List.from(sightings.map((Sighting sighting) => sighting.toJson())),
+        'configuration': configuration.toJson(),
       };
 
   String get filename =>
@@ -167,5 +177,7 @@ class Survey with DiagnosticableTreeMixin {
     properties.add(StringProperty('trail', trail));
     properties.add(StringProperty('id', id));
     properties.add(EnumProperty<SurveyState>('state', state));
+    properties.add(DiagnosticsProperty<SurveyConfiguration>(
+        'configuration', configuration));
   }
 }
