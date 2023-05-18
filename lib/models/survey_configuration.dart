@@ -7,7 +7,7 @@ import 'package:kekoldi_surveys/models/input_field_config.dart';
 final defaultSurveyConfiguration = SurveyConfiguration(defaultSurveyFields);
 
 class SurveyConfiguration with DiagnosticableTreeMixin {
-  final List<InputFieldConfig> fields;
+  List<InputFieldConfig> fields;
 
   SurveyConfiguration(this.fields);
 
