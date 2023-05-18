@@ -35,7 +35,12 @@ class KekoldiSurveys extends StatelessWidget {
                   surface: Colors.lightGreen[100],
                   onSurface: Colors.black,
                   onSurfaceVariant: Colors.lightGreen.shade800,
-                  onError: Colors.grey.shade500)),
+                  onError: Colors.grey.shade500),
+          textTheme: Theme.of(context).textTheme.copyWith(
+              bodyLarge: TextStyle(
+                  color: Colors.black.withOpacity(0.87),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 18))),
       home: HomePage(),
     );
   }
