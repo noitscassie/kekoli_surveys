@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
@@ -18,8 +16,8 @@ class AddSightingDetailsPage extends StatefulWidget {
 }
 
 class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
-  final _config = SurveyConfiguration(defaultSurveyFields);
-  late Map<String, String> attributes = _config.asAttributes;
+  late Map<String, String> attributes =
+      widget.survey.configuration.asAttributes;
 
   void onAttributeChange(String key, String value) => setState(() {
         attributes[key] = value;
@@ -49,6 +47,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
       onFabPress: showConfirmationDialog,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
+      configuration: widget.survey.configuration,
     );
   }
 }
