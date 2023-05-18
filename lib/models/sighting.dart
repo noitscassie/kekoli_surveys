@@ -35,6 +35,12 @@ class Sighting with DiagnosticableTreeMixin {
       .filter((value) => value.isNotEmpty && value != Sighting.unknown)
       .join(', ');
 
+  Map<String, dynamic> orderedData(Survey survey) => {
+        for (var label in survey.configuration.fields
+            .map((InputFieldConfig field) => field.label))
+          label: data[label]
+      };
+
   Sighting duplicate() => Sighting(
         species: species,
         data: data,
