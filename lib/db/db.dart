@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:localstorage/localstorage.dart';
@@ -38,6 +37,7 @@ class Db {
   Future<List<Survey>> getSurveys() async {
     await _ready;
     final surveysData = _storage.getItem(_surveysKey) ?? [];
+
     final surveysJson = List.from(surveysData.map((json) => jsonDecode(json)));
 
     return List.from(surveysJson.map((json) => Survey.fromJson(json)));
@@ -66,6 +66,13 @@ class Db {
     } else {
       return SurveyConfiguration.fromJson(jsonDecode(configData));
     }
+  }
+
+  Future<void> updateSurveyConfiguration(
+      SurveyConfiguration configuration) async {
+    await _ready;
+
+    _insert(_surveyConfigurationKey, configuration.toJson());
   }
 
   Future<void> _insert(String key, dynamic data) async {
