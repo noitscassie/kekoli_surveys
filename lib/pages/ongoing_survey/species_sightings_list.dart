@@ -4,7 +4,7 @@ import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
 class SpeciesSightingsList extends StatefulWidget {
   final String json;
-  final VoidCallback onEdit;
+  final Function(List<Sighting> sightings) onEdit;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final List<Sighting> sightings;
@@ -59,11 +59,18 @@ class _SpeciesSightingsListState extends State<SpeciesSightingsList> {
                       widget.onDecrement();
                     }),
                 BottomSheetOption(
-                    text: 'Edit',
+                    text: 'Edit Most Recent',
                     leadingIcon: Icons.edit,
                     onPress: () {
                       Navigator.of(context).pop();
-                      widget.onEdit();
+                      widget.onEdit([widget.sightings.last]);
+                    }),
+                BottomSheetOption(
+                    text: 'Edit All',
+                    leadingIcon: Icons.all_inclusive,
+                    onPress: () {
+                      Navigator.of(context).pop();
+                      widget.onEdit(widget.sightings);
                     }),
               ])),
       child: Row(

@@ -5,21 +5,24 @@ import 'package:kekoldi_surveys/pages/edit_sighting_details/edit_sighting_detail
 import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 
 class EditSpeciesPage extends StatelessWidget {
-  final Sighting sighting;
+  final List<Sighting> sightings;
   final Survey survey;
 
   const EditSpeciesPage(
-      {super.key, required this.survey, required this.sighting});
+      {super.key, required this.survey, required this.sightings});
 
   void navigateToEditDetails(BuildContext context, String species) async {
-    sighting.update({'species': species});
-    await survey.updateSighting(sighting);
+    for (var sighting in sightings) {
+      sighting.update({'species': species});
+    }
+
+    await survey.updateSightings(sightings);
 
     if (context.mounted) {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => EditSightingDetailsPage(
                 survey: survey,
-                sighting: sighting,
+                sightings: sightings,
               )));
     }
   }
@@ -28,7 +31,7 @@ class EditSpeciesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SpeciesSelector(
         pageTitle: 'Choose a species',
-        initialSearchTerm: sighting.species,
+        initialSearchTerm: sightings.last.species,
         onSelect: (String species) => navigateToEditDetails(context, species));
   }
 }

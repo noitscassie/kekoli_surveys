@@ -130,6 +130,22 @@ class Survey with DiagnosticableTreeMixin {
     _db.updateSurvey(this);
   }
 
+  Future<void> updateSightings(List<Sighting> updatedSightings) async {
+    final idsToUpdate =
+        updatedSightings.map((Sighting sighting) => sighting.id);
+
+    final newSightings = List<Sighting>.from(sightings.map(
+        (Sighting sighting) => idsToUpdate.contains(sighting.id)
+            ? updatedSightings.firstOrNullWhere((Sighting updatedSighting) =>
+                    updatedSighting.id == sighting.id) ??
+                sighting
+            : sighting));
+
+    sightings = newSightings;
+
+    _db.updateSurvey(this);
+  }
+
   Future<void> start() async {
     startAt = DateTime.now();
     state = SurveyState.inProgress;

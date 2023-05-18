@@ -46,11 +46,11 @@ class _SightingTileState extends State<SightingTile> {
           sightings: sightings,
           onChangeSurvey: widget.onChangeSurvey));
 
-  void onEdit(Sighting sighting) =>
+  void onEdit(List<Sighting> sightings) =>
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => EditSpeciesPage(
                 survey: widget.survey,
-                sighting: sighting,
+                sightings: sightings,
               )));
 
   void navigateToChooseSpeciesPage() =>
@@ -91,7 +91,7 @@ class _SightingTileState extends State<SightingTile> {
                   key: Key('${entry.key}_sighting_list_${index.toString()}'),
                   onIncrement: () => onIncrement(entry.value.last),
                   onDecrement: () => onDecrement(entry.value),
-                  onEdit: () => onEdit(entry.value.last),
+                  onEdit: (List<Sighting> sightings) => onEdit(sightings),
                   json: entry.key,
                 ),
               ),

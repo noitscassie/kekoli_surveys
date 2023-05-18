@@ -6,10 +6,10 @@ import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
 class EditSightingDetailsPage extends StatefulWidget {
   final Survey survey;
-  final Sighting sighting;
+  final List<Sighting> sightings;
 
   const EditSightingDetailsPage(
-      {super.key, required this.survey, required this.sighting});
+      {super.key, required this.survey, required this.sightings});
 
   @override
   State<EditSightingDetailsPage> createState() =>
@@ -17,15 +17,18 @@ class EditSightingDetailsPage extends StatefulWidget {
 }
 
 class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
-  late Map<String, dynamic> attributes = widget.sighting.data;
+  late Map<String, dynamic> attributes = widget.sightings.last.data;
 
   void onAttributeChange(String key, String value) => setState(() {
         attributes[key] = value;
       });
 
   Future<void> updateSighting() async {
-    widget.sighting.update(attributes);
-    await widget.survey.updateSighting(widget.sighting);
+    for (var sighting in widget.sightings) {
+      sighting.update(attributes);
+    }
+
+    await widget.survey.updateSightings(widget.sightings);
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
@@ -39,7 +42,7 @@ class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return SightingDetailsForm(
-      species: widget.sighting.species,
+      species: widget.sightings.last.species,
       fabLabel: const Row(
         children: [
           Text('Save Details'),
