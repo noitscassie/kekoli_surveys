@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/trails.dart';
+import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
@@ -46,12 +47,18 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
       scribe.isNotEmpty &&
       participants.whereNotNull().any((participant) => participant.isNotEmpty);
 
+  final Db _db = Db();
+
   Future<void> createSurvey() async {
+    final configuration = await _db.getSurveyConfiguration();
+
     await Survey.create(
-        trail: selectedTrail,
-        leaders: leaders,
-        scribe: scribe,
-        participants: formattedParticipants);
+      trail: selectedTrail,
+      leaders: leaders,
+      scribe: scribe,
+      participants: formattedParticipants,
+      configuration: configuration,
+    );
 
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
