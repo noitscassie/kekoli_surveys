@@ -23,6 +23,17 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     });
   }
 
+  void addField() {
+    final newFields = [
+      ...fields,
+      InputFieldConfig.text(label: 'Untitled Field')
+    ];
+
+    setState(() {
+      fields = newFields;
+    });
+  }
+
   void updateField(InputFieldConfig updatedField) {
     final newFields = fields
         .map((InputFieldConfig field) =>
@@ -73,15 +84,32 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100),
           child: ListView(
-            children: List.from(fields.mapIndexed((index, field) {
-              return ModifyInputField(
-                key: Key(field.id),
-                index: index,
-                field: field,
-                onChange: updateField,
-                onDelete: deleteField,
-              );
-            })),
+            children: [
+              ...fields.mapIndexed((index, field) => ModifyInputField(
+                    key: Key(field.id),
+                    index: index,
+                    field: field,
+                    onChange: updateField,
+                    onDelete: deleteField,
+                  )),
+              Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: GestureDetector(
+                      onTap: addField,
+                      child: Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(right: 16),
+                            child: Icon(Icons.add),
+                          ),
+                          Text(
+                            'Add new field',
+                            style: Theme.of(context).textTheme.bodyLarge,
+                          )
+                        ],
+                      )))
+            ],
           ),
         ));
   }
