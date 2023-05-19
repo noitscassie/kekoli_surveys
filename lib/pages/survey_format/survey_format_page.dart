@@ -57,7 +57,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> onFabPress(BuildContext context) async {
+  Future<void> onFabPress() async {
     final config = await _db.getSurveyConfiguration();
     config.fields = fields;
     await _db.updateSurveyConfiguration(config);
@@ -87,7 +87,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
         fabLabel: const Row(
           children: [Text('Save Survey Format'), Icon(Icons.save_alt)],
         ),
-        onFabPress: () => onFabPress(context),
+        onFabPress: onFabPress,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100),
           child: ListView(
