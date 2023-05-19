@@ -22,11 +22,20 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
 
   bool get isEmailValid => emailRegex.hasMatch(emailAddress);
 
+  late List<String> allParticipants = [
+    ...widget.survey.leaders,
+    widget.survey.scribe,
+    ...widget.survey.participants,
+  ];
+
+  String get emailBody =>
+      'The ${widget.survey.trail} survey on ${DateFormats.ddmmyyyy(widget.survey.startAt!)} started at ${TimeFormats.timeHoursAndMinutes(widget.survey.startAt!)} and ended at ${TimeFormats.timeHoursAndMinutes(widget.survey.endAt!)}, lasting ${TimeFormats.hmFromMinutes(widget.survey.lengthInMinutes())}.\n\nThere were ${allParticipants.length} participants: ${allParticipants.join(', ')}\n\nThere were ${widget.survey.totalObservations} observations in total, ${widget.survey.uniqueSpecies} unique species, and a total abundance of ${widget.survey.totalAbundance}.\n\nThe weather was ${widget.survey.weather!.toLowerCase()}';
+
   Future<void> generateAndEmailCsv() async {
     final filepath = await CsvUtil.generateFromSurvey(widget.survey);
 
     final Email email = Email(
-      body: 'Hi from Cassie ✨',
+      body: emailBody,
       subject:
           '${widget.survey.trail} Survey ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
       recipients: [emailAddress],
@@ -36,11 +45,6 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
     FlutterEmailSender.send(email);
 
     if (context.mounted) {
-      final snackBar = SnackBar(
-        content: Text('Email sent to $emailAddress'),
-        duration: const Duration(seconds: 5),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
       Navigator.of(context).pop();
     }
   }

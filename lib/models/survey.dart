@@ -103,6 +103,8 @@ class Survey with DiagnosticableTreeMixin {
   int get totalObservations => sightings.length;
   int get uniqueSpecies =>
       sightings.map((Sighting sighting) => sighting.species).distinct().length;
+  int get totalAbundance =>
+      sightings.map((Sighting sighting) => sighting.abundance()).sum();
 
   int lengthInMinutes({fromNow = false}) =>
       (fromNow ? DateTime.now() : endAt!).difference(startAt!).inMinutes;
