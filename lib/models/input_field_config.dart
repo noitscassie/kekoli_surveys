@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/widgets/radio_buttons.dart';
 import 'package:kekoldi_surveys/widgets/shared/multiline_text_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/number_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/radio_buttons_input_field.dart';
@@ -117,11 +118,13 @@ class InputFieldConfig with DiagnosticableTreeMixin {
           onChange: onChange,
         );
       case FieldType.radioButtons:
-        return RadioButtonsInputField(
+        return RadioButtonsInputField<String>(
             label: label,
             value: fieldValue,
             options: (sortOptions ? options.sorted() : options)
                 .whereNotNull()
+                .map((String value) =>
+                    RadioButtonOption(value: value, label: value))
                 .toList(),
             onChange: onChange);
       case FieldType.select:

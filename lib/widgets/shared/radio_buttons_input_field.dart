@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/widgets/form_item.dart';
 import 'package:kekoldi_surveys/widgets/radio_buttons.dart';
 
-class RadioButtonsInputField extends StatelessWidget {
+class RadioButtonsInputField<T> extends StatelessWidget {
   final String label;
-  final String value;
-  final List<String> options;
-  final Function(String value) onChange;
+  final T value;
+  final List<RadioButtonOption<T>> options;
+  final Function(T value) onChange;
 
   const RadioButtonsInputField(
       {super.key,
@@ -19,7 +19,7 @@ class RadioButtonsInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormItem(
       label: label,
-      child: RadioButtons(
+      child: RadioButtons<T>(
         options: options,
         onChange: onChange,
         selectedOption: value,

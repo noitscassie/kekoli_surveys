@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 
-class RadioButtons extends StatelessWidget {
-  final String selectedOption;
-  final List<String> options;
-  final Function(String value) onChange;
+class RadioButtonOption<T> {
+  final String label;
+  final String? subtitle;
+  final T value;
+
+  RadioButtonOption({required this.value, required this.label, this.subtitle});
+}
+
+class RadioButtons<T> extends StatelessWidget {
+  final T? selectedOption;
+  final List<RadioButtonOption<T>> options;
+  final Function(T value) onChange;
 
   const RadioButtons(
       {super.key,
@@ -15,13 +23,25 @@ class RadioButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: List.from(options.map((option) => ListTile(
-            onTap: () => onChange(option),
-            title: Text(option),
+            onTap: () => onChange(option.value),
+            title: Text(option.label),
+            subtitle: option.subtitle == null
+                ? null
+                : Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      option.subtitle!,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontStyle: FontStyle.italic),
+                    ),
+                  ),
             contentPadding: EdgeInsets.zero,
-            leading: Radio<String?>(
-              value: option,
+            leading: Radio<T?>(
+              value: option.value,
               groupValue: selectedOption,
-              onChanged: (String? value) {
+              onChanged: (T? value) {
                 if (value == null) return;
 
                 onChange(value);
