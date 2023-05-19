@@ -29,7 +29,7 @@ class _SelectExportTypePageState extends State<SelectExportTypePage> {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-      title: 'Select Export Type',
+      title: 'Export Type',
       fabLabel: const Row(
         children: [Text('Choose Recipient'), Icon(Icons.arrow_right_alt)],
       ),
@@ -39,19 +39,19 @@ class _SelectExportTypePageState extends State<SelectExportTypePage> {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: FormItem(
-            label: 'Select ',
+            label: 'Select CSV Format',
             child: RadioButtons<ExportType>(
               options: [
                 RadioButtonOption(
                     value: ExportType.formatted,
                     label: 'Formatted Data',
                     subtitle:
-                        'Formatted as configured in the settings for this survey'),
+                        'Best for the biodiversity spreadsheet, formatted as configured in the settings for this survey'),
                 RadioButtonOption(
                     value: ExportType.raw,
                     label: 'Raw Data',
                     subtitle:
-                        'Safer, just in case the formatted data is misconfigured'),
+                        'Get all the raw data, just in case the formatted data is misconfigured'),
                 RadioButtonOption(
                     value: ExportType.species,
                     label: 'Species Only',
