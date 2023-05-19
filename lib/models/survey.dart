@@ -106,8 +106,13 @@ class Survey with DiagnosticableTreeMixin {
   int get totalAbundance =>
       sightings.map((Sighting sighting) => sighting.abundance()).sum();
 
+  List<Sighting> get orderedSightings =>
+      sightings.sortedBy((Sighting sighting) => sighting.seenAt).toList();
+
   int lengthInMinutes({fromNow = false}) =>
-      (fromNow ? DateTime.now() : endAt!).difference(startAt!).inMinutes;
+      (fromNow ? DateTime.now() : endAt ?? DateTime.now())
+          .difference(startAt!)
+          .inMinutes;
 
   Future<void> update(
       {String? updatedTrail,
