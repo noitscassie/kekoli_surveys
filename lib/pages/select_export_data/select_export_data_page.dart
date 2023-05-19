@@ -78,24 +78,27 @@ class _SelectExportDataPageState extends State<SelectExportDataPage> {
         ),
         onFabPress: onFabPress,
         child: Center(
-          child: ReorderableListView(
-            children: List.from(
-                columns.mapIndexed((int index, CsvColumn column) => ColumnField(
-                      key: Key('data_export_format_tile_${column.id}'),
-                      column: column,
-                      index: index,
-                      options: dataOptions,
-                      onChange: updateColumn,
-                    ))),
-            onReorder: (int oldIndex, int newIndex) {
-              setState(() {
-                if (oldIndex < newIndex) {
-                  newIndex -= 1;
-                }
-                final item = columns.removeAt(oldIndex);
-                columns.insert(newIndex, item);
-              });
-            },
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 100),
+            child: ReorderableListView(
+              children: List.from(columns
+                  .mapIndexed((int index, CsvColumn column) => ColumnField(
+                        key: Key('data_export_format_tile_${column.id}'),
+                        column: column,
+                        index: index,
+                        options: dataOptions,
+                        onChange: updateColumn,
+                      ))),
+              onReorder: (int oldIndex, int newIndex) {
+                setState(() {
+                  if (oldIndex < newIndex) {
+                    newIndex -= 1;
+                  }
+                  final item = columns.removeAt(oldIndex);
+                  columns.insert(newIndex, item);
+                });
+              },
+            ),
           ),
         ));
   }
