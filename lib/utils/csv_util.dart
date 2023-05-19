@@ -46,7 +46,7 @@ class CsvUtil {
   List<List<String>> _sightingRows(Survey survey) {
     switch (exportType) {
       case ExportType.formatted:
-        return survey.sightings.map((Sighting sighting) {
+        return survey.orderedSightings.map((Sighting sighting) {
           return _columns(survey).map((CsvColumn column) {
             if (column.field == speciesString) {
               return sighting.species;
@@ -56,7 +56,7 @@ class CsvUtil {
           }).toList();
         }).toList();
       case ExportType.raw:
-        return survey.sightings.map((Sighting sighting) {
+        return survey.orderedSightings.map((Sighting sighting) {
           return [
             sighting.species,
             ..._dataFields(survey)
@@ -64,7 +64,7 @@ class CsvUtil {
           ];
         }).toList();
       case ExportType.species:
-        return survey.sightings
+        return survey.orderedSightings
             .map((Sighting sighting) => [sighting.species])
             .toList();
     }
