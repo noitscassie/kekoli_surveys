@@ -1,55 +1,78 @@
-import 'dart:io';
-
 import 'package:csv/csv.dart';
-import 'package:kekoldi_surveys/constants/columns.dart';
+import 'package:kekoldi_surveys/constants/default_csv_columns.dart';
+import 'package:kekoldi_surveys/models/csv_column.dart';
+import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/utils/time_utils.dart';
-import 'package:path_provider/path_provider.dart';
+
+enum ExportType {
+  formatted,
+  raw,
+  species,
+}
 
 class CsvUtil {
-  static Future<String> generateFromSurvey(Survey survey) async {
-    final headers = columns;
+  final ExportType exportType;
 
-    // empty rows match auto-populated fields on the google sheet
-    final sightingRows = survey.sightings.map((Sighting sighting) => [
-          sighting.species,
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-          '',
-          sighting.data['Quantity'],
-          sighting.data['Height'],
-          sighting.data['Substrate'],
-          sighting.data['Sex'],
-          sighting.data['Age'],
-          sighting.data['Type Of Observation'],
-        ]);
+  CsvUtil(this.exportType);
 
+  String generate(Survey survey) {
     final rows = [
-      headers,
-      ...sightingRows,
+      _headers(survey),
+      ..._sightingRows(survey),
     ];
 
-    String csv = const ListToCsvConverter().convert(rows);
-
-    final Directory directory = await getApplicationDocumentsDirectory();
-
-    final directoryPath = directory.path;
-
-    final filename =
-        '${survey.trail.toLowerCase()}_survey_${DateFormats.ddmmyyyyNoBreaks(survey.startAt!)}';
-
-    final filepath = '$directoryPath/$filename.csv';
-
-    final file = File(filepath);
-
-    file.createSync(recursive: true);
-    await file.writeAsString(csv);
-
-    return file.path;
+    return const ListToCsvConverter().convert(rows);
   }
+
+  List<String> _headers(Survey survey) {
+    switch (exportType) {
+      case ExportType.formatted:
+        return _columns(survey)
+            .map((CsvColumn column) => column.header)
+            .toList();
+      case ExportType.raw:
+        return [
+          'Species',
+          ..._dataFields(survey),
+        ];
+      case ExportType.species:
+        return [
+          'Species',
+        ];
+    }
+  }
+
+  List<List<String>> _sightingRows(Survey survey) {
+    switch (exportType) {
+      case ExportType.formatted:
+        return survey.sightings.map((Sighting sighting) {
+          return _columns(survey).map((CsvColumn column) {
+            if (column.field == speciesString) {
+              return sighting.species;
+            } else {
+              return sighting.data[column.field]?.toString() ?? '';
+            }
+          }).toList();
+        }).toList();
+      case ExportType.raw:
+        return survey.sightings.map((Sighting sighting) {
+          return [
+            sighting.species,
+            ..._dataFields(survey)
+                .map((String field) => sighting.data[field]?.toString() ?? ''),
+          ];
+        }).toList();
+      case ExportType.species:
+        return survey.sightings
+            .map((Sighting sighting) => [sighting.species])
+            .toList();
+    }
+  }
+
+  List<CsvColumn> _columns(Survey survey) => survey.configuration.csvColumns;
+
+  List<String> _dataFields(Survey survey) => survey.configuration.fields
+      .map((InputFieldConfig field) => field.label)
+      .toList();
 }
