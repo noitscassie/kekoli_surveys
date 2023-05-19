@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/pages/export_survey/export_survey_page.dart';
+import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page.dart';
 import 'package:kekoldi_surveys/pages/view_survey/sighting_list_item.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/data_tile.dart';
@@ -19,6 +19,11 @@ class ViewSurveyPage extends StatelessWidget {
         ...survey.participants
       ].join(', ');
 
+  void onFabPress(BuildContext context) =>
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              SelectExportTypePage(survey: survey)));
+
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
@@ -26,8 +31,7 @@ class ViewSurveyPage extends StatelessWidget {
       fabLabel: const Row(
         children: [Text('Export Data'), Icon(Icons.download)],
       ),
-      onFabPress: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => ExportSurveyPage(survey: survey))),
+      onFabPress: () => onFabPress(context),
       child: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: Column(
