@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
+import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
 
 class SpeciesSightingsList extends StatefulWidget {
   final String json;
@@ -43,36 +43,11 @@ class _SpeciesSightingsListState extends State<SpeciesSightingsList> {
     return InkWell(
       onTap: () => showModalBottomSheet(
           context: context,
-          builder: (BuildContext context) => BottomSheetOptions(options: [
-                BottomSheetOption(
-                    text: 'Add Tally',
-                    leadingIcon: Icons.exposure_plus_1,
-                    onPress: () {
-                      Navigator.of(context).pop();
-                      widget.onIncrement();
-                    }),
-                BottomSheetOption(
-                    text: 'Remove Tally',
-                    leadingIcon: Icons.exposure_minus_1,
-                    onPress: () {
-                      Navigator.of(context).pop();
-                      widget.onDecrement();
-                    }),
-                BottomSheetOption(
-                    text: 'Edit Most Recent',
-                    leadingIcon: Icons.edit,
-                    onPress: () {
-                      Navigator.of(context).pop();
-                      widget.onEdit([widget.sightings.last]);
-                    }),
-                BottomSheetOption(
-                    text: 'Edit All',
-                    leadingIcon: Icons.all_inclusive,
-                    onPress: () {
-                      Navigator.of(context).pop();
-                      widget.onEdit(widget.sightings);
-                    }),
-              ])),
+          builder: (BuildContext context) => SightingOptionsSheet(
+              onIncrement: widget.onIncrement,
+              onDecrement: widget.onDecrement,
+              onEditMostRecent: () => widget.onEdit([widget.sightings.last]),
+              onEditAll: () => widget.onEdit(widget.sightings))),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

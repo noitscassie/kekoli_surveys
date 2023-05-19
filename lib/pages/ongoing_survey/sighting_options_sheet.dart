@@ -4,13 +4,16 @@ import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 class SightingOptionsSheet extends StatelessWidget {
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
-  final VoidCallback onEdit;
+  final VoidCallback onEditMostRecent;
+  final VoidCallback onEditAll;
 
-  const SightingOptionsSheet(
-      {super.key,
-      required this.onIncrement,
-      required this.onDecrement,
-      required this.onEdit});
+  const SightingOptionsSheet({
+    super.key,
+    required this.onIncrement,
+    required this.onDecrement,
+    required this.onEditMostRecent,
+    required this.onEditAll,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +33,18 @@ class SightingOptionsSheet extends StatelessWidget {
             onDecrement();
           }),
       BottomSheetOption(
-          text: 'Edit',
+          text: 'Edit Most Recent',
           leadingIcon: Icons.edit,
           onPress: () {
             Navigator.of(context).pop();
-            onEdit();
+            onEditMostRecent();
+          }),
+      BottomSheetOption(
+          text: 'Edit All',
+          leadingIcon: Icons.all_inclusive,
+          onPress: () {
+            Navigator.of(context).pop();
+            onEditAll();
           }),
     ]);
   }
