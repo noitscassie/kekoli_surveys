@@ -30,17 +30,23 @@ class KekoldiSurveys extends StatelessWidget {
           labelStyle: Theme.of(context).textTheme.bodySmall,
         ),
       ).copyWith(
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightGreen)
-              .copyWith(
-                  surface: Colors.lightGreen[100],
-                  onSurface: Colors.black,
-                  onSurfaceVariant: Colors.lightGreen.shade800,
-                  onError: Colors.grey.shade500),
-          textTheme: Theme.of(context).textTheme.copyWith(
-              bodyLarge: TextStyle(
-                  color: Colors.black.withOpacity(0.87),
-                  fontWeight: FontWeight.normal,
-                  fontSize: 18))),
+        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.lightGreen)
+            .copyWith(
+                surface: Colors.lightGreen[100],
+                onSurface: Colors.black,
+                onSurfaceVariant: Colors.lightGreen.shade800,
+                onError: Colors.grey.shade500),
+        textTheme: Theme.of(context).textTheme.copyWith(
+            bodyLarge: TextStyle(
+                color: Colors.black.withOpacity(0.87),
+                fontWeight: FontWeight.normal,
+                fontSize: 18),
+            labelSmall: TextStyle(
+                color: Colors.black.withOpacity(0.95),
+                fontWeight: FontWeight.normal,
+                fontStyle: FontStyle.italic,
+                fontSize: 10)),
+      ),
       home: HomePage(),
     );
   }
