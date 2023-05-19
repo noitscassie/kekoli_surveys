@@ -22,7 +22,7 @@ class SpeciesSelector extends StatefulWidget {
 class _SpeciesSelectorState extends State<SpeciesSelector> {
   late String searchTerm = widget.initialSearchTerm;
 
-  List<String> get allSpecies => species;
+  List<String> get allSpecies => species.distinct().toList();
 
   bool matchesSearchTerm(String species) {
     final searchableName = species.toLowerCase();
