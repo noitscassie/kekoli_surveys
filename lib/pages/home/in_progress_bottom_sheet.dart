@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/edit_survey/edit_survey_page.dart';
+import 'package:kekoldi_surveys/pages/home/delete_survey_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
@@ -31,6 +32,18 @@ class InProgressBottomSheet extends StatelessWidget {
                     EditSurveyPage(survey: survey)));
           },
           leadingIcon: Icons.edit,
+        ),
+        BottomSheetOption(
+          text: 'Delete Survey',
+          onPress: () {
+            Navigator.of(context).pop();
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) =>
+                    DeleteSurveyModal(survey: survey));
+          },
+          leadingIcon: Icons.delete_forever,
         ),
       ],
     );

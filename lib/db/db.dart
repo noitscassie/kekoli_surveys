@@ -34,11 +34,22 @@ class Db {
     _insert(_surveysKey, updatedSurveys);
   }
 
+  Future<void> deleteSurvey(Survey survey) async {
+    await _ready;
+
+    final surveys = await getSurveys();
+    final updatedSurveys = List.from(surveys
+        .whereNot((Survey loadedSurvey) => loadedSurvey.id == survey.id));
+
+    _insert(_surveysKey, updatedSurveys);
+  }
+
   Future<List<Survey>> getSurveys() async {
     await _ready;
     final surveysData = _storage.getItem(_surveysKey) ?? [];
 
-    final surveysJson = List.from(surveysData.map((json) => jsonDecode(json)));
+    final surveysJson = List.from(surveysData
+        .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
 
     return List.from(surveysJson.map((json) => Survey.fromJson(json)));
   }
