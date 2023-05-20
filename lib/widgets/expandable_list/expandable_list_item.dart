@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/nested_list_item.dart';
 
-class ExandableListItemChild {
+class ExpandableListItemChild {
   final String title;
   final String? subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
 
-  ExandableListItemChild(
+  ExpandableListItemChild(
       {required this.title, this.subtitle, this.trailing, this.onTap});
 }
 
 class ExpandableListItem extends StatelessWidget {
   final String title;
   final String? subtitle;
-  final List<ExandableListItemChild> children;
+  final List<ExpandableListItemChild> children;
   final Widget? trailing;
 
   const ExpandableListItem(
@@ -48,7 +48,7 @@ class ExpandableListItem extends StatelessWidget {
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...children.map(
-            (ExandableListItemChild child) => NestedListItem(childData: child))
+            (ExpandableListItemChild child) => NestedListItem(childData: child))
       ],
     );
   }

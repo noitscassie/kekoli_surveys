@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 
 class NestedListItem extends StatelessWidget {
-  final ExandableListItemChild childData;
+  final ExpandableListItemChild childData;
 
   const NestedListItem({super.key, required this.childData});
 

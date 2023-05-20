@@ -104,7 +104,7 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
                                   .groupBy((Sighting sighting) =>
                                       sighting.attributesString)
                                   .entries
-                                  .map((entry) => ExandableListItemChild(
+                                  .map((entry) => ExpandableListItemChild(
                                       title: entry.key,
                                       trailing: HeroQuantity(
                                           quantity:
