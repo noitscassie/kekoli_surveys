@@ -48,7 +48,7 @@ class RemovableTextFieldList extends StatelessWidget {
                       onChanged: (String value) => onUpdateItem(index, value),
                     ),
                   ))),
-        if (items.whereNotNull().last.isNotEmpty)
+        if (items.isEmpty || items.whereNotNull().last.isNotEmpty)
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: GestureDetector(

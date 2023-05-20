@@ -1,4 +1,4 @@
-const List<String> trails = [
+const List<String> defaultTrails = [
   'Ocelot',
   'Osprey',
   'River',

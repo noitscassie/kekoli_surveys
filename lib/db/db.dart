@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dartx/dartx.dart';
+import 'package:kekoldi_surveys/constants/trails.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:localstorage/localstorage.dart';
@@ -8,6 +10,7 @@ class Db {
   static const filePath = 'kekoldi_surveys.json';
   static const _surveysKey = 'surveys';
   static const _surveyConfigurationKey = 'surveyConfiguration';
+  static const _trailsKey = 'trails';
 
   final _storage = LocalStorage(filePath);
 
@@ -84,6 +87,26 @@ class Db {
     await _ready;
 
     _insert(_surveyConfigurationKey, configuration.toJson());
+  }
+
+  Future<List<String>> getTrails() async {
+    await _ready;
+
+    final trails = _storage.getItem(_trailsKey);
+
+    if (trails == null) {
+      _insert(_surveyConfigurationKey, defaultTrails);
+
+      return defaultTrails;
+    } else {
+      return trails;
+    }
+  }
+
+  Future<void> updateTrails(List<String> trails) async {
+    await _ready;
+
+    _insert(_trailsKey, trails);
   }
 
   Future<void> _insert(String key, dynamic data) async {

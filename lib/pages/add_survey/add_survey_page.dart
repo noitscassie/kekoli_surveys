@@ -20,7 +20,8 @@ class AddSurveyPage extends StatefulWidget {
 }
 
 class _AddSurveyPageState extends State<AddSurveyPage> {
-  late String selectedTrail = widget.initialTrail ?? trails.first;
+  late String selectedTrail = widget.initialTrail ?? defaultTrails.first;
+
   List<String> leaders = [
     '',
   ];
