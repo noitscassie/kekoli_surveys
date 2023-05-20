@@ -109,7 +109,5 @@ class Db {
     _insert(_trailsKey, trails);
   }
 
-  Future<void> _insert(String key, dynamic data) async {
-    _storage.setItem(key, data);
-  }
+  void _insert(String key, dynamic data) => _storage.setItem(key, data);
 }
