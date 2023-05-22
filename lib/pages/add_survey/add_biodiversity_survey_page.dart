@@ -10,16 +10,17 @@ import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
-class AddSurveyPage extends StatefulWidget {
+class AddBiodiversitySurveyPage extends StatefulWidget {
   final String? initialTrail;
 
-  const AddSurveyPage({super.key, this.initialTrail});
+  const AddBiodiversitySurveyPage({super.key, this.initialTrail});
 
   @override
-  State<AddSurveyPage> createState() => _AddSurveyPageState();
+  State<AddBiodiversitySurveyPage> createState() =>
+      _AddBiodiversitySurveyPageState();
 }
 
-class _AddSurveyPageState extends State<AddSurveyPage> {
+class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
   late String selectedTrail = widget.initialTrail ?? defaultTrails.first;
 
   List<String> leaders = [
