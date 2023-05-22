@@ -4,7 +4,7 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddWeatherPage extends StatefulWidget {
   final Function(String weather) onAddWeather;
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const AddWeatherPage(
       {super.key, required this.survey, required this.onAddWeather});

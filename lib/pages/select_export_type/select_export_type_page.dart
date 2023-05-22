@@ -7,7 +7,7 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/radio_buttons.dart';
 
 class SelectExportTypePage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const SelectExportTypePage({super.key, required this.survey});
 

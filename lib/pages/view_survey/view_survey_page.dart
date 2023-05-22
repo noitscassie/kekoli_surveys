@@ -11,7 +11,7 @@ import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 import 'package:kekoldi_surveys/widgets/shared/survey_stats.dart';
 
 class ViewSurveyPage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   const ViewSurveyPage({super.key, required this.survey});
 
   @override

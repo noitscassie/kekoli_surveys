@@ -30,13 +30,13 @@ class HomePage extends StatelessWidget {
         ),
         onFabPress: () => Navigator.of(context).push(MaterialPageRoute(
             builder: (BuildContext context) => const AddSurveyPage())),
-        child: FutureBuilder<List<Survey>>(
-          future: _db.getSurveys(),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Survey>> snapshot) {
+        child: FutureBuilder<List<BiodiversitySurvey>>(
+          future: _db.getBiodiveristySurveys(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<BiodiversitySurvey>> snapshot) {
             if (snapshot.hasData) {
               final surveys = snapshot.data!
-                  .sortedBy((Survey survey) => survey.createdAt)
+                  .sortedBy((BiodiversitySurvey survey) => survey.createdAt)
                   .reversed;
 
               return Center(

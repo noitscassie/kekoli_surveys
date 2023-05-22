@@ -5,12 +5,12 @@ import 'package:kekoldi_surveys/pages/home/home_page.dart';
 
 class DeleteSurveyModal extends StatelessWidget {
   final Db _db = Db();
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   DeleteSurveyModal({super.key, required this.survey});
 
   Future<void> _deleteSurvey(BuildContext context) async {
-    await _db.deleteSurvey(survey);
+    await _db.deleteBiodiversitySurvey(survey);
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(

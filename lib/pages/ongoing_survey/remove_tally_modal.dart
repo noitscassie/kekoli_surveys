@@ -5,9 +5,9 @@ import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class RemoveTallyModal extends StatelessWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   final List<Sighting> sightings;
-  final Function(Survey survey) onChangeSurvey;
+  final Function(BiodiversitySurvey survey) onChangeSurvey;
 
   const RemoveTallyModal(
       {super.key,

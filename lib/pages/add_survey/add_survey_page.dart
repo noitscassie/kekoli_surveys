@@ -53,7 +53,7 @@ class _AddSurveyPageState extends State<AddSurveyPage> {
   Future<void> createSurvey() async {
     final configuration = await _db.getSurveyConfiguration();
 
-    await Survey.create(
+    await BiodiversitySurvey.create(
       trail: selectedTrail,
       leaders: leaders,
       scribe: scribe,

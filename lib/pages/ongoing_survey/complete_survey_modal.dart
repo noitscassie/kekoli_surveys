@@ -5,8 +5,8 @@ import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 
 class CompleteSurveyModal extends StatefulWidget {
-  final Survey survey;
-  final Function(Survey survey) onChangeSurvey;
+  final BiodiversitySurvey survey;
+  final Function(BiodiversitySurvey survey) onChangeSurvey;
 
   const CompleteSurveyModal(
       {super.key, required this.survey, required this.onChangeSurvey});

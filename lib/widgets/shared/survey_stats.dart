@@ -4,7 +4,7 @@ import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/data_tile.dart';
 
 class SurveyStats extends StatelessWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const SurveyStats({super.key, required this.survey});
 

@@ -4,7 +4,7 @@ import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_
 import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 
 class ChooseSpeciesPage extends StatelessWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const ChooseSpeciesPage({super.key, required this.survey});
 

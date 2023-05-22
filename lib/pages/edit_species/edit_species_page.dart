@@ -6,7 +6,7 @@ import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 
 class EditSpeciesPage extends StatelessWidget {
   final List<Sighting> sightings;
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const EditSpeciesPage(
       {super.key, required this.survey, required this.sightings});

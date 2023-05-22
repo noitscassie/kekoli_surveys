@@ -9,7 +9,7 @@ import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class EditSurveyPage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const EditSurveyPage({super.key, required this.survey});
 

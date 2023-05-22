@@ -17,7 +17,7 @@ class Db {
 
   Future<bool> get _ready => _storage.ready;
 
-  Future<void> createSurvey(Survey survey) async {
+  Future<void> createBiodiversitySurvey(BiodiversitySurvey survey) async {
     await _ready;
 
     final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
@@ -26,44 +26,45 @@ class Db {
     _insert(_biodiversitySurveysKey, surveys);
   }
 
-  Future<void> updateSurvey(Survey survey) async {
+  Future<void> updateBiodiversitySurvey(BiodiversitySurvey survey) async {
     await _ready;
 
-    final surveys = await getSurveys();
-    final updatedSurveys = List.from(surveys.map((Survey loadedSurvey) =>
-        loadedSurvey.id == survey.id
+    final surveys = await getBiodiveristySurveys();
+    final updatedSurveys = List.from(surveys.map(
+        (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id
             ? survey.toJson()
             : loadedSurvey.toJson()));
 
     _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
-  Future<void> deleteSurvey(Survey survey) async {
+  Future<void> deleteBiodiversitySurvey(BiodiversitySurvey survey) async {
     await _ready;
 
-    final surveys = await getSurveys();
-    final updatedSurveys = List.from(surveys
-        .whereNot((Survey loadedSurvey) => loadedSurvey.id == survey.id));
+    final surveys = await getBiodiveristySurveys();
+    final updatedSurveys = List.from(surveys.whereNot(
+        (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id));
 
     _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
-  Future<List<Survey>> getSurveys() async {
+  Future<List<BiodiversitySurvey>> getBiodiveristySurveys() async {
     await _ready;
     final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
 
     final surveysJson = List.from(surveysData
         .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
 
-    return List.from(surveysJson.map((json) => Survey.fromJson(json)));
+    return List.from(
+        surveysJson.map((json) => BiodiversitySurvey.fromJson(json)));
   }
 
-  Future<Survey> getSurvey(String id) async {
+  Future<BiodiversitySurvey> getBiodiversitySurvey(String id) async {
     await _ready;
 
-    final surveys = await getSurveys();
-    final Survey survey =
-        surveys.firstWhere((Survey survey) => survey.id == id);
+    final surveys = await getBiodiveristySurveys();
+    final BiodiversitySurvey survey =
+        surveys.firstWhere((BiodiversitySurvey survey) => survey.id == id);
 
     return survey;
   }
@@ -90,7 +91,7 @@ class Db {
     _insert(_biodiversitySurveyConfigurationKey, configuration.toJson());
   }
 
-  Future<List<String>> getTrails() async {
+  Future<List<String>> getBiodiversityTrails() async {
     await _ready;
 
     final trails = _storage.getItem(_biodiversityTrailsKey);
@@ -104,7 +105,7 @@ class Db {
     }
   }
 
-  Future<void> updateTrails(List<String> trails) async {
+  Future<void> updateBiodiversityTrails(List<String> trails) async {
     await _ready;
 
     _insert(_biodiversityTrailsKey, trails);

@@ -5,7 +5,7 @@ import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_deta
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
 class AddSightingDetailsPage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   final String species;
 
   const AddSightingDetailsPage(

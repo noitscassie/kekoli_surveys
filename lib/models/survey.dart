@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
 
 enum SurveyState { unstarted, inProgress, completed }
 
-class Survey with DiagnosticableTreeMixin {
+class BiodiversitySurvey with DiagnosticableTreeMixin {
   final String id;
   final DateTime createdAt;
   DateTime? startAt;
@@ -26,7 +26,7 @@ class Survey with DiagnosticableTreeMixin {
 
   static final Db _db = Db();
 
-  Survey(
+  BiodiversitySurvey(
       {required this.trail,
       required this.leaders,
       required this.scribe,
@@ -40,7 +40,7 @@ class Survey with DiagnosticableTreeMixin {
       : id = const Uuid().v4(),
         createdAt = DateTime.now();
 
-  Survey.fromJson(Map<String, dynamic> json)
+  BiodiversitySurvey.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         trail = json['trail'],
         leaders = List<String>.from(json['leaders']),
@@ -61,20 +61,20 @@ class Survey with DiagnosticableTreeMixin {
                 : json['configuration']),
         createdAt = DateTime.parse(json['createdAt']);
 
-  static Future<Survey> create(
+  static Future<BiodiversitySurvey> create(
       {required String trail,
       required List<String> leaders,
       required String scribe,
       required List<String> participants,
       required SurveyConfiguration configuration}) async {
-    final survey = Survey(
+    final survey = BiodiversitySurvey(
         trail: trail,
         leaders: leaders,
         scribe: scribe,
         participants: participants,
         configuration: configuration);
 
-    _db.createSurvey(survey);
+    _db.createBiodiversitySurvey(survey);
 
     return survey;
   }
@@ -98,7 +98,7 @@ class Survey with DiagnosticableTreeMixin {
       };
 
   String get filename =>
-      '${trail.toLowerCase()}_survey_${DateFormats.ddmmyyyyNoBreaks(startAt ?? DateTime.now())}';
+      '${trail.toLowerCase()}_biodiversity_survey_${DateFormats.ddmmyyyyNoBreaks(startAt ?? DateTime.now())}';
 
   int get totalObservations => sightings.length;
   int get uniqueSpecies =>
@@ -124,7 +124,7 @@ class Survey with DiagnosticableTreeMixin {
     scribe = updatedScribe ?? scribe;
     participants = updatedParticipants ?? participants;
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> updateSighting(Sighting updatedSighting) async {
@@ -134,7 +134,7 @@ class Survey with DiagnosticableTreeMixin {
 
     sightings = updatedSightings;
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> updateSightings(List<Sighting> updatedSightings) async {
@@ -150,46 +150,46 @@ class Survey with DiagnosticableTreeMixin {
 
     sightings = newSightings;
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> start() async {
     startAt = DateTime.now();
     state = SurveyState.inProgress;
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> end() async {
     endAt = DateTime.now();
     state = SurveyState.completed;
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> setWeather(String newWeather) async {
     weather = newWeather;
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> addSighting(Sighting sighting) async {
     sightings = [sighting, ...sightings];
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> addSightings(List<Sighting> newSightings) async {
     sightings = [...newSightings, ...sightings];
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> removeSighting(Sighting sightingToRemove) async {
     sightings = List.from(sightings
         .whereNot((Sighting sighting) => sighting.id == sightingToRemove.id));
 
-    _db.updateSurvey(this);
+    _db.updateBiodiversitySurvey(this);
   }
 
   @override

@@ -8,7 +8,7 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class ExportSurveyPage extends StatefulWidget {
   final ExportType exportType;
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const ExportSurveyPage(
       {super.key, required this.survey, required this.exportType});

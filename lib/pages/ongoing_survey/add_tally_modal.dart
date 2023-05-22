@@ -5,9 +5,9 @@ import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class AddTallyModal extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   final Sighting sighting;
-  final Function(Survey survey) onChangeSurvey;
+  final Function(BiodiversitySurvey survey) onChangeSurvey;
 
   const AddTallyModal(
       {super.key,

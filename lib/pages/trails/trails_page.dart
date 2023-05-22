@@ -39,7 +39,7 @@ class _TrailsPageState extends State<TrailsPage> {
   }
 
   Future<void> _saveTrails(BuildContext context) async {
-    await _db.updateTrails(_trails.whereNotNull().toList());
+    await _db.updateBiodiversityTrails(_trails.whereNotNull().toList());
 
     if (context.mounted) {
       const snackBar = SnackBar(
@@ -54,7 +54,7 @@ class _TrailsPageState extends State<TrailsPage> {
   }
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getTrails();
+    final trails = await _db.getBiodiversityTrails();
     setState(() {
       _trails = trails;
     });

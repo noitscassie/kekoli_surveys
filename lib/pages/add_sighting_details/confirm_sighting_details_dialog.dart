@@ -6,7 +6,7 @@ import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class ConfirmSightingDetailsDialog extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   final Sighting sighting;
 
   const ConfirmSightingDetailsDialog(

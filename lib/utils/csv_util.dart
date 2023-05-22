@@ -16,7 +16,7 @@ class CsvUtil {
 
   CsvUtil(this.exportType);
 
-  String generate(Survey survey) {
+  String generate(BiodiversitySurvey survey) {
     final rows = [
       _headers(survey),
       ..._sightingRows(survey),
@@ -25,7 +25,7 @@ class CsvUtil {
     return const ListToCsvConverter().convert(rows);
   }
 
-  List<String> _headers(Survey survey) {
+  List<String> _headers(BiodiversitySurvey survey) {
     switch (exportType) {
       case ExportType.formatted:
         return _columns(survey)
@@ -43,7 +43,7 @@ class CsvUtil {
     }
   }
 
-  List<List<String>> _sightingRows(Survey survey) {
+  List<List<String>> _sightingRows(BiodiversitySurvey survey) {
     switch (exportType) {
       case ExportType.formatted:
         return survey.orderedSightings.map((Sighting sighting) {
@@ -70,9 +70,11 @@ class CsvUtil {
     }
   }
 
-  List<CsvColumn> _columns(Survey survey) => survey.configuration.csvColumns;
+  List<CsvColumn> _columns(BiodiversitySurvey survey) =>
+      survey.configuration.csvColumns;
 
-  List<String> _dataFields(Survey survey) => survey.configuration.fields
-      .map((InputFieldConfig field) => field.label)
-      .toList();
+  List<String> _dataFields(BiodiversitySurvey survey) =>
+      survey.configuration.fields
+          .map((InputFieldConfig field) => field.label)
+          .toList();
 }

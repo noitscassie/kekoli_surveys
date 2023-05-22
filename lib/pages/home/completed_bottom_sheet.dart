@@ -6,7 +6,7 @@ import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
 class CompletedBottomSheet extends StatelessWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const CompletedBottomSheet({super.key, required this.survey});
 

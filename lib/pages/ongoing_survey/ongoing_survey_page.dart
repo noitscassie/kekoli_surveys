@@ -9,7 +9,7 @@ import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class OngoingSurveyPage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const OngoingSurveyPage({super.key, required this.survey});
 
@@ -18,7 +18,7 @@ class OngoingSurveyPage extends StatefulWidget {
 }
 
 class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
-  late Survey statefulSurvey = widget.survey;
+  late BiodiversitySurvey statefulSurvey = widget.survey;
 
   void navigateToChooseSpeciesPage(BuildContext context) =>
       Navigator.of(context).push(MaterialPageRoute(
@@ -36,7 +36,7 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
             onChangeSurvey: updateSurvey,
           ));
 
-  void updateSurvey(Survey survey) {
+  void updateSurvey(BiodiversitySurvey survey) {
     setState(() {
       statefulSurvey = survey;
     });
@@ -62,7 +62,8 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
                   speciesName: group.key,
                   sightings: group.value,
                   survey: statefulSurvey,
-                  onChangeSurvey: (Survey survey) => updateSurvey(survey),
+                  onChangeSurvey: (BiodiversitySurvey survey) =>
+                      updateSurvey(survey),
                 ),
               )
         ]),

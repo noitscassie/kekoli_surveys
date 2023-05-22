@@ -37,7 +37,7 @@ class Sighting with DiagnosticableTreeMixin {
       .filter((value) => value.isNotEmpty && value != Sighting.unknown)
       .join(', ');
 
-  Map<String, dynamic> orderedData(Survey survey) => {
+  Map<String, dynamic> orderedData(BiodiversitySurvey survey) => {
         for (var label in survey.configuration.fields
             .map((InputFieldConfig field) => field.label))
           label: data[label]

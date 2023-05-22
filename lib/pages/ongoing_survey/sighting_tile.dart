@@ -12,10 +12,10 @@ import 'package:kekoldi_surveys/pages/ongoing_survey/species_sightings_list.dart
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
 class SightingTile extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   final String speciesName;
   final List<Sighting> sightings;
-  final Function(Survey survey) onChangeSurvey;
+  final Function(BiodiversitySurvey survey) onChangeSurvey;
 
   const SightingTile(
       {super.key,

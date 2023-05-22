@@ -9,7 +9,7 @@ import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
 class SurveyTile extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const SurveyTile({super.key, required this.survey});
 
