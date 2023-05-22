@@ -8,9 +8,10 @@ import 'package:localstorage/localstorage.dart';
 
 class Db {
   static const filePath = 'kekoldi_surveys.json';
-  static const _surveysKey = 'surveys';
-  static const _surveyConfigurationKey = 'surveyConfiguration';
-  static const _trailsKey = 'trails';
+  static const _biodiversitySurveysKey = 'biodiversitySurveys';
+  static const _biodiversitySurveyConfigurationKey =
+      '_biodiversitySurveyConfiguration';
+  static const _biodiversityTrailsKey = 'biodiversityTrails';
 
   final _storage = LocalStorage(filePath);
 
@@ -19,10 +20,10 @@ class Db {
   Future<void> createSurvey(Survey survey) async {
     await _ready;
 
-    final surveysData = _storage.getItem(_surveysKey) ?? [];
+    final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
     final surveys = [...surveysData, survey.toJson()];
 
-    _insert(_surveysKey, surveys);
+    _insert(_biodiversitySurveysKey, surveys);
   }
 
   Future<void> updateSurvey(Survey survey) async {
@@ -34,7 +35,7 @@ class Db {
             ? survey.toJson()
             : loadedSurvey.toJson()));
 
-    _insert(_surveysKey, updatedSurveys);
+    _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
   Future<void> deleteSurvey(Survey survey) async {
@@ -44,12 +45,12 @@ class Db {
     final updatedSurveys = List.from(surveys
         .whereNot((Survey loadedSurvey) => loadedSurvey.id == survey.id));
 
-    _insert(_surveysKey, updatedSurveys);
+    _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
   Future<List<Survey>> getSurveys() async {
     await _ready;
-    final surveysData = _storage.getItem(_surveysKey) ?? [];
+    final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
 
     final surveysJson = List.from(surveysData
         .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
@@ -70,11 +71,11 @@ class Db {
   Future<SurveyConfiguration> getSurveyConfiguration() async {
     await _ready;
 
-    final configData = _storage.getItem(_surveyConfigurationKey);
+    final configData = _storage.getItem(_biodiversitySurveyConfigurationKey);
 
     if (configData == null) {
       final config = defaultSurveyConfiguration;
-      _insert(_surveyConfigurationKey, config.toJson());
+      _insert(_biodiversitySurveyConfigurationKey, config.toJson());
 
       return config;
     } else {
@@ -86,16 +87,16 @@ class Db {
       SurveyConfiguration configuration) async {
     await _ready;
 
-    _insert(_surveyConfigurationKey, configuration.toJson());
+    _insert(_biodiversitySurveyConfigurationKey, configuration.toJson());
   }
 
   Future<List<String>> getTrails() async {
     await _ready;
 
-    final trails = _storage.getItem(_trailsKey);
+    final trails = _storage.getItem(_biodiversityTrailsKey);
 
     if (trails == null) {
-      _insert(_surveyConfigurationKey, defaultTrails);
+      _insert(_biodiversitySurveyConfigurationKey, defaultTrails);
 
       return defaultTrails;
     } else {
@@ -106,7 +107,7 @@ class Db {
   Future<void> updateTrails(List<String> trails) async {
     await _ready;
 
-    _insert(_trailsKey, trails);
+    _insert(_biodiversityTrailsKey, trails);
   }
 
   void _insert(String key, dynamic data) => _storage.setItem(key, data);
