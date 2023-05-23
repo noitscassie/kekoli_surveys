@@ -129,7 +129,7 @@ class Db {
     final trails = _storage.getItem(_biodiversityTrailsKey);
 
     if (trails == null) {
-      _insert(_biodiversitySurveyConfigurationKey, defaultTrails);
+      _insert(_biodiversityTrailsKey, defaultTrails);
 
       return defaultTrails;
     } else {
