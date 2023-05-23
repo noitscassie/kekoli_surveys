@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:uuid/uuid.dart';
@@ -51,24 +52,40 @@ class BirdSurvey with DiagnosticableTreeMixin {
         participants = List<String>.from(json['participants']),
         type = BirdSurveyType.values.byName(json['type']),
         weather = json['weather'],
-        createdAt = DateTime.parse(json['createdAt']);
+        createdAt = DateTime.parse(json['createdAt']),
+        segments = List<BirdSurveySegment>.from((json['segments'] ?? []).map(
+            (segment) => BirdSurveySegment.fromJson(
+                segment.runtimeType == String
+                    ? jsonDecode(segment)
+                    : segment)));
 
   static Future<BirdSurvey> create(
       {required String trail,
       required List<String> leaders,
       required String scribe,
       required List<String> participants,
-      required BirdSurveyType type}) async {
+      required BirdSurveyType type,
+      required List<BirdSurveySegment> segments}) async {
     final survey = BirdSurvey(
-        trail: trail,
-        leaders: leaders,
-        scribe: scribe,
-        participants: participants,
-        type: type);
+      trail: trail,
+      leaders: leaders,
+      scribe: scribe,
+      participants: participants,
+      type: type,
+      segments: segments,
+    );
 
     _db.createBirdSurvey(survey);
 
     return survey;
+  }
+
+  SurveyState get state {
+    return SurveyState.unstarted;
+    // if (startAt == null) return SurveyState.unstarted;
+    // if (endAt == null) return SurveyState.inProgress;
+
+    return SurveyState.completed;
   }
 
   Map<String, dynamic> get attributes => {
@@ -80,6 +97,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
         'trail': trail,
         'createdAt': createdAt.toIso8601String(),
         'type': type.name,
+        'segments': segments,
       };
 
   String toJson() => jsonEncode(attributes);
