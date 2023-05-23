@@ -2,13 +2,12 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:uuid/uuid.dart';
-
-enum SurveyState { unstarted, inProgress, completed }
 
 class BiodiversitySurvey with DiagnosticableTreeMixin {
   final String id;
@@ -20,7 +19,6 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
   String scribe;
   List<String> participants;
   String trail;
-  SurveyState state;
   List<Sighting> sightings;
   final SurveyConfiguration configuration;
 
@@ -35,7 +33,6 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
       this.startAt,
       this.endAt,
       this.weather,
-      this.state = SurveyState.unstarted,
       this.sightings = const []})
       : id = const Uuid().v4(),
         createdAt = DateTime.now();
@@ -49,7 +46,6 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
         startAt =
             json['startAt'] == 'null' ? null : DateTime.parse(json['startAt']),
         endAt = json['endAt'] == 'null' ? null : DateTime.parse(json['endAt']),
-        state = SurveyState.values.byName(json['state']),
         sightings = List<Sighting>.from((json['sightings'] ?? []).map(
             (sighting) => Sighting.fromMap(sighting.runtimeType == String
                 ? jsonDecode(sighting)
@@ -90,7 +86,6 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
         'scribe': scribe,
         'participants': participants,
         'trail': trail,
-        'state': state.name,
         'sightings':
             List.from(sightings.map((Sighting sighting) => sighting.toJson())),
         'configuration': configuration.toJson(),
@@ -108,6 +103,13 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
 
   List<Sighting> get orderedSightings =>
       sightings.sortedBy((Sighting sighting) => sighting.seenAt).toList();
+
+  SurveyState get state {
+    if (startAt == null) return SurveyState.unstarted;
+    if (endAt == null) return SurveyState.inProgress;
+
+    return SurveyState.completed;
+  }
 
   int lengthInMinutes({fromNow = false}) =>
       (fromNow ? DateTime.now() : endAt ?? DateTime.now())
@@ -155,14 +157,12 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
 
   Future<void> start() async {
     startAt = DateTime.now();
-    state = SurveyState.inProgress;
 
     _db.updateBiodiversitySurvey(this);
   }
 
   Future<void> end() async {
     endAt = DateTime.now();
-    state = SurveyState.completed;
 
     _db.updateBiodiversitySurvey(this);
   }

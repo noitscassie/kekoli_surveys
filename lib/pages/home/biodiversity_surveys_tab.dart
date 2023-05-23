@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/widgets/survey_tile.dart';
 
 class BiodiversitySurveysTab extends StatelessWidget {

@@ -80,6 +80,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
       };
 
   String toJson() => jsonEncode(attributes);
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

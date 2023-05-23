@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/constants/survey_state.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/home/completed_bottom_sheet.dart';
 import 'package:kekoldi_surveys/pages/home/in_progress_bottom_sheet.dart';
 import 'package:kekoldi_surveys/pages/home/unstarted_bottom_sheet.dart';

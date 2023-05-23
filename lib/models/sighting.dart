@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:uuid/uuid.dart';
 
 class Sighting with DiagnosticableTreeMixin {

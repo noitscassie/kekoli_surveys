@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/utils/csv_util.dart';
 import 'package:kekoldi_surveys/utils/file_util.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';

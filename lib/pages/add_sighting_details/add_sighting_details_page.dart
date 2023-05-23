@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 

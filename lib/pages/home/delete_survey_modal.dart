@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 
 class DeleteSurveyModal extends StatelessWidget {

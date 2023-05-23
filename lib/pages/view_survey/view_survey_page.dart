@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page.dart';
 import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';

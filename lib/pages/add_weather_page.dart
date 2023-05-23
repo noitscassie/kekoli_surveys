@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddWeatherPage extends StatefulWidget {

@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/choose_species/choose_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/complete_survey_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_tile.dart';

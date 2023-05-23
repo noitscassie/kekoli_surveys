@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_survey_page.dart';
 import 'package:kekoldi_surveys/utils/csv_util.dart';
 import 'package:kekoldi_surveys/widgets/form_item.dart';

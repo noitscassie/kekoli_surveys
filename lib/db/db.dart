@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:kekoldi_surveys/constants/trails.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:localstorage/localstorage.dart';
 

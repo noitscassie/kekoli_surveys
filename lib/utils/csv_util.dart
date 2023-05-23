@@ -1,9 +1,9 @@
 import 'package:csv/csv.dart';
 import 'package:kekoldi_surveys/constants/default_csv_columns.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 
 enum ExportType {
   formatted,

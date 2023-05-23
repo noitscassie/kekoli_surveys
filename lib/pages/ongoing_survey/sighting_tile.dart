@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/pages/edit_species/edit_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/add_tally_modal.dart';
