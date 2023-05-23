@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
-import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
+import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/danger_cta.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 
-class DeleteBiodiversitySurveyModal extends StatelessWidget {
-  final Db _db = Db();
-  final BiodiversitySurvey survey;
+class DeleteBirdSurveyModal extends StatelessWidget {
+  final BirdSurvey survey;
 
-  DeleteBiodiversitySurveyModal({super.key, required this.survey});
+  final Db _db = Db();
+
+  DeleteBirdSurveyModal({super.key, required this.survey});
 
   Future<void> _deleteSurvey(BuildContext context) async {
-    await _db.deleteBiodiversitySurvey(survey);
+    await _db.deleteBirdSurvey(survey);
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-              builder: (BuildContext context) => const HomePage()),
+              builder: (BuildContext context) => const HomePage(
+                    initialTabIndex: 1,
+                  )),
           (route) => false);
     }
   }
@@ -25,11 +28,11 @@ class DeleteBiodiversitySurveyModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogScaffold(
-      title: 'Delete ${survey.trail} survey?',
+      title: 'Delete Bird ${survey.type.prettyName} ${survey.trail}?',
       content:
-          'Are you sure you want to delete this survey? This cannot be undone.',
+          'Are you sure you want to delete this ${survey.type.prettyName.toLowerCase()}? This cannot be undone.',
       primaryCta: DangerCta(
-        text: 'Delete Survey',
+        text: 'Delete ${survey.type.prettyName}',
         onTap: () => _deleteSurvey(context),
       ),
     );

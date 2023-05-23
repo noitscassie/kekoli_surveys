@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
-import 'package:kekoldi_surveys/pages/home/completed_bottom_sheet.dart';
-import 'package:kekoldi_surveys/pages/home/in_progress_bottom_sheet.dart';
-import 'package:kekoldi_surveys/pages/home/unstarted_bottom_sheet.dart';
+import 'package:kekoldi_surveys/pages/home/completed_biodiversity_bottom_sheet.dart';
+import 'package:kekoldi_surveys/pages/home/in_progress_biodiversity_bottom_sheet.dart';
+import 'package:kekoldi_surveys/pages/home/unstarted_biodiversity_bottom_sheet.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
 import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
-import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
+import 'package:kekoldi_surveys/widgets/shared/survey_tile.dart';
 
 class BiodiversitySurveyTile extends StatefulWidget {
   final BiodiversitySurvey survey;
@@ -25,11 +25,11 @@ class _BiodiversitySurveyTileState extends State<BiodiversitySurveyTile> {
         builder: (BuildContext context) {
           switch (widget.survey.state) {
             case SurveyState.unstarted:
-              return UnstartedBottomSheet(survey: widget.survey);
+              return UnstartedBiodiversityBottomSheet(survey: widget.survey);
             case SurveyState.inProgress:
-              return InProgressBottomSheet(survey: widget.survey);
+              return InProgressBiodiversityBottomSheet(survey: widget.survey);
             case SurveyState.completed:
-              return CompletedBottomSheet(survey: widget.survey);
+              return CompletedBiodiversityBottomSheet(survey: widget.survey);
           }
         });
   }
@@ -56,76 +56,13 @@ class _BiodiversitySurveyTileState extends State<BiodiversitySurveyTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: InkWell(
-        onTap: onTap,
-        child: Material(
-          elevation: 8,
-          color: Colors.transparent,
-          child: Card(
-            color: Theme.of(context).colorScheme.surface,
-            shape: const RoundedRectangleBorder(
-              side: BorderSide(
-                style: BorderStyle.none,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('${widget.survey.trail} Survey',
-                          style: Theme.of(context).textTheme.headlineSmall),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              surveyState,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            Text('Tap for options',
-                                style: Theme.of(context).textTheme.bodySmall),
-                          ],
-                        ),
-                      ),
-                      PartlyBoldedText(
-                          style: Theme.of(context).textTheme.bodySmall,
-                          textParts: [
-                            RawText('Led by '),
-                            RawText(widget.survey.leaders.join(' and '),
-                                bold: true)
-                          ]),
-                      PartlyBoldedText(
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textParts: [
-                          RawText('Scribed by '),
-                          RawText(widget.survey.scribe, bold: true)
-                        ],
-                      ),
-                      PartlyBoldedText(
-                          style: Theme.of(context).textTheme.bodySmall,
-                          textParts: [
-                            RawText('Participated in by '),
-                            RawText(widget.survey.participants.join(', '),
-                                bold: true),
-                          ]),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+    return SurveyTile(
+      title: '${widget.survey.trail} Survey',
+      subtitle: surveyState,
+      leaders: widget.survey.leaders,
+      scribe: widget.survey.scribe,
+      participants: widget.survey.participants,
+      onTap: onTap,
     );
   }
 }

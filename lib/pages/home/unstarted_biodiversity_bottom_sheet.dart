@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/edit_survey/edit_survey_page.dart';
-import 'package:kekoldi_surveys/pages/home/delete_survey_modal.dart';
+import 'package:kekoldi_surveys/pages/home/delete_biodiversity_survey_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
-class UnstartedBottomSheet extends StatelessWidget {
+class UnstartedBiodiversityBottomSheet extends StatelessWidget {
   final BiodiversitySurvey survey;
 
-  const UnstartedBottomSheet({super.key, required this.survey});
+  const UnstartedBiodiversityBottomSheet({super.key, required this.survey});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class UnstartedBottomSheet extends StatelessWidget {
                 context: context,
                 barrierDismissible: false,
                 builder: (BuildContext context) =>
-                    DeleteSurveyModal(survey: survey));
+                    DeleteBiodiversitySurveyModal(survey: survey));
           },
           leadingIcon: Icons.delete_forever,
         ),

@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
-import 'package:kekoldi_surveys/widgets/survey_tile.dart';
+import 'package:kekoldi_surveys/pages/home/biodiversity_survey_tile.dart';
 
 class BiodiversitySurveysTab extends StatelessWidget {
   final Db _db = Db();
@@ -22,8 +22,8 @@ class BiodiversitySurveysTab extends StatelessWidget {
 
           return Center(
             child: ListView(
-              children: List.from(
-                  surveys.map((survey) => SurveyTile(survey: survey))),
+              children: List.from(surveys
+                  .map((survey) => BiodiversitySurveyTile(survey: survey))),
             ),
           );
         } else {

@@ -2,6 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
+import 'package:kekoldi_surveys/pages/home/bird_survey_tile.dart';
 
 class BirdSurveysTab extends StatelessWidget {
   final Db _db = Db();
@@ -21,7 +22,8 @@ class BirdSurveysTab extends StatelessWidget {
 
           return Center(
             child: ListView(
-              children: List.from(surveys.map((survey) => Text(survey.trail))),
+              children: List.from(
+                  surveys.map((survey) => BirdSurveyTile(survey: survey))),
             ),
           );
         } else {
