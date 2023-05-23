@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
 import 'package:kekoldi_surveys/constants/trails.dart';
+import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:localstorage/localstorage.dart';
@@ -12,6 +13,7 @@ class Db {
   static const _biodiversitySurveyConfigurationKey =
       '_biodiversitySurveyConfiguration';
   static const _biodiversityTrailsKey = 'biodiversityTrails';
+  static const _birdSurveysKey = 'birdSurveys';
 
   final _storage = LocalStorage(filePath);
 
@@ -29,7 +31,7 @@ class Db {
   Future<void> updateBiodiversitySurvey(BiodiversitySurvey survey) async {
     await _ready;
 
-    final surveys = await getBiodiveristySurveys();
+    final surveys = await getBiodiversitySurveys();
     final updatedSurveys = List.from(surveys.map(
         (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id
             ? survey.toJson()
@@ -41,14 +43,14 @@ class Db {
   Future<void> deleteBiodiversitySurvey(BiodiversitySurvey survey) async {
     await _ready;
 
-    final surveys = await getBiodiveristySurveys();
+    final surveys = await getBiodiversitySurveys();
     final updatedSurveys = List.from(surveys.whereNot(
         (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id));
 
     _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
-  Future<List<BiodiversitySurvey>> getBiodiveristySurveys() async {
+  Future<List<BiodiversitySurvey>> getBiodiversitySurveys() async {
     await _ready;
     final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
 
@@ -62,11 +64,41 @@ class Db {
   Future<BiodiversitySurvey> getBiodiversitySurvey(String id) async {
     await _ready;
 
-    final surveys = await getBiodiveristySurveys();
+    final surveys = await getBiodiversitySurveys();
     final BiodiversitySurvey survey =
         surveys.firstWhere((BiodiversitySurvey survey) => survey.id == id);
 
     return survey;
+  }
+
+  Future<List<BirdSurvey>> getBirdSurveys() async {
+    await _ready;
+
+    final surveysData = _storage.getItem(_birdSurveysKey) ?? [];
+
+    final surveysJson = List.from(surveysData
+        .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
+
+    return List.from(surveysJson.map((json) => BirdSurvey.fromJson(json)));
+  }
+
+  Future<BirdSurvey> getBirdSurvey(String id) async {
+    await _ready;
+
+    final surveys = await getBirdSurveys();
+    final BirdSurvey survey =
+        surveys.firstWhere((BirdSurvey survey) => survey.id == id);
+
+    return survey;
+  }
+
+  Future<void> createBirdSurvey(BirdSurvey survey) async {
+    await _ready;
+
+    final surveysData = _storage.getItem(_birdSurveysKey) ?? [];
+    final surveys = [...surveysData, survey.toJson()];
+
+    _insert(_birdSurveysKey, surveys);
   }
 
   Future<SurveyConfiguration> getSurveyConfiguration() async {
