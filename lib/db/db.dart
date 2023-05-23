@@ -101,6 +101,16 @@ class Db {
     _insert(_birdSurveysKey, surveys);
   }
 
+  Future<void> deleteBirdSurvey(BirdSurvey survey) async {
+    await _ready;
+
+    final surveys = await getBirdSurveys();
+    final updatedSurveys = List.from(surveys
+        .whereNot((BirdSurvey loadedSurvey) => loadedSurvey.id == survey.id));
+
+    _insert(_birdSurveysKey, updatedSurveys);
+  }
+
   Future<SurveyConfiguration> getSurveyConfiguration() async {
     await _ready;
 
