@@ -14,7 +14,8 @@ class DeleteSurveyModal extends StatelessWidget {
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => const HomePage()),
           (route) => false);
     }
   }

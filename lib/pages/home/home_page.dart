@@ -6,14 +6,16 @@ import 'package:kekoldi_surveys/pages/settings/settings_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int? initialTabIndex;
+
+  const HomePage({super.key, this.initialTabIndex});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  int _tabIndex = 0;
+  late int _tabIndex = widget.initialTabIndex ?? 0;
 
   late final List<String> _titles = [
     'Biodiversity Surveys',
@@ -22,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   late final List<Widget> _children = [
     BiodiversitySurveysTab(),
-    const BirdSurveysTab(),
+    BirdSurveysTab(),
   ];
 
   final List<Widget> _fabTitles = [
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   late final List<VoidCallback> _fabActions = [
     _navigateToAddBiodiversitySurveyPage,
-    _navigateToAddBiodiversitySurveyPage,
+    _navigateToAddBirdSurveyPage,
   ];
 
   void onTabTap(int index) => setState(() {
@@ -53,6 +55,10 @@ class _HomePageState extends State<HomePage> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) =>
               const AddBiodiversitySurveyPage()));
+
+  void _navigateToAddBirdSurveyPage() =>
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => const AddBirdSurveyPage()));
 
   void _navigateToSettingsPage() =>
       Navigator.of(context).push(MaterialPageRoute(
@@ -82,7 +88,7 @@ class _HomePageState extends State<HomePage> {
           onTap: onTabTap,
         ),
         fabLabel: _fabTitles[_tabIndex],
-        onFabPress: _navigateToAddBiodiversitySurveyPage,
+        onFabPress: _fabActions[_tabIndex],
         child: _children[_tabIndex]);
   }
 }

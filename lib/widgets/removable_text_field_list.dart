@@ -9,6 +9,7 @@ class RemovableTextFieldList extends StatelessWidget {
   final Function(int index, String text) onUpdateItem;
   final Function(int index) onRemoveItem;
   final EdgeInsetsGeometry? inputPadding;
+  final int? maxItems;
 
   const RemovableTextFieldList({
     super.key,
@@ -19,7 +20,12 @@ class RemovableTextFieldList extends StatelessWidget {
     required this.onUpdateItem,
     required this.onRemoveItem,
     this.inputPadding,
+    this.maxItems,
   });
+
+  bool get newItemAllowed =>
+      (items.isEmpty || items.whereNotNull().last.isNotEmpty) &&
+      (maxItems == null ? true : items.whereNotNull().length < maxItems!);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class RemovableTextFieldList extends StatelessWidget {
                       onChanged: (String value) => onUpdateItem(index, value),
                     ),
                   ))),
-        if (items.isEmpty || items.whereNotNull().last.isNotEmpty)
+        if (newItemAllowed)
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 16),
               child: GestureDetector(

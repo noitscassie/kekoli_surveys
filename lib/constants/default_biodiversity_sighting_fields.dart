@@ -3,7 +3,7 @@ import 'package:kekoldi_surveys/constants/substrates.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 
-final List<InputFieldConfig> defaultSurveyFields = [
+final List<InputFieldConfig> defaultBiodiversitySightingFields = [
   InputFieldConfig.number(label: 'Quantity', required: true),
   InputFieldConfig.select(
       label: 'Height',

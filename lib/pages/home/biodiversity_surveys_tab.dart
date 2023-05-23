@@ -12,7 +12,7 @@ class BiodiversitySurveysTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<BiodiversitySurvey>>(
-      future: _db.getBiodiveristySurveys(),
+      future: _db.getBiodiversitySurveys(),
       builder: (BuildContext context,
           AsyncSnapshot<List<BiodiversitySurvey>> snapshot) {
         if (snapshot.hasData) {

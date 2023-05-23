@@ -24,10 +24,10 @@ class SelectDropdownInputField extends StatelessWidget {
               .map((String option) =>
                   DropdownMenuItem(value: option, child: Text(option)))
               .toList(),
-          onChanged: (String? newSubstrate) {
-            if (newSubstrate == null) return;
+          onChanged: (String? newValue) {
+            if (newValue == null) return;
 
-            onChange(newSubstrate);
+            onChange(newValue);
           }),
     );
   }

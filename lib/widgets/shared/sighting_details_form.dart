@@ -43,7 +43,7 @@ class SightingDetailsForm extends StatelessWidget {
             children: configuration.fields
                 .map((InputFieldConfig config) => config.inputField(
                     value: attributes[config.label],
-                    onChange: (String value) =>
+                    onChange: (dynamic value) =>
                         onAttributeChange(config.label, value)))
                 .toList(),
           ),

@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/constants/default_biodiversity_sighting_fields.dart';
 import 'package:kekoldi_surveys/constants/default_csv_columns.dart';
-import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 
 final defaultSurveyConfiguration =
-    SurveyConfiguration(defaultSurveyFields, defaultCsvColumns);
+    SurveyConfiguration(defaultBiodiversitySightingFields, defaultCsvColumns);
 
 class SurveyConfiguration with DiagnosticableTreeMixin {
   List<InputFieldConfig> fields;

@@ -32,8 +32,9 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
   List<String> get formattedLeaders =>
       List.from(leaders.map((leader) => leader.trim()));
   List<String> get formattedParticipants => List.from(participants
-      .where((participant) => participant != null && participant.isNotEmpty)
-      .map((participant) => participant!.trim()));
+      .whereNotNull()
+      .where((participant) => participant.isNotEmpty)
+      .map((participant) => participant.trim()));
 
   final ScrollController _controller = ScrollController();
 
@@ -65,7 +66,8 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => const HomePage()),
           (route) => false);
     }
   }
