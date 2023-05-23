@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/db/db.dart';
+import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:uuid/uuid.dart';
 
 enum BirdSurveyType {
@@ -27,6 +28,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
   BirdSurveyType type;
   DateTime? date;
   String? weather;
+  final List<BirdSurveySegment> segments;
 
   static final Db _db = Db();
 
@@ -36,6 +38,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
       required this.scribe,
       required this.participants,
       required this.type,
+      required this.segments,
       this.weather})
       : id = const Uuid().v4(),
         createdAt = DateTime.now();
@@ -93,5 +96,6 @@ class BirdSurvey with DiagnosticableTreeMixin {
     properties.add(EnumProperty<BirdSurveyType>('type', type));
     properties.add(DiagnosticsProperty<DateTime?>('date', date));
     properties.add(StringProperty('weather', weather));
+    properties.add(IterableProperty<BirdSurveySegment>('segments', segments));
   }
 }

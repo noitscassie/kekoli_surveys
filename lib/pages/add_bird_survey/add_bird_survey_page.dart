@@ -1,7 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/bird_survey_trails.dart';
 import 'package:kekoldi_surveys/constants/default_bird_survey_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
+import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -27,6 +29,12 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   List<String?> get leaders => attributes[leadersField];
   String get scribe => attributes[scribeField];
   List<String?> get participants => attributes[participantsField];
+  List<BirdSurveySegment> get segments => (defaultBirdSurveyTrails
+              .firstOrNullWhere((loadedTrail) => loadedTrail.name == trail)
+              ?.segments ??
+          [])
+      .map((String segment) => BirdSurveySegment(name: segment))
+      .toList();
 
   List<String> get formattedLeaders =>
       List.from(leaders.whereNotNull().map((leader) => leader.trim()));
@@ -69,6 +77,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       scribe: scribe,
       participants: formattedParticipants,
       type: BirdSurveyType.byPrettyName(surveyType),
+      segments: segments,
     );
 
     if (context.mounted) {

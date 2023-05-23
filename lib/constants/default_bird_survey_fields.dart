@@ -11,7 +11,7 @@ const participantsField = 'Add Participants';
 final List<InputFieldConfig> defaultBirdSurveyFields = [
   InputFieldConfig.select(
     label: trailField,
-    options: defaultBirdSurveyTrails,
+    options: defaultBirdSurveyTrails.map((trail) => trail.name).toList(),
     defaultValue: defaultBirdSurveyTrails.first,
     required: true,
     sortOptions: false,
