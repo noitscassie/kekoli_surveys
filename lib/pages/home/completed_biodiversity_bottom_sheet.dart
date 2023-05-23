@@ -5,10 +5,10 @@ import 'package:kekoldi_surveys/pages/home/delete_survey_modal.dart';
 import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
-class CompletedBottomSheet extends StatelessWidget {
+class CompletedBiodiversityBottomSheet extends StatelessWidget {
   final BiodiversitySurvey survey;
 
-  const CompletedBottomSheet({super.key, required this.survey});
+  const CompletedBiodiversityBottomSheet({super.key, required this.survey});
 
   @override
   Widget build(BuildContext context) {

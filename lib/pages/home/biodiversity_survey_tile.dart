@@ -9,16 +9,16 @@ import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
-class SurveyTile extends StatefulWidget {
+class BiodiversitySurveyTile extends StatefulWidget {
   final BiodiversitySurvey survey;
 
-  const SurveyTile({super.key, required this.survey});
+  const BiodiversitySurveyTile({super.key, required this.survey});
 
   @override
-  State<SurveyTile> createState() => _SurveyTileState();
+  State<BiodiversitySurveyTile> createState() => _BiodiversitySurveyTileState();
 }
 
-class _SurveyTileState extends State<SurveyTile> {
+class _BiodiversitySurveyTileState extends State<BiodiversitySurveyTile> {
   void onTap() {
     showModalBottomSheet(
         context: context,
