@@ -4,7 +4,7 @@ import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/home/completed_biodiversity_bottom_sheet.dart';
 import 'package:kekoldi_surveys/pages/home/in_progress_biodiversity_bottom_sheet.dart';
 import 'package:kekoldi_surveys/pages/home/unstarted_biodiversity_bottom_sheet.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
+import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/shared/survey_tile.dart';
@@ -37,7 +37,7 @@ class _BiodiversitySurveyTileState extends State<BiodiversitySurveyTile> {
   void navigateToOngoingSurvey() =>
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
-              OngoingSurveyPage(survey: widget.survey)));
+              OngoingBiodiversitySurveyPage(survey: widget.survey)));
 
   void viewSurveyDetails() => Navigator.of(context).push(MaterialPageRoute(
       builder: (BuildContext context) =>

@@ -8,19 +8,21 @@ import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_tile.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
-class OngoingSurveyPage extends StatefulWidget {
+class OngoingBiodiversitySurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
 
-  const OngoingSurveyPage({super.key, required this.survey});
+  const OngoingBiodiversitySurveyPage({super.key, required this.survey});
 
   @override
-  State<OngoingSurveyPage> createState() => _OngoingSurveyPageState();
+  State<OngoingBiodiversitySurveyPage> createState() =>
+      _OngoingBiodiversitySurveyPageState();
 }
 
-class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
+class _OngoingBiodiversitySurveyPageState
+    extends State<OngoingBiodiversitySurveyPage> {
   late BiodiversitySurvey statefulSurvey = widget.survey;
 
-  void navigateToChooseSpeciesPage(BuildContext context) =>
+  void _navigateToChooseSpeciesPage() =>
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) =>
               ChooseSpeciesPage(survey: statefulSurvey)));
@@ -28,7 +30,7 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
   Map<String, List<Sighting>> get groupedSightings =>
       widget.survey.sightings.groupBy((sighting) => sighting.species);
 
-  void onCompleteSurvey() => showDialog(
+  void _onCompleteSurvey() => showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => CompleteSurveyModal(
@@ -36,11 +38,9 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
             onChangeSurvey: updateSurvey,
           ));
 
-  void updateSurvey(BiodiversitySurvey survey) {
-    setState(() {
-      statefulSurvey = survey;
-    });
-  }
+  void updateSurvey(BiodiversitySurvey survey) => setState(() {
+        statefulSurvey = survey;
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +50,9 @@ class _OngoingSurveyPageState extends State<OngoingSurveyPage> {
       fabLabel: const Row(
         children: [Text('Add New Sighting'), Icon(Icons.add)],
       ),
-      onFabPress: () => navigateToChooseSpeciesPage(context),
+      onFabPress: _navigateToChooseSpeciesPage,
       actions: [
-        IconButton(onPressed: onCompleteSurvey, icon: const Icon(Icons.check))
+        IconButton(onPressed: _onCompleteSurvey, icon: const Icon(Icons.check))
       ],
       child: Padding(
         padding: const EdgeInsets.only(bottom: 100),

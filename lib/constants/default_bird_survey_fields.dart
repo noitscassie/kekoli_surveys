@@ -12,7 +12,7 @@ final List<InputFieldConfig> defaultBirdSurveyFields = [
   InputFieldConfig.select(
     label: trailField,
     options: defaultBirdSurveyTrails.map((trail) => trail.name).toList(),
-    defaultValue: defaultBirdSurveyTrails.first,
+    defaultValue: defaultBirdSurveyTrails.first.name,
     required: true,
     sortOptions: false,
   ),

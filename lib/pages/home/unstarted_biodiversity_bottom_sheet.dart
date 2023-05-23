@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/edit_survey/edit_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/delete_biodiversity_survey_modal.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_survey_page.dart';
+import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
 class UnstartedBiodiversityBottomSheet extends StatelessWidget {
@@ -21,7 +21,7 @@ class UnstartedBiodiversityBottomSheet extends StatelessWidget {
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                     builder: (BuildContext context) =>
-                        OngoingSurveyPage(survey: survey)),
+                        OngoingBiodiversitySurveyPage(survey: survey)),
                 (route) => false);
           },
           leadingIcon: Icons.start,
