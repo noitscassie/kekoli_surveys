@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
+import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
 
 class SpeciesSightingsList extends StatefulWidget {
   final String json;
@@ -25,18 +26,6 @@ class _SpeciesSightingsListState extends State<SpeciesSightingsList> {
   late Sighting sighting = widget.sightings.last;
 
   Map<String, dynamic> get attributes => sighting.data;
-
-  Widget _modifyTallyIcon(
-          {required VoidCallback onTap, required IconData icon}) =>
-      InkWell(
-        onTap: onTap,
-        child: CircleAvatar(
-            radius: 15,
-            child: Icon(
-              icon,
-              size: 15,
-            )),
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -75,33 +64,11 @@ class _SpeciesSightingsListState extends State<SpeciesSightingsList> {
               ),
             ),
           ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _modifyTallyIcon(
-                      icon: Icons.exposure_minus_1, onTap: widget.onDecrement),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: CircleAvatar(
-                        radius: 25,
-                        child: Text(
-                          widget.sightings.length.toString(),
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        )),
-                  ),
-                  _modifyTallyIcon(
-                      icon: Icons.exposure_plus_1, onTap: widget.onIncrement),
-                ],
-              ),
-              Text(
-                'Count',
-                style: Theme.of(context).textTheme.bodySmall,
-              )
-            ],
-          )
+          SpeciesListCountAndTallies(
+            count: widget.sightings.length.toString(),
+            onIncrement: widget.onIncrement,
+            onDecrement: widget.onDecrement,
+          ),
         ],
       ),
     );
