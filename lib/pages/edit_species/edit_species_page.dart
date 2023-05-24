@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/species.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/edit_sighting_details/edit_sighting_details_page.dart';
@@ -30,8 +31,10 @@ class EditSpeciesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpeciesSelector(
-        pageTitle: 'Choose a species',
-        initialSearchTerm: sightings.last.species,
-        onSelect: (String species) => navigateToEditDetails(context, species));
+      pageTitle: 'Choose a species',
+      initialSearchTerm: sightings.last.species,
+      onSelect: (String species) => navigateToEditDetails(context, species),
+      species: biodiversitySpecies,
+    );
   }
 }

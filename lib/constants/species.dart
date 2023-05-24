@@ -1,4 +1,4 @@
-final List<String> species = [
+final List<String> biodiversitySpecies = [
   "Acadian Flycatcher",
   "Agami Heron",
   "Alder Flycatcher",

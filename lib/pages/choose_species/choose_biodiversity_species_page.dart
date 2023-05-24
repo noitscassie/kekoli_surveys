@@ -18,7 +18,9 @@ class ChooseSpeciesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpeciesSelector(
-        pageTitle: 'Choose a species',
-        onSelect: (String species) => navigateToAddDetails(context, species));
+      pageTitle: 'Choose a species',
+      onSelect: (String species) => navigateToAddDetails(context, species),
+      species: biodiversitySpecies,
+    );
   }
 }

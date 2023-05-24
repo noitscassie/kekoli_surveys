@@ -1,6 +1,5 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/species.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
@@ -8,12 +7,14 @@ class SpeciesSelector extends StatefulWidget {
   final String pageTitle;
   final String initialSearchTerm;
   final Function(String species) onSelect;
+  final List<String> species;
 
   const SpeciesSelector(
       {super.key,
       this.initialSearchTerm = '',
       required this.onSelect,
-      required this.pageTitle});
+      required this.pageTitle,
+      required this.species});
 
   @override
   State<SpeciesSelector> createState() => _SpeciesSelectorState();
@@ -22,7 +23,7 @@ class SpeciesSelector extends StatefulWidget {
 class _SpeciesSelectorState extends State<SpeciesSelector> {
   late String searchTerm = widget.initialSearchTerm;
 
-  List<String> get allSpecies => species.distinct().toList();
+  late List<String> allSpecies = widget.species;
 
   bool matchesSearchTerm(String species) {
     final searchableName = species.toLowerCase();
