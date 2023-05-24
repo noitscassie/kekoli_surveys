@@ -81,11 +81,15 @@ class BirdSurvey with DiagnosticableTreeMixin {
   }
 
   SurveyState get state {
-    return SurveyState.unstarted;
-    // if (startAt == null) return SurveyState.unstarted;
-    // if (endAt == null) return SurveyState.inProgress;
+    if (segments.all((segment) => segment.state == SurveyState.completed)) {
+      return SurveyState.completed;
+    }
 
-    return SurveyState.completed;
+    if (segments.all((segment) => segment.state == SurveyState.unstarted)) {
+      return SurveyState.unstarted;
+    }
+
+    return SurveyState.inProgress;
   }
 
   Map<String, dynamic> get attributes => {
@@ -97,7 +101,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
         'trail': trail,
         'createdAt': createdAt.toIso8601String(),
         'type': type.name,
-        'segments': segments,
+        'segments': List.from(segments.map((segment) => segment.toJson())),
       };
 
   String toJson() => jsonEncode(attributes);
