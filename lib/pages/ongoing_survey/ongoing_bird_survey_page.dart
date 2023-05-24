@@ -47,10 +47,6 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
     }
   }
 
-  void updateSurvey(BirdSurvey survey) => setState(() {
-        statefulSurvey = survey;
-      });
-
   @override
   Widget build(BuildContext context) {
     return PageScaffold(

@@ -9,14 +9,14 @@ class AddBirdTallyModal extends StatelessWidget {
   final BirdSurvey survey;
   final BirdSurveySegment segment;
   final Sighting sighting;
-  final Function(BirdSurvey survey) onChangeSurvey;
+  final Function(BirdSurveySegment segment) onChangeSegment;
 
   const AddBirdTallyModal({
     super.key,
     required this.survey,
     required this.segment,
     required this.sighting,
-    required this.onChangeSurvey,
+    required this.onChangeSegment,
   });
 
   void _onConfirm(int quantity) {
@@ -24,7 +24,7 @@ class AddBirdTallyModal extends StatelessWidget {
 
     segment.addSightings(sightings);
     survey.updateSegment(segment);
-    onChangeSurvey(survey);
+    onChangeSegment(segment);
   }
 
   @override

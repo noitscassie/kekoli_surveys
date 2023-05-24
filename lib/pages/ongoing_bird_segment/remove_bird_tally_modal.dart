@@ -9,13 +9,13 @@ class RemoveBirdTallyModal extends StatelessWidget {
   final BirdSurvey survey;
   final BirdSurveySegment segment;
   final List<Sighting> sightings;
-  final Function(BirdSurvey survey) onChangeSurvey;
+  final Function(BirdSurveySegment segment) onChangeSegment;
 
   const RemoveBirdTallyModal({
     super.key,
     required this.survey,
     required this.sightings,
-    required this.onChangeSurvey,
+    required this.onChangeSegment,
     required this.segment,
   });
 
@@ -24,9 +24,7 @@ class RemoveBirdTallyModal extends StatelessWidget {
   void _onConfirm(BuildContext context) {
     segment.removeSighting(sighting);
     survey.updateSegment(segment);
-    onChangeSurvey(survey);
-
-    Navigator.of(context).pop();
+    onChangeSegment(segment);
   }
 
   @override
