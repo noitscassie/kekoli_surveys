@@ -31,43 +31,29 @@ class _ConfirmSightingDetailsDialogState
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.sighting.species,
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          ...widget.sighting
-              .orderedData(widget.survey)
-              .entries
-              .filter((entry) => entry.value.isNotEmpty)
-              .mapIndexed(
-                (index, entry) => Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: PartlyBoldedText(
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textParts: [
-                      RawText('${entry.key}: ', bold: true),
-                      RawText(entry.value),
-                    ],
-                  ),
-                ),
-              )
-        ],
+    return DialogScaffold(
+      title: widget.sighting.species,
+      primaryCta: PrimaryCta(
+        text: 'Add Sighting',
+        onTap: _addSighting,
       ),
-      actionsAlignment: MainAxisAlignment.spaceBetween,
-      actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-      actions: [
-        TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text(
-              'Back',
-            )),
-        ElevatedButton(
-            onPressed: addSighting, child: const Text('Add Sighting')),
+      children: [
+        ...widget.sighting
+            .orderedData(widget.survey.configuration.fields)
+            .entries
+            .filter((entry) => entry.value.isNotEmpty)
+            .mapIndexed(
+              (index, entry) => Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: PartlyBoldedText(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textParts: [
+                    RawText('${entry.key}: ', bold: true),
+                    RawText(entry.value),
+                  ],
+                ),
+              ),
+            )
       ],
     );
   }

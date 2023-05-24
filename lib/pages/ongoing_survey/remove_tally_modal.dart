@@ -36,7 +36,7 @@ class RemoveTallyModal extends StatelessWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           ...sighting
-              .orderedData(survey)
+              .orderedData(survey.configuration.fields)
               .entries
               .filter((entry) => entry.value.isNotEmpty)
               .mapIndexed(

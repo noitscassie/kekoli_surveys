@@ -45,7 +45,7 @@ class _AddTallyModalState extends State<AddTallyModal> {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           ...widget.sighting
-              .orderedData(widget.survey)
+              .orderedData(widget.survey.configuration.fields)
               .entries
               .filter((entry) => entry.value.isNotEmpty)
               .mapIndexed(

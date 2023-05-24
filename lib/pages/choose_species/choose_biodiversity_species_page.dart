@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/species.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 
-class ChooseSpeciesPage extends StatelessWidget {
+class ChooseBiodiversitySpeciesPage extends StatelessWidget {
   final BiodiversitySurvey survey;
 
-  const ChooseSpeciesPage({super.key, required this.survey});
+  const ChooseBiodiversitySpeciesPage({super.key, required this.survey});
 
   void navigateToAddDetails(BuildContext context, String species) =>
       Navigator.of(context).push(MaterialPageRoute(

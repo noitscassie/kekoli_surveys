@@ -52,7 +52,7 @@ class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
       onFabPress: updateSighting,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
-      configuration: widget.survey.configuration,
+      fields: widget.survey.configuration.fields,
     );
   }
 }

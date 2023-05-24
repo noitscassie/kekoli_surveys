@@ -48,7 +48,7 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
       onFabPress: showConfirmationDialog,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
-      configuration: widget.survey.configuration,
+      fields: widget.survey.configuration.fields,
     );
   }
 }
