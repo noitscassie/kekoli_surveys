@@ -6,7 +6,7 @@ import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
 import 'package:kekoldi_surveys/pages/edit_species/edit_species_page.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/add_tally_modal.dart';
+import 'package:kekoldi_surveys/pages/ongoing_survey/add_biodiversity_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/remove_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/species_sightings_list.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
@@ -32,7 +32,7 @@ class _SightingTileState extends State<SightingTile> {
   void onIncrement(Sighting sighting) => showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => AddTallyModal(
+      builder: (BuildContext context) => AddBiodiversityTallyModal(
             sighting: sighting,
             survey: widget.survey,
             onChangeSurvey: widget.onChangeSurvey,
