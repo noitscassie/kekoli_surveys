@@ -28,12 +28,7 @@ class SightingDetailsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageScaffold(
         title: species,
-        fabLabel: Row(
-          children: [
-            Text('Add $species'),
-            const Icon(Icons.add),
-          ],
-        ),
+        fabLabel: fabLabel,
         isFabValid: _valid,
         onFabPress: onFabPress,
         child: Padding(

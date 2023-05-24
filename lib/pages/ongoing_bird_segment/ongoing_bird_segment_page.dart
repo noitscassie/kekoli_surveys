@@ -4,6 +4,7 @@ import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/choose_species/choose_bird_species_page.dart';
+import 'package:kekoldi_surveys/pages/edit_species/edit_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/add_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
@@ -57,13 +58,23 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
           builder: (BuildContext context) => ChooseBirdSpeciesPage(
               survey: widget.survey, segment: widget.segment)));
 
+  void _onEdit(List<Sighting> sightings) => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => EditBirdSpeciesPage(
+            survey: widget.survey,
+            sightings: sightings,
+            segment: widget.segment,
+          ),
+        ),
+      );
+
   void _showBottomSheet(List<Sighting> sightings) => showModalBottomSheet(
       context: context,
       builder: (BuildContext context) => SightingOptionsSheet(
             onIncrement: () => _onIncrement(sightings.last),
             onDecrement: () => _onDecrement(sightings),
-            onEditMostRecent: () {},
-            onEditAll: () {},
+            onEditMostRecent: () => _onEdit([sightings.last]),
+            onEditAll: () => _onEdit(sightings),
           ));
 
   @override

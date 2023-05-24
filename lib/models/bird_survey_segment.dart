@@ -61,6 +61,20 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
             (Sighting sighting) => sighting.id == sightingToRemove.id),
       );
 
+  void updateSightings(List<Sighting> updatedSightings) {
+    final idsToUpdate =
+        updatedSightings.map((Sighting sighting) => sighting.id);
+
+    final newSightings = List<Sighting>.from(sightings.map(
+        (Sighting sighting) => idsToUpdate.contains(sighting.id)
+            ? updatedSightings.firstOrNullWhere((Sighting updatedSighting) =>
+                    updatedSighting.id == sighting.id) ??
+                sighting
+            : sighting));
+
+    sightings = newSightings;
+  }
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

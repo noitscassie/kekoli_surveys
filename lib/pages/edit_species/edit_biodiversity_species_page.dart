@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/species.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/pages/edit_sighting_details/edit_sighting_details_page.dart';
+import 'package:kekoldi_surveys/pages/edit_sighting_details/edit_biodiversity_sighting_details_page.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 
-class EditSpeciesPage extends StatelessWidget {
+class EditBiodiversitySpeciesPage extends StatelessWidget {
   final List<Sighting> sightings;
   final BiodiversitySurvey survey;
 
-  const EditSpeciesPage(
-      {super.key, required this.survey, required this.sightings});
+  const EditBiodiversitySpeciesPage({
+    super.key,
+    required this.survey,
+    required this.sightings,
+  });
 
   void navigateToEditDetails(BuildContext context, String species) async {
     for (var sighting in sightings) {
@@ -21,7 +24,8 @@ class EditSpeciesPage extends StatelessWidget {
 
     if (context.mounted) {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => EditSightingDetailsPage(
+          builder: (BuildContext context) =>
+              EditBiodiversitySightingDetailsPage(
                 survey: survey,
                 sightings: sightings,
               )));

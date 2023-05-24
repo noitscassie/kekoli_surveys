@@ -4,19 +4,20 @@ import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
-class EditSightingDetailsPage extends StatefulWidget {
+class EditBiodiversitySightingDetailsPage extends StatefulWidget {
   final BiodiversitySurvey survey;
   final List<Sighting> sightings;
 
-  const EditSightingDetailsPage(
+  const EditBiodiversitySightingDetailsPage(
       {super.key, required this.survey, required this.sightings});
 
   @override
-  State<EditSightingDetailsPage> createState() =>
-      _EditSightingDetailsPageState();
+  State<EditBiodiversitySightingDetailsPage> createState() =>
+      _EditBiodiversitySightingDetailsPageState();
 }
 
-class _EditSightingDetailsPageState extends State<EditSightingDetailsPage> {
+class _EditBiodiversitySightingDetailsPageState
+    extends State<EditBiodiversitySightingDetailsPage> {
   late Map<String, dynamic> attributes = widget.sightings.last.data;
 
   void onAttributeChange(String key, String value) => setState(() {
