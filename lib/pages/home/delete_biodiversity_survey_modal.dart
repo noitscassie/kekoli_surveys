@@ -26,12 +26,14 @@ class DeleteBiodiversitySurveyModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return DialogScaffold(
       title: 'Delete ${survey.trail} survey?',
-      content:
-          'Are you sure you want to delete this survey? This cannot be undone.',
       primaryCta: DangerCta(
         text: 'Delete Survey',
         onTap: () => _deleteSurvey(context),
       ),
+      children: const [
+        Text(
+            'Are you sure you want to delete this survey? This cannot be undone.')
+      ],
     );
   }
 }

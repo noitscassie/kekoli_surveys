@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_sighting_details_dialog.dart';
+import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_biodiversity_sighting_details_dialog.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
 class AddSightingDetailsPage extends StatefulWidget {
@@ -26,7 +26,8 @@ class _AddSightingDetailsPageState extends State<AddSightingDetailsPage> {
   void showConfirmationDialog() => showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => ConfirmSightingDetailsDialog(
+      builder: (BuildContext context) =>
+          ConfirmBiodiversitySightingDetailsDialog(
             survey: widget.survey,
             sighting: Sighting(
               species: widget.species,

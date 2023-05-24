@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class DialogScaffold extends StatelessWidget {
   final String title;
-  final String content;
+  final List<Widget> children;
   final Widget primaryCta;
 
   const DialogScaffold({
     super.key,
     required this.title,
-    required this.content,
+    required this.children,
     required this.primaryCta,
   });
 
@@ -19,14 +19,14 @@ class DialogScaffold extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
             Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(content),
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
             ),
+            ...children,
           ]),
       actionsAlignment: MainAxisAlignment.spaceBetween,
       actionsPadding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
