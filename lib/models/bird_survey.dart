@@ -53,11 +53,11 @@ class BirdSurvey with DiagnosticableTreeMixin {
         type = BirdSurveyType.values.byName(json['type']),
         weather = json['weather'],
         createdAt = DateTime.parse(json['createdAt']),
-        segments = List<BirdSurveySegment>.from((json['segments'] ?? []).map(
-            (segment) => BirdSurveySegment.fromJson(
-                segment.runtimeType == String
-                    ? jsonDecode(segment)
-                    : segment)));
+        segments = List<BirdSurveySegment>.from(
+            (json['segments'] ?? []).map((segment) {
+          return BirdSurveySegment.fromJson(
+              segment.runtimeType == String ? jsonDecode(segment) : segment);
+        }));
 
   static Future<BirdSurvey> create(
       {required String trail,
