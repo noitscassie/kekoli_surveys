@@ -79,8 +79,8 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
 
   Map<String, dynamic> get attributes => {
         'id': id,
-        'startAt': startAt.toString(),
-        'endAt': endAt.toString(),
+        'startAt': startAt?.toIso8601String(),
+        'endAt': endAt?.toIso8601String(),
         'weather': weather,
         'leaders': leaders,
         'scribe': scribe,
