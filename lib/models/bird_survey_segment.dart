@@ -47,9 +47,27 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
 
   String toJson() => jsonEncode(attributes);
 
+  void start() => startAt = DateTime.now();
+
+  void end() => endAt = DateTime.now();
+
+  void addSighting(Sighting sighting) => sightings = [sighting, ...sightings];
+
+  void addSightings(List<Sighting> newSightings) =>
+      sightings = [...newSightings, ...sightings];
+
+  void removeSighting(Sighting sightingToRemove) => sightings = List.from(
+        sightings.whereNot(
+            (Sighting sighting) => sighting.id == sightingToRemove.id),
+      );
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties.add(StringProperty('name', name));
+    properties.add(StringProperty('id', id));
+    properties.add(IterableProperty<Sighting>('sightings', sightings));
+    properties.add(DiagnosticsProperty<DateTime?>('startAt', startAt));
+    properties.add(DiagnosticsProperty<DateTime?>('endAt', endAt));
   }
 }

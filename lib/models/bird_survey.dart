@@ -29,7 +29,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
   BirdSurveyType type;
   DateTime? date;
   String? weather;
-  final List<BirdSurveySegment> segments;
+  List<BirdSurveySegment> segments;
 
   static final Db _db = Db();
 
@@ -105,6 +105,13 @@ class BirdSurvey with DiagnosticableTreeMixin {
       };
 
   String toJson() => jsonEncode(attributes);
+
+  Future<void> updateSegment(BirdSurveySegment updatedSegment) async {
+    segments = List.from(segments.map((segment) =>
+        segment.id == updatedSegment.id ? updatedSegment : segment));
+
+    _db.updateBirdSurvey(this);
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
