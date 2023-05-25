@@ -4,24 +4,24 @@ import 'package:kekoldi_surveys/pages/home/delete_bird_survey_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_bird_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
-class UnstartedBirdBottomSheet extends StatelessWidget {
+class BirdSurveyBottomSheet extends StatelessWidget {
   final BirdSurvey survey;
 
-  const UnstartedBirdBottomSheet({super.key, required this.survey});
+  const BirdSurveyBottomSheet({super.key, required this.survey});
 
   @override
   Widget build(BuildContext context) {
     return BottomSheetOptions(
       options: [
         BottomSheetOption(
-          text: 'Start ${survey.type.title}',
+          text: 'View ${survey.type.title}',
           onPress: () {
-            // survey.start();
-            // Navigator.of(context).pushAndRemoveUntil(
-            //     MaterialPageRoute(
-            //         builder: (BuildContext context) =>
-            //             OngoingSurveyPage(survey: survey)),
-            //         (route) => false);
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    OngoingBirdSurveyPage(survey: survey),
+              ),
+            );
           },
           leadingIcon: Icons.start,
         ),

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
-import 'package:kekoldi_surveys/pages/home/completed_bird_bottom_sheet.dart';
-import 'package:kekoldi_surveys/pages/home/in_progress_bird_bottom_sheet.dart';
-import 'package:kekoldi_surveys/pages/home/unstarted_bird_bottom_sheet.dart';
+import 'package:kekoldi_surveys/pages/home/bird_survey_bottom_sheet.dart';
 import 'package:kekoldi_surveys/widgets/shared/survey_tile.dart';
 
 class BirdSurveyTile extends StatelessWidget {
@@ -22,20 +20,11 @@ class BirdSurveyTile extends StatelessWidget {
     }
   }
 
-  void onTap(BuildContext context) {
+  void onTap(BuildContext context) =>
     showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          switch (survey.state) {
-            case SurveyState.unstarted:
-              return UnstartedBirdBottomSheet(survey: survey);
-            case SurveyState.inProgress:
-              return InProgressBirdBottomSheet(survey: survey);
-            case SurveyState.completed:
-              return CompletedBirdBottomSheet(survey: survey);
-          }
-        });
-  }
+      context: context,
+      builder: (BuildContext context) => BirdSurveyBottomSheet(survey: survey),
+    );
 
   @override
   Widget build(BuildContext context) {
