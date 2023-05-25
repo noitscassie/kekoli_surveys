@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/constants/survey_state.dart';
+import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:uuid/uuid.dart';
 
@@ -47,9 +48,17 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
 
   String toJson() => jsonEncode(attributes);
 
-  void start() => startAt = DateTime.now();
+  void start(BirdSurvey survey) {
+    startAt = DateTime.now();
 
-  void end() => endAt = DateTime.now();
+    survey.updateSegment(this);
+  }
+
+  void end(BirdSurvey survey) {
+    endAt = DateTime.now();
+
+    survey.updateSegment(this);
+  }
 
   void addSighting(Sighting sighting) => sightings = [sighting, ...sightings];
 

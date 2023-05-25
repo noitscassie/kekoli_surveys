@@ -28,6 +28,8 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
 
   void _onSegmentTap(BirdSurveySegment segment, int index) {
     if (_segmentUnlocked(index)) {
+      segment.start(statefulSurvey);
+
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (BuildContext context) => OngoingBirdSegmentPage(

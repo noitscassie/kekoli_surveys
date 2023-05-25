@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
@@ -8,6 +10,7 @@ import 'package:kekoldi_surveys/pages/edit_species/edit_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/add_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
+import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
@@ -27,10 +30,14 @@ class OngoingBirdSegmentPage extends StatefulWidget {
 }
 
 class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
-  late BirdSurveySegment statefulSegment = widget.segment;
+  late BirdSurveySegment _statefulSegment = widget.segment;
+  late Timer _timer;
+  Duration _timeElapsed = Duration.zero;
+
+  void _completeSegment() {}
 
   void _updateSegment(BirdSurveySegment segment) => setState(() {
-        statefulSegment = segment;
+        _statefulSegment = segment;
       });
 
   void _onIncrement(Sighting sighting) => showDialog(
@@ -77,10 +84,30 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
             onEditAll: () => _onEdit(sightings),
           ));
 
+  void _updateSegmentDuration() => setState(() {
+        _timeElapsed = DateTime.now().difference(_statefulSegment.startAt!);
+      });
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      _timer = Timer.periodic(
+          const Duration(seconds: 1), (timer) => _updateSegmentDuration());
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-      title: '${widget.survey.type.prettyName} ${widget.segment.name}',
+      title:
+          '${widget.survey.type.prettyName} ${widget.segment.name} ${TimeFormats.timeMinutesAndSeconds(_timeElapsed)}',
       fabLabel: const Row(
         children: [
           Text('Add New Bird'),

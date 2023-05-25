@@ -23,4 +23,16 @@ class TimeFormats {
 
   static timeHoursAndMinutes(DateTime time) =>
       '${time.hour}:${time.minute < 10 ? '0${time.minute}' : time.minute}';
+
+  static timeMinutesAndSeconds(Duration duration) {
+    final minutes =
+        _paddedTimePart(duration.inMinutes.remainder(Duration.minutesPerHour));
+
+    final seconds = _paddedTimePart(
+        duration.inSeconds.remainder(Duration.secondsPerMinute));
+
+    return '$minutes:$seconds';
+  }
+
+  static _paddedTimePart(int length) => length.toString().padLeft(2, '0');
 }
