@@ -8,6 +8,7 @@ import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/choose_species/choose_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/edit_species/edit_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/add_bird_tally_modal.dart';
+import 'package:kekoldi_surveys/pages/ongoing_bird_segment/confirm_segment_complete_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
@@ -34,7 +35,10 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
   late Timer _timer;
   Duration _timeElapsed = Duration.zero;
 
-  void _completeSegment() {}
+  void _completeSegment() => showDialog(
+      context: context,
+      builder: (BuildContext context) => ConfirmSegmentCompleteModal(
+          survey: widget.survey, segment: _statefulSegment));
 
   void _updateSegment(BirdSurveySegment segment) => setState(() {
         _statefulSegment = segment;
@@ -115,6 +119,12 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
         ],
       ),
       onFabPress: _navigateToChooseSpeciesPage,
+      actions: [
+        IconButton(
+          onPressed: _completeSegment,
+          icon: const Icon(Icons.check),
+        )
+      ],
       child: Padding(
         padding: const EdgeInsets.only(bottom: 100),
         child: ListView(
