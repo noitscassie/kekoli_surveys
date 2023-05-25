@@ -78,5 +78,6 @@ class Sighting with DiagnosticableTreeMixin {
     properties.add(StringProperty('id', id));
     properties.add(StringProperty('comments', data['comments']));
     properties.add(DiagnosticsProperty<DateTime?>('seenAt', seenAt));
+    properties.add(DiagnosticsProperty<Map<String, dynamic>>('data', data));
   }
 }
