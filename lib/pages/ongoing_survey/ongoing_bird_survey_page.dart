@@ -7,6 +7,7 @@ import 'package:kekoldi_surveys/pages/add_weather/add_weather_page.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/confirm_start_bird_segment_modal.dart';
+import 'package:kekoldi_surveys/pages/view_bird_segment/view_bird_segment_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/data_tile.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -58,15 +59,15 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
           builder: (BuildContext context) =>
               AddWeatherPage(onAddWeather: _onAddWeather)));
 
-  void _navigateToViewSegmentPage(BirdSurveySegment segment) => null;
-  // Navigator.of(context).push(
-  //   MaterialPageRoute(
-  //     builder: (BuildContext context) => OngoingBirdSegmentPage(
-  //       survey: statefulSurvey,
-  //       segment: segment,
-  //     ),
-  //   ),
-  // );
+  void _navigateToViewSegmentPage(BirdSurveySegment segment) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => ViewBirdSegmentPage(
+            survey: _statefulSurvey,
+            segment: segment,
+          ),
+        ),
+      );
 
   void _navigateToOngoingSegmentPage(BirdSurveySegment segment) =>
       Navigator.of(context).push(

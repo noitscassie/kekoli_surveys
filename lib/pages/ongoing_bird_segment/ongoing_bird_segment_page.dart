@@ -143,19 +143,20 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
                           .sortedBy((entry) => entry.key)
                           .map(
                             (entry) => ExpandableListItemChild(
-                                title: entry.key,
-                                subtitle: 'Tap for options',
-                                onTap: () => _showBottomSheet(entry.value),
-                                trailing: SpeciesListCountAndTallies(
-                                  count: entry.value.length.toString(),
-                                  onIncrement: () =>
-                                      _onIncrement(entry.value.last),
-                                  onDecrement: () => _onDecrement(entry.value),
-                                )),
+                              title: entry.key,
+                              subtitle: 'Tap for options',
+                              onTap: () => _showBottomSheet(entry.value),
+                              trailing: SpeciesListCountAndTallies(
+                                count: entry.value.length.toString(),
+                                onIncrement: () =>
+                                    _onIncrement(entry.value.last),
+                                onDecrement: () => _onDecrement(entry.value),
+                              ),
+                            ),
                           ),
                     ),
                   ),
-                )
+                ),
           ],
         ),
       ),
