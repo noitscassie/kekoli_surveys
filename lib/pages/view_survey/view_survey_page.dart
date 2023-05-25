@@ -8,7 +8,7 @@ import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
-import 'package:kekoldi_surveys/widgets/shared/survey_stats.dart';
+import 'package:kekoldi_surveys/widgets/shared/biodiversity_survey_stats.dart';
 
 class ViewSurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
@@ -49,7 +49,7 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SurveyStats(survey: widget.survey),
+            BiodiversitySurveyStats(survey: widget.survey),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

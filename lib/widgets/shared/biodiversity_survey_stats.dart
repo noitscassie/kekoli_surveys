@@ -3,10 +3,10 @@ import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/data_tile.dart';
 
-class SurveyStats extends StatelessWidget {
+class BiodiversitySurveyStats extends StatelessWidget {
   final BiodiversitySurvey survey;
 
-  const SurveyStats({super.key, required this.survey});
+  const BiodiversitySurveyStats({super.key, required this.survey});
 
   @override
   Widget build(BuildContext context) {
