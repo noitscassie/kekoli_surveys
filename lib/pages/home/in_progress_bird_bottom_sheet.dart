@@ -13,7 +13,7 @@ class InProgressBirdBottomSheet extends StatelessWidget {
     return BottomSheetOptions(
       options: [
         BottomSheetOption(
-          text: 'View ${survey.type.prettyName}',
+          text: 'View ${survey.type.title}',
           onPress: () {
             // Navigator.of(context).pushAndRemoveUntil(
             //     MaterialPageRoute(
@@ -24,7 +24,7 @@ class InProgressBirdBottomSheet extends StatelessWidget {
           leadingIcon: Icons.start,
         ),
         BottomSheetOption(
-          text: 'Edit ${survey.type.prettyName}',
+          text: 'Edit ${survey.type.title}',
           onPress: () {
             // Navigator.of(context).pop();
             // Navigator.of(context).push(MaterialPageRoute(
@@ -34,7 +34,7 @@ class InProgressBirdBottomSheet extends StatelessWidget {
           leadingIcon: Icons.edit,
         ),
         BottomSheetOption(
-          text: 'Delete ${survey.type.prettyName}',
+          text: 'Delete ${survey.type.title}',
           onPress: () {
             Navigator.of(context).pop();
             showDialog(

@@ -107,7 +107,7 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       title:
-          '${widget.survey.type.prettyName} ${widget.segment.name} ${TimeFormats.timeMinutesAndSeconds(_timeElapsed)}',
+          '${widget.survey.type.title} ${widget.segment.name} ${TimeFormats.timeMinutesAndSeconds(_timeElapsed)}',
       fabLabel: const Row(
         children: [
           Text('Add New Bird'),

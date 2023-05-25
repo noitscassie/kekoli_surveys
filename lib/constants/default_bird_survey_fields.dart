@@ -18,7 +18,7 @@ final List<InputFieldConfig> defaultBirdSurveyFields = [
   ),
   InputFieldConfig.radioButtons(
     label: surveyTypeField,
-    options: BirdSurveyType.values.map((type) => type.prettyName).toList(),
+    options: BirdSurveyType.values.map((type) => type.title).toList(),
     defaultValue: '',
     required: true,
     sortOptions: true,

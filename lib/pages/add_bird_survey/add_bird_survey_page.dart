@@ -76,7 +76,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       leaders: formattedLeaders,
       scribe: scribe,
       participants: formattedParticipants,
-      type: BirdSurveyType.byPrettyName(surveyType),
+      type: BirdSurveyType.byTitle(surveyType),
       segments: segments,
     );
 

@@ -28,14 +28,14 @@ class DeleteBirdSurveyModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DialogScaffold(
-      title: 'Delete Bird ${survey.type.prettyName} ${survey.trail}?',
+      title: 'Delete Bird ${survey.type.title} ${survey.trail}?',
       primaryCta: DangerCta(
-        text: 'Delete ${survey.type.prettyName}',
+        text: 'Delete ${survey.type.title}',
         onTap: () => _deleteSurvey(context),
       ),
       children: [
         Text(
-            'Are you sure you want to delete this ${survey.type.prettyName.toLowerCase()}? This cannot be undone.')
+            'Are you sure you want to delete this ${survey.type.title.toLowerCase()}? This cannot be undone.')
       ],
     );
   }

@@ -40,7 +40,7 @@ class BirdSurveyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SurveyTile(
-      title: 'Bird ${survey.type.prettyName} ${survey.trail}',
+      title: 'Bird ${survey.type.title} ${survey.trail}',
       subtitle: _surveyState,
       leaders: survey.leaders,
       scribe: survey.scribe,

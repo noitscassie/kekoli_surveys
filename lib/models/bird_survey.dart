@@ -8,15 +8,25 @@ import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:uuid/uuid.dart';
 
 enum BirdSurveyType {
-  pointCount(prettyName: 'Point Count'),
-  transect(prettyName: 'Transect');
+  pointCount(
+    title: 'Point Count',
+    segmentName: 'Point',
+  ),
+  transect(
+    title: 'Transect',
+    segmentName: 'Transect',
+  );
 
-  const BirdSurveyType({required this.prettyName});
+  const BirdSurveyType({
+    required this.title,
+    required this.segmentName,
+  });
 
-  final String prettyName;
+  final String title;
+  final String segmentName;
 
-  static byPrettyName(String prettyName) => BirdSurveyType.values
-      .firstOrNullWhere((BirdSurveyType type) => type.prettyName == prettyName);
+  static byTitle(String title) => BirdSurveyType.values
+      .firstOrNullWhere((BirdSurveyType type) => type.title == title);
 }
 
 class BirdSurvey with DiagnosticableTreeMixin {

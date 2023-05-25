@@ -14,7 +14,7 @@ class UnstartedBirdBottomSheet extends StatelessWidget {
     return BottomSheetOptions(
       options: [
         BottomSheetOption(
-          text: 'Start ${survey.type.prettyName}',
+          text: 'Start ${survey.type.title}',
           onPress: () {
             // survey.start();
             // Navigator.of(context).pushAndRemoveUntil(
@@ -26,7 +26,7 @@ class UnstartedBirdBottomSheet extends StatelessWidget {
           leadingIcon: Icons.start,
         ),
         BottomSheetOption(
-          text: 'Edit ${survey.type.prettyName}',
+          text: 'Edit ${survey.type.title}',
           onPress: () {
             // Navigator.of(context).pop();
             // Navigator.of(context).push(MaterialPageRoute(
@@ -36,7 +36,7 @@ class UnstartedBirdBottomSheet extends StatelessWidget {
           leadingIcon: Icons.edit,
         ),
         BottomSheetOption(
-          text: 'Delete ${survey.type.prettyName}',
+          text: 'Delete ${survey.type.title}',
           onPress: () {
             Navigator.of(context).pop();
             showDialog(
