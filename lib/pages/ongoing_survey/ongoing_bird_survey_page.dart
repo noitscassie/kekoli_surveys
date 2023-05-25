@@ -173,10 +173,9 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_statefulSurvey.segments);
     return PageScaffold(
       title:
-          '${_statefulSurvey.type.title} ${_statefulSurvey.trail}, ${DateFormats.ddmmyyyy(DateTime.now())}',
+          '${_statefulSurvey.type.title} ${_statefulSurvey.trail}${', ${_statefulSurvey.startAt == null ? '' : DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}'}',
       fabLabel: Row(
         children: [
           Text(_fabText),

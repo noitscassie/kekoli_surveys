@@ -38,7 +38,6 @@ class BirdSurvey with DiagnosticableTreeMixin {
   List<String> participants;
   String trail;
   BirdSurveyType type;
-  DateTime? date;
   String? weather;
   List<BirdSurveySegment> segments;
 
@@ -125,6 +124,17 @@ class BirdSurvey with DiagnosticableTreeMixin {
 
   int get totalObservations => allSightings.length;
 
+  DateTime? get startAt => segments
+      .map((segment) => segment.startAt)
+      .sorted()
+      .firstOrNullWhere((startTime) => startTime != null);
+
+  DateTime? get endAt => segments
+      .map((segment) => segment.endAt)
+      .sorted()
+      .reversed
+      .firstOrNullWhere((endTime) => endTime != null);
+
   Future<void> updateSegment(BirdSurveySegment updatedSegment) async {
     segments = List.from(segments.map((segment) =>
         segment.id == updatedSegment.id ? updatedSegment : segment));
@@ -148,8 +158,9 @@ class BirdSurvey with DiagnosticableTreeMixin {
     properties.add(IterableProperty<String>('participants', participants));
     properties.add(StringProperty('trail', trail));
     properties.add(EnumProperty<BirdSurveyType>('type', type));
-    properties.add(DiagnosticsProperty<DateTime?>('date', date));
     properties.add(StringProperty('weather', weather));
+    properties.add(DiagnosticsProperty<DateTime?>('startAt', startAt));
+    properties.add(DiagnosticsProperty<DateTime?>('endAt', endAt));
     properties.add(IterableProperty<BirdSurveySegment>('segments', segments));
   }
 }
