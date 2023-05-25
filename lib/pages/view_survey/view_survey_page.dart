@@ -38,7 +38,10 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
       title:
           '${widget.survey.trail} Survey ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
       fabLabel: const Row(
-        children: [Text('Export Data'), Icon(Icons.download)],
+        children: [
+          Text('Export Data'),
+          Icon(Icons.download),
+        ],
       ),
       onFabPress: () => onFabPress(context),
       child: Padding(

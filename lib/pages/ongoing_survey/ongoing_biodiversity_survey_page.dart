@@ -48,11 +48,17 @@ class _OngoingBiodiversitySurveyPageState
       title:
           '${statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(statefulSurvey.startAt!)}',
       fabLabel: const Row(
-        children: [Text('Add New Sighting'), Icon(Icons.add)],
+        children: [
+          Text('Add New Sighting'),
+          Icon(Icons.add),
+        ],
       ),
       onFabPress: _navigateToChooseSpeciesPage,
       actions: [
-        IconButton(onPressed: _onCompleteSurvey, icon: const Icon(Icons.check))
+        IconButton(
+          onPressed: _onCompleteSurvey,
+          icon: const Icon(Icons.check),
+        )
       ],
       child: Padding(
         padding: const EdgeInsets.only(bottom: 100),
