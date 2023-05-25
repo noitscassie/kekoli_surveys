@@ -89,8 +89,8 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
     super.debugFillProperties(properties);
     properties.add(StringProperty('name', name));
     properties.add(StringProperty('id', id));
-    properties.add(IterableProperty<Sighting>('sightings', sightings));
     properties.add(DiagnosticsProperty<DateTime?>('startAt', startAt));
     properties.add(DiagnosticsProperty<DateTime?>('endAt', endAt));
+    properties.add(IterableProperty<Sighting>('sightings', sightings));
   }
 }
