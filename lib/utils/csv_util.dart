@@ -16,7 +16,7 @@ class CsvUtil {
 
   CsvUtil(this.exportType);
 
-  String generate(BiodiversitySurvey survey) {
+  String generateBiodiversityCsv(BiodiversitySurvey survey) {
     final rows = [
       _headers(survey),
       ..._sightingRows(survey),

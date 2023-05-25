@@ -44,8 +44,8 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
         scribe = json['scribe'],
         participants = List<String>.from(json['participants']),
         startAt =
-            json['startAt'] == 'null' ? null : DateTime.parse(json['startAt']),
-        endAt = json['endAt'] == 'null' ? null : DateTime.parse(json['endAt']),
+            json['startAt'] == null ? null : DateTime.parse(json['startAt']),
+        endAt = json['endAt'] == null ? null : DateTime.parse(json['endAt']),
         sightings = List<Sighting>.from((json['sightings'] ?? []).map(
             (sighting) => Sighting.fromMap(sighting.runtimeType == String
                 ? jsonDecode(sighting)
@@ -103,6 +103,12 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
 
   List<Sighting> get orderedSightings =>
       sightings.sortedBy((Sighting sighting) => sighting.seenAt).toList();
+
+  List<String> get allParticipants => [
+        ...leaders,
+        scribe,
+        ...participants,
+      ];
 
   SurveyState get state {
     if (startAt == null) return SurveyState.unstarted;
