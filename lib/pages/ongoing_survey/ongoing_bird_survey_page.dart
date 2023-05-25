@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
+import 'package:kekoldi_surveys/pages/add_weather/add_weather_page.dart';
+import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/confirm_start_bird_segment_modal.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
+import 'package:kekoldi_surveys/widgets/data_tile.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
 class OngoingBirdSurveyPage extends StatefulWidget {
@@ -19,11 +23,40 @@ class OngoingBirdSurveyPage extends StatefulWidget {
 }
 
 class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
-  late final BirdSurvey _statefulSurvey = widget.survey;
+  late BirdSurvey _statefulSurvey = widget.survey;
+
+  String get participantsString => [
+        ..._statefulSurvey.leaders.map((String leader) => '$leader (leader)'),
+        '${_statefulSurvey.scribe} (scribe)',
+        ..._statefulSurvey.participants
+      ].join(', ');
 
   bool _segmentUnlocked(index) =>
       index == 0 ||
       _statefulSurvey.segments[index - 1].state == SurveyState.completed;
+
+  Future<void> _onAddWeather(String weather) async {
+    await _statefulSurvey.setWeather(weather);
+
+    setState(() {
+      _statefulSurvey = _statefulSurvey;
+    });
+
+    if (context.mounted) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const HomePage(
+            initialTabIndex: 1,
+          ),
+        ),
+      );
+    }
+  }
+
+  void _navigateToAddWeatherPage() =>
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) =>
+              AddWeatherPage(onAddWeather: _onAddWeather)));
 
   void _navigateToViewSegmentPage(BirdSurveySegment segment) => null;
   // Navigator.of(context).push(
@@ -68,7 +101,7 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       final snackBar = SnackBar(
         duration: const Duration(seconds: 2),
         content: Text(
-            '${_statefulSurvey.type.title} ${segment.name} cannot be started until the previous ${_statefulSurvey.type.title.toLowerCase()} has been completed.'),
+            '${_statefulSurvey.type.segmentName} ${segment.name} cannot be started until the previous ${_statefulSurvey.type.title.toLowerCase()} has been completed.'),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -98,7 +131,11 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       return 'Start Next ${_statefulSurvey.type.segmentName}';
     }
 
-    return 'Export Data'; // TODO: data export
+    if (_statefulSurvey.weather == null) {
+      return 'Add Weather';
+    }
+
+    return 'Export Data';
   }
 
   IconData get _fabIcon {
@@ -108,6 +145,10 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
 
     if (_nextSegment != null) {
       return Icons.arrow_right_alt;
+    }
+
+    if (_statefulSurvey.weather == null) {
+      return Icons.sunny;
     }
 
     return Icons.download;
@@ -120,6 +161,10 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
 
     if (_nextSegment != null) {
       return () => _startSegment(_nextSegment!);
+    }
+
+    if (_statefulSurvey.weather == null) {
+      return () => _navigateToAddWeatherPage();
     }
 
     return () {}; // TODO: data export
@@ -141,6 +186,42 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       child: Padding(
         padding: const EdgeInsets.only(bottom: 100),
         child: ListView(children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                DataTile(
+                  data: _statefulSurvey.totalObservations.toString(),
+                  label: 'Total Observations',
+                ),
+                DataTile(
+                  data: _statefulSurvey.uniqueSpecies.toString(),
+                  label: 'Unique Species',
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(
+              participantsString,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontStyle: FontStyle.italic),
+            ),
+          ),
+          if (_statefulSurvey.weather != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+              child: PartlyBoldedText(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textParts: [
+                    RawText('Weather was '),
+                    RawText(_statefulSurvey.weather!.toLowerCase(), bold: true),
+                  ]),
+            ),
           ..._statefulSurvey.segments
               .mapIndexed((index, segment) => SelectableListItem(
                     text:

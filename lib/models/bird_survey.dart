@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
+import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:uuid/uuid.dart';
 
 enum BirdSurveyType {
@@ -116,9 +117,23 @@ class BirdSurvey with DiagnosticableTreeMixin {
 
   String toJson() => jsonEncode(attributes);
 
+  List<Sighting> get allSightings =>
+      segments.map((segment) => segment.sightings).flatten().toList();
+
+  int get uniqueSpecies =>
+      allSightings.map((sighting) => sighting.species).distinct().length;
+
+  int get totalObservations => allSightings.length;
+
   Future<void> updateSegment(BirdSurveySegment updatedSegment) async {
     segments = List.from(segments.map((segment) =>
         segment.id == updatedSegment.id ? updatedSegment : segment));
+
+    _db.updateBirdSurvey(this);
+  }
+
+  Future<void> setWeather(String newWeather) async {
+    weather = newWeather;
 
     _db.updateBirdSurvey(this);
   }
