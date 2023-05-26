@@ -20,11 +20,12 @@ class ConfirmSegmentCompleteModal extends StatelessWidget {
     await survey.updateSegment(segment);
 
     if (context.mounted) {
-      Navigator.of(context).push(
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) =>
               OngoingBirdSurveyPage(survey: survey),
         ),
+        (_) => false,
       );
     }
   }
