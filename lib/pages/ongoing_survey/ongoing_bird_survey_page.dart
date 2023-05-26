@@ -105,7 +105,7 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       final snackBar = SnackBar(
         duration: const Duration(seconds: 2),
         content: Text(
-            '${_statefulSurvey.type.segmentName} ${segment.name} cannot be started until the previous ${_statefulSurvey.type.title.toLowerCase()} has been completed.'),
+            '${_statefulSurvey.type.segmentName} ${segment.name} cannot be started until the previous ${_statefulSurvey.type.segmentName.toLowerCase()} has been completed.'),
       );
 
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
