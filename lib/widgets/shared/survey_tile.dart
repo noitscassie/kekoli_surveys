@@ -42,46 +42,51 @@ class SurveyTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(title,
-                          style: Theme.of(context).textTheme.headlineSmall),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              subtitle,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                            Text('Tap for options',
-                                style: Theme.of(context).textTheme.bodySmall),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: Theme.of(context).textTheme.headlineSmall,
+                          softWrap: true,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                subtitle,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                              Text('Tap for options',
+                                  style: Theme.of(context).textTheme.bodySmall),
+                            ],
+                          ),
+                        ),
+                        PartlyBoldedText(
+                            style: Theme.of(context).textTheme.bodySmall,
+                            textParts: [
+                              RawText('Led by '),
+                              RawText(leaders.join(' and '), bold: true)
+                            ]),
+                        PartlyBoldedText(
+                          style: Theme.of(context).textTheme.bodySmall,
+                          textParts: [
+                            RawText('Scribed by '),
+                            RawText(scribe, bold: true)
                           ],
                         ),
-                      ),
-                      PartlyBoldedText(
-                          style: Theme.of(context).textTheme.bodySmall,
-                          textParts: [
-                            RawText('Led by '),
-                            RawText(leaders.join(' and '), bold: true)
-                          ]),
-                      PartlyBoldedText(
-                        style: Theme.of(context).textTheme.bodySmall,
-                        textParts: [
-                          RawText('Scribed by '),
-                          RawText(scribe, bold: true)
-                        ],
-                      ),
-                      PartlyBoldedText(
-                          style: Theme.of(context).textTheme.bodySmall,
-                          textParts: [
-                            RawText('Participated in by '),
-                            RawText(participants.join(', '), bold: true),
-                          ]),
-                    ],
+                        PartlyBoldedText(
+                            style: Theme.of(context).textTheme.bodySmall,
+                            textParts: [
+                              RawText('Participated in by '),
+                              RawText(participants.join(', '), bold: true),
+                            ]),
+                      ],
+                    ),
                   ),
                 ],
               ),
