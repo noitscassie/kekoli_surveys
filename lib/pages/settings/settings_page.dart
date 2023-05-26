@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/pages/bird_trails/bird_trails_page.dart';
-import 'package:kekoldi_surveys/pages/select_export_data/select_export_data_page.dart';
+import 'package:kekoldi_surveys/pages/select_export_data/biodiversity_data_export_page.dart';
 import 'package:kekoldi_surveys/pages/survey_format/survey_format_page.dart';
 import 'package:kekoldi_surveys/pages/trails/biodiversity_trails_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -12,7 +12,7 @@ class SettingsPage extends StatelessWidget {
   void _navigateToDataExportFormat(BuildContext context) =>
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) => const SelectExportDataPage(),
+          builder: (BuildContext context) => const BiodiversityDataExportPage(),
         ),
       );
 

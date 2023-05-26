@@ -1,9 +1,12 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/default_biodiversity_sighting_fields.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/pages/survey_format/modify_input_field.dart';
 import 'package:kekoldi_surveys/widgets/add_new_item.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class SurveyFormatPage extends StatefulWidget {
@@ -16,6 +19,39 @@ class SurveyFormatPage extends StatefulWidget {
 class _SurveyFormatPageState extends State<SurveyFormatPage> {
   final Db _db = Db();
   List<InputFieldConfig> fields = [];
+
+  void _openResetToDefaultsDialog() => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => DialogScaffold(
+          title: 'Reset to defaults?',
+          primaryCta: PrimaryCta(text: 'Reset', onTap: _resetFieldsToDefaults),
+          children: const [
+            Text(
+              'Are you sure you want to reset all the current biodiversity survey fields to their defaults?',
+            )
+          ],
+        ),
+      );
+
+  Future<void> _resetFieldsToDefaults() async {
+    final config = await _db.getSurveyConfiguration();
+    config.fields = defaultBiodiversitySightingFields;
+
+    await _db.updateSurveyConfiguration(config);
+
+    if (context.mounted) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text('Successfully reset biodiversity fields'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    }
+  }
 
   Future<void> _loadFields() async {
     final config = await _db.getSurveyConfiguration();
@@ -85,6 +121,12 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
         title: 'Survey Format',
+        actions: [
+          IconButton(
+            onPressed: _openResetToDefaultsDialog,
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
         fabLabel: const Row(
           children: [Text('Save Survey Format'), Icon(Icons.save_alt)],
         ),

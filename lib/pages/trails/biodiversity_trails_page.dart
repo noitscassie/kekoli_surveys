@@ -1,6 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
 import 'package:kekoldi_surveys/db/db.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/removable_text_field_list.dart';
 
@@ -14,6 +17,35 @@ class BiodiversityTrailsPage extends StatefulWidget {
 class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   final Db _db = Db();
   List<String?> _trails = [];
+
+  void _openResetToDefaultsDialog() => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => DialogScaffold(
+          title: 'Reset to defaults?',
+          primaryCta: PrimaryCta(text: 'Reset', onTap: _resetTrailsToDefaults),
+          children: const [
+            Text(
+                'Are you sure you want to reset all the current biodiversity trails to their defaults?')
+          ],
+        ),
+      );
+
+  Future<void> _resetTrailsToDefaults() async {
+    await _db.updateBiodiversityTrails(defaultBiodiversityTrails);
+
+    if (context.mounted) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text('Successfully reset biodiversity trails'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    }
+  }
 
   void _addTrail() {
     setState(() {
@@ -70,6 +102,12 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       title: 'Biodiversity Trails',
+      actions: [
+        IconButton(
+          onPressed: _openResetToDefaultsDialog,
+          icon: const Icon(Icons.refresh),
+        ),
+      ],
       fabLabel: const Row(
         children: [
           Text('Save Trails'),

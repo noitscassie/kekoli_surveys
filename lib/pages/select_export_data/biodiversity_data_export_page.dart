@@ -5,16 +5,20 @@ import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/pages/select_export_data/column_field.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
-class SelectExportDataPage extends StatefulWidget {
-  const SelectExportDataPage({super.key});
+class BiodiversityDataExportPage extends StatefulWidget {
+  const BiodiversityDataExportPage({super.key});
 
   @override
-  State<SelectExportDataPage> createState() => _SelectExportDataPageState();
+  State<BiodiversityDataExportPage> createState() =>
+      _BiodiversityDataExportPageState();
 }
 
-class _SelectExportDataPageState extends State<SelectExportDataPage> {
+class _BiodiversityDataExportPageState
+    extends State<BiodiversityDataExportPage> {
   List<String?> get dataOptions => [
         null,
         speciesString,
@@ -25,7 +29,40 @@ class _SelectExportDataPageState extends State<SelectExportDataPage> {
   List<CsvColumn> columns = [];
   List<String> fields = [];
 
-  Future<void> loadColumns() async {
+  void _openResetToDefaultsDialog() => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => DialogScaffold(
+          title: 'Reset to defaults?',
+          primaryCta: PrimaryCta(text: 'Reset', onTap: _resetFieldsToDefaults),
+          children: const [
+            Text(
+              'Are you sure you want to reset the current biodiversity data export format to its default setting?',
+            )
+          ],
+        ),
+      );
+
+  Future<void> _resetFieldsToDefaults() async {
+    final config = await _db.getSurveyConfiguration();
+    config.csvColumns = defaultBiodiversityCsvColumns;
+
+    await _db.updateSurveyConfiguration(config);
+
+    if (context.mounted) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text('Successfully reset data export format'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _loadData() async {
     final config = await _db.getSurveyConfiguration();
 
     setState(() {
@@ -66,29 +103,41 @@ class _SelectExportDataPageState extends State<SelectExportDataPage> {
   @override
   void initState() {
     super.initState();
-    loadColumns();
+    _loadData();
   }
 
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
         title: 'Select Data Format',
+        actions: [
+          IconButton(
+            onPressed: _openResetToDefaultsDialog,
+            icon: const Icon(Icons.refresh),
+          ),
+        ],
         fabLabel: const Row(
-          children: [Text('Save Export Format'), Icon(Icons.save_alt)],
+          children: [
+            Text('Save Export Format'),
+            Icon(Icons.save_alt),
+          ],
         ),
         onFabPress: onFabPress,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 100),
             child: ReorderableListView(
-              children: List.from(columns
-                  .mapIndexed((int index, CsvColumn column) => ColumnField(
-                        key: Key('data_export_format_tile_${column.id}'),
-                        column: column,
-                        index: index,
-                        options: dataOptions,
-                        onChange: updateColumn,
-                      ))),
+              children: List.from(
+                columns.mapIndexed(
+                  (int index, CsvColumn column) => ColumnField(
+                    key: Key('data_export_format_tile_${column.id}'),
+                    column: column,
+                    index: index,
+                    options: dataOptions,
+                    onChange: updateColumn,
+                  ),
+                ),
+              ),
               onReorder: (int oldIndex, int newIndex) {
                 setState(() {
                   if (oldIndex < newIndex) {

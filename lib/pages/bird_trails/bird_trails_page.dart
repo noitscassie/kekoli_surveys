@@ -1,9 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/bird_survey_trails.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey_trail.dart';
 import 'package:kekoldi_surveys/pages/bird_trails/bird_trail_page.dart';
 import 'package:kekoldi_surveys/widgets/add_new_item.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
@@ -18,6 +21,35 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
   final Db _db = Db();
 
   List<BirdSurveyTrail> _trails = [];
+
+  void _openResetToDefaultsDialog() => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => DialogScaffold(
+          title: 'Reset to defaults?',
+          primaryCta: PrimaryCta(text: 'Reset', onTap: _resetTrailsToDefaults),
+          children: const [
+            Text(
+                'Are you sure you want to reset all the current bird trails to their defaults?')
+          ],
+        ),
+      );
+
+  Future<void> _resetTrailsToDefaults() async {
+    await _db.updateBirdTrails(defaultBirdSurveyTrails);
+
+    if (context.mounted) {
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 2),
+        content: Text('Successfully reset bird trails'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+    }
+  }
 
   Future<void> _loadTrails() async {
     final trails = await _db.getBirdTrails();
@@ -95,6 +127,12 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
   Widget build(BuildContext context) {
     return PageScaffold(
       title: 'Bird Trails',
+      actions: [
+        IconButton(
+          onPressed: _openResetToDefaultsDialog,
+          icon: const Icon(Icons.refresh),
+        ),
+      ],
       child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 100),
         child: ListView(
