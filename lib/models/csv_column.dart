@@ -8,7 +8,10 @@ class CsvColumn with DiagnosticableTreeMixin {
   String header;
   String? field;
 
-  CsvColumn({required this.header, this.field}) : id = const Uuid().v4();
+  CsvColumn({
+    required this.header,
+    this.field,
+  }) : id = const Uuid().v4();
 
   CsvColumn.fromJson(Map<String, dynamic> json)
       : id = json['id'],

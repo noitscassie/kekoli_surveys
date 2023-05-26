@@ -1,6 +1,8 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/danger_cta.dart';
+import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/removable_text_field_list.dart';
 
 class ModifyInputField extends StatelessWidget {
@@ -70,45 +72,21 @@ class ModifyInputField extends StatelessWidget {
     onChange(field);
   }
 
-  void onDeleteFieldPress(BuildContext context) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
-          content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Delete ${field.label} field?',
-                  style: Theme.of(context).textTheme.headlineSmall,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                      'Are you sure you want to remove the ${field.label} field from the survey data?'),
-                ),
-              ]),
-          actionsAlignment: MainAxisAlignment.spaceBetween,
-          actions: [
-            TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
-                  'Back',
-                )),
-            ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.error)),
-                onPressed: () => onDelete(field),
-                child: Text(
-                  'Delete Field',
-                  style:
-                      TextStyle(color: Theme.of(context).colorScheme.surface),
-                )),
-          ]),
-    );
-  }
+  void _onDeleteFieldPress(BuildContext context) => showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) => DialogScaffold(
+          title: 'Delete ${field.label} field?',
+          primaryCta: DangerCta(
+            text: 'Delete Field',
+            onTap: () => onDelete(field),
+          ),
+          children: [
+            Text(
+                'Are you sure you want to remove the ${field.label} field from the survey data?')
+          ],
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -210,7 +188,7 @@ class ModifyInputField extends StatelessWidget {
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             Theme.of(context).colorScheme.error)),
-                    onPressed: () => onDeleteFieldPress(context),
+                    onPressed: () => _onDeleteFieldPress(context),
                     child: Text(
                       'Remove Field',
                       style: TextStyle(

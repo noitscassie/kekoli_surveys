@@ -5,6 +5,7 @@ import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/pages/select_export_data/column_field.dart';
+import 'package:kekoldi_surveys/widgets/add_new_item.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -19,15 +20,16 @@ class BiodiversityDataExportPage extends StatefulWidget {
 
 class _BiodiversityDataExportPageState
     extends State<BiodiversityDataExportPage> {
-  List<String?> get dataOptions => [
+  List<String?> get _dataOptions => [
         null,
         speciesString,
-        ...fields,
+        ..._fields,
       ];
 
   final Db _db = Db();
-  List<CsvColumn> columns = [];
-  List<String> fields = [];
+  List<CsvColumn> _columns = [];
+  List<String> _fields = [];
+  bool _expandFinalField = false;
 
   void _openResetToDefaultsDialog() => showDialog(
         context: context,
@@ -66,26 +68,26 @@ class _BiodiversityDataExportPageState
     final config = await _db.getSurveyConfiguration();
 
     setState(() {
-      columns = config.csvColumns;
-      fields =
+      _columns = config.csvColumns;
+      _fields =
           config.fields.map((InputFieldConfig field) => field.label).toList();
     });
   }
 
-  void updateColumn(CsvColumn updatedColumn) {
-    final newColumns = columns
+  void _updateColumn(CsvColumn updatedColumn) {
+    final newColumns = _columns
         .map((CsvColumn column) =>
             column.id == updatedColumn.id ? updatedColumn : column)
         .toList();
 
     setState(() {
-      columns = newColumns;
+      _columns = newColumns;
     });
   }
 
-  Future<void> onFabPress() async {
+  Future<void> _onFabPress() async {
     final config = await _db.getSurveyConfiguration();
-    config.csvColumns = columns;
+    config.csvColumns = _columns;
     await _db.updateSurveyConfiguration(config);
 
     if (context.mounted) {
@@ -99,6 +101,34 @@ class _BiodiversityDataExportPageState
       Navigator.of(context).pop();
     }
   }
+
+  void _addNewField() => setState(
+        () {
+          _columns = [
+            ..._columns,
+            CsvColumn(
+              header: 'New Column',
+            )
+          ];
+          _expandFinalField = true;
+        },
+      );
+
+  void _onReorder(int oldIndex, int newIndex) => setState(() {
+        if (oldIndex < newIndex) {
+          newIndex -= 1;
+        }
+
+        final item = _columns.removeAt(oldIndex);
+
+        _columns.insert(newIndex, item);
+      });
+
+  void _onDelete(CsvColumn columnToDelete) => setState(() {
+        _columns = _columns
+            .whereNot((column) => column.id == columnToDelete.id)
+            .toList();
+      });
 
   @override
   void initState() {
@@ -122,31 +152,31 @@ class _BiodiversityDataExportPageState
             Icon(Icons.save_alt),
           ],
         ),
-        onFabPress: onFabPress,
+        onFabPress: _onFabPress,
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(bottom: 100),
             child: ReorderableListView(
-              children: List.from(
-                columns.mapIndexed(
+              onReorder: _onReorder,
+              footer: AddNewItem(
+                key: const Key('add_new_data_export_column_tile'),
+                text: 'Add new export field',
+                onTap: _addNewField,
+              ),
+              children: [
+                ..._columns.mapIndexed(
                   (int index, CsvColumn column) => ColumnField(
                     key: Key('data_export_format_tile_${column.id}'),
                     column: column,
                     index: index,
-                    options: dataOptions,
-                    onChange: updateColumn,
+                    options: _dataOptions,
+                    onChange: _updateColumn,
+                    onDelete: () => _onDelete(column),
+                    initiallyExpanded:
+                        _expandFinalField && (index + 1) == _columns.length,
                   ),
                 ),
-              ),
-              onReorder: (int oldIndex, int newIndex) {
-                setState(() {
-                  if (oldIndex < newIndex) {
-                    newIndex -= 1;
-                  }
-                  final item = columns.removeAt(oldIndex);
-                  columns.insert(newIndex, item);
-                });
-              },
+              ],
             ),
           ),
         ));
