@@ -6,8 +6,8 @@ import 'package:kekoldi_surveys/constants/default_csv_columns.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 
-final defaultSurveyConfiguration =
-    SurveyConfiguration(defaultBiodiversitySightingFields, defaultCsvColumns);
+final defaultSurveyConfiguration = SurveyConfiguration(
+    defaultBiodiversitySightingFields, defaultBiodiversityCsvColumns);
 
 class SurveyConfiguration with DiagnosticableTreeMixin {
   List<InputFieldConfig> fields;

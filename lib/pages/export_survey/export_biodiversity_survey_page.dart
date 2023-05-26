@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:kekoldi_surveys/constants/csv_export_types.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
-import 'package:kekoldi_surveys/utils/csv_util.dart';
+import 'package:kekoldi_surveys/utils/biodiversity_csv_generator.dart';
 import 'package:kekoldi_surveys/utils/email_sender_helper.dart';
 import 'package:kekoldi_surveys/utils/file_util.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
@@ -25,11 +26,12 @@ class ExportBiodiversitySurveyPage extends StatefulWidget {
 
 class _ExportBiodiversitySurveyPageState
     extends State<ExportBiodiversitySurveyPage> {
-  late final CsvUtil _csvUtil = CsvUtil(widget.exportType);
+  late final BiodiversityCsvGenerator _csvGenerator = BiodiversityCsvGenerator(
+      exportType: widget.exportType, survey: widget.survey);
   late final FileUtil _fileUtil = FileUtil();
 
   Future<void> generateAndEmailCsv(String emailAddress) async {
-    final csv = _csvUtil.generateBiodiversityCsv(widget.survey);
+    final csv = _csvGenerator.generate();
 
     final filename =
         '${widget.survey.trail.toLowerCase()}_survey_${DateFormats.ddmmyyyyNoBreaks(widget.survey.startAt!)}.csv';
