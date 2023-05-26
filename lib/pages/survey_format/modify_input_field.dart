@@ -207,15 +207,16 @@ class ModifyInputField extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              Theme.of(context).colorScheme.error)),
-                      onPressed: () => onDeleteFieldPress(context),
-                      child: Text(
-                        'Remove Field',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.surface),
-                      )),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).colorScheme.error)),
+                    onPressed: () => onDeleteFieldPress(context),
+                    child: Text(
+                      'Remove Field',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.surface),
+                    ),
+                  ),
                 ],
               ),
             )

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:dartx/dartx.dart';
-import 'package:kekoldi_surveys/constants/trails.dart';
+import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
+import 'package:kekoldi_surveys/constants/bird_survey_trails.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
+import 'package:kekoldi_surveys/models/bird_survey_trail.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -14,6 +16,7 @@ class Db {
       '_biodiversitySurveyConfiguration';
   static const _biodiversityTrailsKey = 'biodiversityTrails';
   static const _birdSurveysKey = 'birdSurveys';
+  static const _birdTrailsKey = 'birdTrails';
 
   final _storage = LocalStorage(filePath);
 
@@ -151,9 +154,9 @@ class Db {
     final trails = _storage.getItem(_biodiversityTrailsKey);
 
     if (trails == null) {
-      _insert(_biodiversityTrailsKey, defaultTrails);
+      _insert(_biodiversityTrailsKey, defaultBiodiversityTrails);
 
-      return defaultTrails;
+      return defaultBiodiversityTrails;
     } else {
       return List<String>.from(trails);
     }
@@ -163,6 +166,33 @@ class Db {
     await _ready;
 
     _insert(_biodiversityTrailsKey, trails);
+  }
+
+  Future<List<BirdSurveyTrail>> getBirdTrails() async {
+    await _ready;
+
+    final trails = _storage.getItem(_birdTrailsKey);
+
+    if (trails == null) {
+      final defaultTrails = defaultBirdSurveyTrails;
+      _insert(_birdTrailsKey, defaultTrails);
+
+      return defaultTrails;
+    } else {
+      return List<BirdSurveyTrail>.from(
+        trails.map(
+          (json) => BirdSurveyTrail.fromJson(
+            jsonDecode(json),
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> updateBirdTrails(List<BirdSurveyTrail> trails) async {
+    await _ready;
+
+    _insert(_birdTrailsKey, trails.map((trail) => trail.toJson()).toList());
   }
 
   void _insert(String key, dynamic data) => _storage.setItem(key, data);

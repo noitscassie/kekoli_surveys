@@ -1,9 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/bird_survey_trails.dart';
 import 'package:kekoldi_surveys/constants/default_bird_survey_fields.dart';
+import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
+import 'package:kekoldi_surveys/models/bird_survey_trail.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
@@ -17,6 +18,8 @@ class AddBirdSurveyPage extends StatefulWidget {
 }
 
 class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
+  final _db = Db();
+
   late Map<String, dynamic> attributes = {
     for (var config in _fields) config.label: config.defaultValue
   };
@@ -30,12 +33,15 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   List<String?> get leaders => attributes[leadersField];
   String get scribe => attributes[scribeField];
   List<String?> get participants => attributes[participantsField];
-  List<BirdSurveySegment> get segments => (defaultBirdSurveyTrails
+
+  List<BirdSurveySegment> get segments => (_trails
               .firstOrNullWhere((loadedTrail) => loadedTrail.name == trail)
               ?.segments ??
           [])
       .map((String segment) => BirdSurveySegment(name: segment))
       .toList();
+
+  List<BirdSurveyTrail> _trails = [];
 
   List<String> get formattedLeaders =>
       List.from(leaders.whereNotNull().map((leader) => leader.trim()));
@@ -59,7 +65,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       scribe.isNotEmpty &&
       participants.whereNotNull().any((participant) => participant.isNotEmpty);
 
-  List<InputFieldConfig> get _fields => defaultBirdSurveyFields;
+  List<InputFieldConfig> get _fields => defaultBirdSurveyFields(_trails);
 
   void _onFieldChange(int index, String key, dynamic value) {
     setState(() {
@@ -97,6 +103,20 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
     }
   }
 
+  Future<void> _loadTrails() async {
+    final trails = await _db.getBirdTrails();
+
+    setState(() {
+      _trails = trails;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadTrails();
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
@@ -111,17 +131,20 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       onFabPress: _onFabPress,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 100),
-        child: ListView(
-          controller: _controller,
-          children: [
-            ..._fields.mapIndexed(
-                (int index, InputFieldConfig field) => field.inputField(
+        child: _trails.isEmpty
+            ? const CircularProgressIndicator()
+            : ListView(
+                controller: _controller,
+                children: [
+                  ..._fields.mapIndexed(
+                    (int index, InputFieldConfig field) => field.inputField(
                       value: attributes[field.label],
                       onChange: (dynamic value) =>
                           _onFieldChange(index, field.label, value),
-                    )),
-          ],
-        ),
+                    ),
+                  ),
+                ],
+              ),
       ),
     );
   }

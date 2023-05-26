@@ -69,28 +69,29 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-        title: 'Trails',
-        fabLabel: const Row(
+      title: 'Biodiversity Trails',
+      fabLabel: const Row(
+        children: [
+          Text('Save Trails'),
+          Icon(Icons.save_alt),
+        ],
+      ),
+      onFabPress: () => _saveTrails(context),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 16, bottom: 100),
+        child: ListView(
           children: [
-            Text('Save Trails'),
-            Icon(Icons.save_alt),
+            RemovableTextFieldList(
+              items: _trails,
+              optionLabel: 'Trail',
+              newItemText: 'Add new trail',
+              onAddItem: _addTrail,
+              onUpdateItem: _updateTrail,
+              onRemoveItem: _removeTrail,
+            )
           ],
         ),
-        onFabPress: () => _saveTrails(context),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16, bottom: 100),
-          child: ListView(
-            children: [
-              RemovableTextFieldList(
-                items: _trails,
-                optionLabel: 'Trail',
-                newItemText: 'Add new trail',
-                onAddItem: _addTrail,
-                onUpdateItem: _updateTrail,
-                onRemoveItem: _removeTrail,
-              )
-            ],
-          ),
-        ));
+      ),
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/pages/survey_format/modify_input_field.dart';
+import 'package:kekoldi_surveys/widgets/add_new_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class SurveyFormatPage extends StatefulWidget {
@@ -16,14 +17,14 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
   final Db _db = Db();
   List<InputFieldConfig> fields = [];
 
-  Future<void> loadFields() async {
+  Future<void> _loadFields() async {
     final config = await _db.getSurveyConfiguration();
     setState(() {
       fields = config.fields;
     });
   }
 
-  void addField() {
+  void _addField() {
     final newFields = [
       ...fields,
       InputFieldConfig.text(label: 'Untitled Field')
@@ -34,7 +35,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     });
   }
 
-  void updateField(InputFieldConfig updatedField) {
+  void _updateField(InputFieldConfig updatedField) {
     final newFields = fields
         .map((InputFieldConfig field) =>
             field.id == updatedField.id ? updatedField : field)
@@ -45,7 +46,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     });
   }
 
-  void deleteField(InputFieldConfig fieldToDelete) {
+  void _deleteField(InputFieldConfig fieldToDelete) {
     final newFields = fields
         .whereNot((InputFieldConfig field) => fieldToDelete.id == field.id)
         .toList();
@@ -57,7 +58,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> onFabPress() async {
+  Future<void> _onFabPress() async {
     final config = await _db.getSurveyConfiguration();
     config.fields = fields;
     await _db.updateSurveyConfiguration(config);
@@ -77,7 +78,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
   @override
   void initState() {
     super.initState();
-    loadFields();
+    _loadFields();
   }
 
   @override
@@ -87,35 +88,24 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
         fabLabel: const Row(
           children: [Text('Save Survey Format'), Icon(Icons.save_alt)],
         ),
-        onFabPress: onFabPress,
+        onFabPress: _onFabPress,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 100),
           child: ListView(
             children: [
-              ...fields.mapIndexed((index, field) => ModifyInputField(
-                    key: Key(field.id),
-                    index: index,
-                    field: field,
-                    onChange: updateField,
-                    onDelete: deleteField,
-                  )),
-              Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: GestureDetector(
-                      onTap: addField,
-                      child: Row(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(right: 16),
-                            child: Icon(Icons.add),
-                          ),
-                          Text(
-                            'Add new field',
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          )
-                        ],
-                      )))
+              ...fields.mapIndexed(
+                (index, field) => ModifyInputField(
+                  key: Key(field.id),
+                  index: index,
+                  field: field,
+                  onChange: _updateField,
+                  onDelete: _deleteField,
+                ),
+              ),
+              AddNewItem(
+                text: 'Add new field',
+                onTap: _addField,
+              ),
             ],
           ),
         ));

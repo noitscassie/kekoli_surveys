@@ -142,23 +142,25 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
         );
       case FieldType.radioButtons:
         return RadioButtonsInputField<String>(
-            label: label,
-            value: fieldValue,
-            options: (sortOptions ? options.sorted() : options)
-                .whereNotNull()
-                .map((value) => value.toString())
-                .map((String value) =>
-                    RadioButtonOption(value: value, label: value))
-                .toList(),
-            onChange: onChange);
+          label: label,
+          value: fieldValue,
+          options: (sortOptions ? options.sorted() : options)
+              .whereNotNull()
+              .map((value) => value.toString())
+              .map((String value) =>
+                  RadioButtonOption(value: value, label: value))
+              .toList(),
+          onChange: onChange,
+        );
       case FieldType.select:
         return SelectDropdownInputField(
-            label: label,
-            value: fieldValue,
-            options: (sortOptions ? options.sorted() : options)
-                .whereNotNull()
-                .toList(),
-            onChange: onChange);
+          label: label,
+          value: fieldValue,
+          options: (sortOptions ? options.sorted() : options)
+              .whereNotNull()
+              .toList(),
+          onChange: onChange,
+        );
       case FieldType.multifieldText:
         return MultifieldTextInputField(
           label: label,

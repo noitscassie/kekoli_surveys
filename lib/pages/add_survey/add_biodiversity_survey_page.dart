@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/trails.dart';
+import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
@@ -21,7 +21,8 @@ class AddBiodiversitySurveyPage extends StatefulWidget {
 }
 
 class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
-  late String selectedTrail = widget.initialTrail ?? defaultTrails.first;
+  late String selectedTrail =
+      widget.initialTrail ?? defaultBiodiversityTrails.first;
 
   List<String> leaders = [
     '',

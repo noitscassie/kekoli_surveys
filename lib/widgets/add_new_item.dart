@@ -12,10 +12,10 @@ class AddNewItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      child: GestureDetector(
-        onTap: onTap,
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
         child: Row(
           children: [
             const Padding(
