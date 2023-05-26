@@ -165,6 +165,21 @@ class BirdSurvey with DiagnosticableTreeMixin {
         ...participants,
       ];
 
+  Future<void> update(
+      {String? updatedTrail,
+      BirdSurveyType? updatedType,
+      List<String>? updatedLeaders,
+      String? updatedScribe,
+      List<String>? updatedParticipants}) async {
+    trail = updatedTrail ?? trail;
+    type = updatedType ?? type;
+    leaders = updatedLeaders ?? leaders;
+    scribe = updatedScribe ?? scribe;
+    participants = updatedParticipants ?? participants;
+
+    _db.updateBirdSurvey(this);
+  }
+
   Future<void> updateSegment(BirdSurveySegment updatedSegment) async {
     segments = List.from(segments.map((segment) =>
         segment.id == updatedSegment.id ? updatedSegment : segment));

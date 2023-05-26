@@ -6,23 +6,31 @@ import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/bird_survey_trail.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
-import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/shared/bird_survey_form.dart';
 
-class AddBirdSurveyPage extends StatefulWidget {
-  const AddBirdSurveyPage({super.key});
+class EditBirdSurveyPage extends StatefulWidget {
+  final BirdSurvey survey;
+
+  const EditBirdSurveyPage({
+    super.key,
+    required this.survey,
+  });
 
   @override
-  State<AddBirdSurveyPage> createState() => _AddBirdSurveyPageState();
+  State<EditBirdSurveyPage> createState() => _EditBirdSurveyPageState();
 }
 
-class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
+class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
   final _db = Db();
 
   late Map<String, dynamic> attributes = {
-    for (var config in _fields) config.label: config.defaultValue
+    trailField: widget.survey.trail,
+    surveyTypeField: widget.survey.type.title,
+    leadersField: widget.survey.leaders,
+    scribeField: widget.survey.scribe,
+    participantsField: widget.survey.participants,
   };
 
   void onAttributeChange(String key, dynamic value) => setState(() {
@@ -61,19 +69,12 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   List<InputFieldConfig> get _fields => defaultBirdSurveyFields(_trails);
 
   Future<void> _onFabPress() async {
-    final configuration =
-        BirdSurveyType.byTitle(surveyType) == BirdSurveyType.transect
-            ? defaultBirdTransectSurveyConfiguration
-            : defaultBirdPointCountSurveyConfiguration;
-
-    await BirdSurvey.create(
-      trail: trail,
-      leaders: formattedLeaders,
-      scribe: scribe,
-      participants: formattedParticipants,
-      type: BirdSurveyType.byTitle(surveyType),
-      segments: segments,
-      configuration: configuration,
+    await widget.survey.update(
+      updatedTrail: trail,
+      updatedLeaders: formattedLeaders,
+      updatedScribe: scribe,
+      updatedParticipants: formattedParticipants,
+      updatedType: BirdSurveyType.byTitle(surveyType),
     );
 
     if (context.mounted) {
@@ -109,12 +110,12 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       );
     } else {
       return BirdSurveyForm(
-        title: 'Add Survey',
+        title: 'Edit $surveyType',
         fields: _fields,
-        fabLabel: const Row(
+        fabLabel: Row(
           children: [
-            Text('Add Survey'),
-            Icon(Icons.add),
+            Text('Save $surveyType'),
+            const Icon(Icons.save_alt),
           ],
         ),
         isFabValid: _valid,
