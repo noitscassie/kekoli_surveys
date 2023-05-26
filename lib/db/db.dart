@@ -155,7 +155,7 @@ class Db {
 
       return defaultTrails;
     } else {
-      return trails;
+      return List<String>.from(trails);
     }
   }
 
