@@ -16,6 +16,7 @@ class BirdSurveyBottomSheet extends StatelessWidget {
         BottomSheetOption(
           text: 'View ${survey.type.title}',
           onPress: () {
+            Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (BuildContext context) =>

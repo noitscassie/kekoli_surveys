@@ -171,14 +171,29 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       return () => _navigateToAddWeatherPage();
     }
 
-    return () {}; // TODO: data export
+    return () {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => SelectExportTypePage(
+            onContinue: (ExportType exportType) => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => ExportBirdSurveyPage(
+                  survey: widget.survey,
+                  exportType: exportType,
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    };
   }
 
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
       title:
-          '${_statefulSurvey.type.title} ${_statefulSurvey.trail}${', ${_statefulSurvey.startAt == null ? '' : DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}'}',
+          '${_statefulSurvey.type.title} ${_statefulSurvey.trail}${_statefulSurvey.startAt == null ? '' : ', ${DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}'}',
       fabLabel: Row(
         children: [
           Text(_fabText),
