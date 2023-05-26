@@ -115,7 +115,7 @@ class ModifyInputField extends StatelessWidget {
     return ExpansionTile(
         title: Text(
           'Field ${index + 1} - ${field.label}',
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
         expandedCrossAxisAlignment: CrossAxisAlignment.start,
         children: [
