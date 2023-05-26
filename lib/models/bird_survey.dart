@@ -119,6 +119,9 @@ class BirdSurvey with DiagnosticableTreeMixin {
   List<Sighting> get allSightings =>
       segments.map((segment) => segment.sightings).flatten().toList();
 
+  List<Sighting> get orderedSightings =>
+      allSightings.sortedBy((Sighting sighting) => sighting.seenAt).toList();
+
   int get uniqueSpecies =>
       allSightings.map((sighting) => sighting.species).distinct().length;
 
@@ -126,14 +129,22 @@ class BirdSurvey with DiagnosticableTreeMixin {
 
   DateTime? get startAt => segments
       .map((segment) => segment.startAt)
+      .whereNotNull()
       .sorted()
-      .firstOrNullWhere((startTime) => startTime != null);
+      .firstOrNull;
 
   DateTime? get endAt => segments
       .map((segment) => segment.endAt)
+      .whereNotNull()
       .sorted()
       .reversed
-      .firstOrNullWhere((endTime) => endTime != null);
+      .firstOrNull;
+
+  List<String> get allParticipants => [
+        ...leaders,
+        scribe,
+        ...participants,
+      ];
 
   Future<void> updateSegment(BirdSurveySegment updatedSegment) async {
     segments = List.from(segments.map((segment) =>
