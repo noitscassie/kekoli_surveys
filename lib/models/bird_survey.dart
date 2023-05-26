@@ -12,19 +12,23 @@ enum BirdSurveyType {
   pointCount(
     title: 'Point Count',
     segmentName: 'Point',
+    snakeCaseName: 'point_count',
   ),
   transect(
     title: 'Transect',
     segmentName: 'Transect',
+    snakeCaseName: 'transect',
   );
 
   const BirdSurveyType({
     required this.title,
     required this.segmentName,
+    required this.snakeCaseName,
   });
 
   final String title;
   final String segmentName;
+  final String snakeCaseName;
 
   static byTitle(String title) => BirdSurveyType.values
       .firstOrNullWhere((BirdSurveyType type) => type.title == title);
