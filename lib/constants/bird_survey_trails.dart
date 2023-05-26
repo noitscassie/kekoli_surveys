@@ -2,7 +2,7 @@ import 'package:kekoldi_surveys/models/bird_survey_trail.dart';
 
 final List<BirdSurveyTrail> defaultBirdSurveyTrails = [
   BirdSurveyTrail(
-    name: '1-5',
+    name: '1 - 5',
     segments: [
       '1',
       '2',
@@ -12,7 +12,7 @@ final List<BirdSurveyTrail> defaultBirdSurveyTrails = [
     ],
   ),
   BirdSurveyTrail(
-    name: '5-1',
+    name: '5 - 1',
     segments: [
       '5',
       '4',
@@ -22,7 +22,7 @@ final List<BirdSurveyTrail> defaultBirdSurveyTrails = [
     ],
   ),
   BirdSurveyTrail(
-    name: '6-10',
+    name: '6 - 10',
     segments: [
       '6',
       '7',
@@ -32,7 +32,7 @@ final List<BirdSurveyTrail> defaultBirdSurveyTrails = [
     ],
   ),
   BirdSurveyTrail(
-    name: '10-6',
+    name: '10 - 6',
     segments: [
       '10',
       '9',
