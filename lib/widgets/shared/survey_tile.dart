@@ -26,7 +26,6 @@ class SurveyTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Material(
-          elevation: 8,
           color: Colors.transparent,
           child: Card(
             color: Theme.of(context).colorScheme.surface,
