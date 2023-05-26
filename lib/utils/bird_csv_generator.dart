@@ -1,8 +1,6 @@
 import 'package:csv/csv.dart';
 import 'package:dartx/dartx.dart';
 import 'package:kekoldi_surveys/constants/csv_export_types.dart';
-import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
-import 'package:kekoldi_surveys/constants/default_csv_columns.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
@@ -161,11 +159,9 @@ class BirdCsvGenerator {
       .flatten()
       .toList();
 
-  List<CsvColumn> get _columns => survey.type == BirdSurveyType.transect
-      ? defaultBirdTransectColumns
-      : defaultBirdPointCountColumns;
+  List<CsvColumn> get _columns => survey.configuration.csvColumns;
 
-  List<String> get _dataFields => defaultBirdSightingFields
+  List<String> get _dataFields => survey.configuration.fields
       .map((InputFieldConfig field) => field.label)
       .toList();
 }

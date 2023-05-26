@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/species.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
-import 'package:kekoldi_surveys/pages/add_sighting_details/add_sighting_details_page.dart';
+import 'package:kekoldi_surveys/pages/add_sighting_details/add_biodiversity_sighting_details_page.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 
 class ChooseBiodiversitySpeciesPage extends StatelessWidget {
@@ -11,7 +11,7 @@ class ChooseBiodiversitySpeciesPage extends StatelessWidget {
 
   void navigateToAddDetails(BuildContext context, String species) =>
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => AddSightingDetailsPage(
+          builder: (BuildContext context) => AddBiodiversitySightingDetailsPage(
                 survey: survey,
                 species: species,
               )));

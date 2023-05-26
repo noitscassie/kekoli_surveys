@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
@@ -63,7 +62,7 @@ class _EditBirdSightingDetailsPageState
       onFabPress: updateSighting,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
-      fields: defaultBirdSightingFields,
+      fields: widget.survey.configuration.fields,
     );
   }
 }

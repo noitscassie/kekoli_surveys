@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
-import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/confirm_bird_sighting_details_dialog.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
@@ -26,15 +24,12 @@ class AddBirdSightingDetailsPage extends StatefulWidget {
 
 class _AddBirdSightingDetailsPageState
     extends State<AddBirdSightingDetailsPage> {
-  late Map<String, dynamic> attributes = {
-    for (var config in _fields) config.label: config.defaultValue
-  };
+  late Map<String, String> attributes =
+      widget.survey.configuration.asAttributes;
 
   void onAttributeChange(String key, String value) => setState(() {
         attributes[key] = value;
       });
-
-  List<InputFieldConfig> get _fields => defaultBirdSightingFields;
 
   void showConfirmationDialog() => showDialog(
         context: context,
@@ -62,7 +57,7 @@ class _AddBirdSightingDetailsPageState
       onFabPress: showConfirmationDialog,
       attributes: attributes,
       onAttributeChange: onAttributeChange,
-      fields: _fields,
+      fields: widget.survey.configuration.fields,
     );
   }
 }

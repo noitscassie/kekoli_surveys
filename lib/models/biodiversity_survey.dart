@@ -64,11 +64,12 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
       required List<String> participants,
       required SurveyConfiguration configuration}) async {
     final survey = BiodiversitySurvey(
-        trail: trail,
-        leaders: leaders,
-        scribe: scribe,
-        participants: participants,
-        configuration: configuration);
+      trail: trail,
+      leaders: leaders,
+      scribe: scribe,
+      participants: participants,
+      configuration: configuration,
+    );
 
     _db.createBiodiversitySurvey(survey);
 

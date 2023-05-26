@@ -129,7 +129,7 @@ class Db {
     final configData = _storage.getItem(_biodiversitySurveyConfigurationKey);
 
     if (configData == null) {
-      final config = defaultSurveyConfiguration;
+      final config = defaultBiodiversitySurveyConfiguration;
       _insert(_biodiversitySurveyConfigurationKey, config.toJson());
 
       return config;

@@ -6,6 +6,7 @@ import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:uuid/uuid.dart';
 
 enum BirdSurveyType {
@@ -44,6 +45,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
   BirdSurveyType type;
   String? weather;
   List<BirdSurveySegment> segments;
+  final SurveyConfiguration configuration;
 
   static final Db _db = Db();
 
@@ -54,6 +56,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
       required this.participants,
       required this.type,
       required this.segments,
+      required this.configuration,
       this.weather})
       : id = const Uuid().v4(),
         createdAt = DateTime.now();
@@ -71,7 +74,16 @@ class BirdSurvey with DiagnosticableTreeMixin {
             (json['segments'] ?? []).map((segment) {
           return BirdSurveySegment.fromJson(
               segment.runtimeType == String ? jsonDecode(segment) : segment);
-        }));
+        })),
+        configuration = json['configuration'] == null
+            ? BirdSurveyType.values.byName(json['type']) ==
+                    BirdSurveyType.transect
+                ? defaultBirdTransectSurveyConfiguration
+                : defaultBirdPointCountSurveyConfiguration
+            : SurveyConfiguration.fromJson(
+                json['configuration'].runtimeType == String
+                    ? jsonDecode(json['configuration'])
+                    : json['configuration']);
 
   static Future<BirdSurvey> create(
       {required String trail,
@@ -79,7 +91,8 @@ class BirdSurvey with DiagnosticableTreeMixin {
       required String scribe,
       required List<String> participants,
       required BirdSurveyType type,
-      required List<BirdSurveySegment> segments}) async {
+      required List<BirdSurveySegment> segments,
+      required SurveyConfiguration configuration}) async {
     final survey = BirdSurvey(
       trail: trail,
       leaders: leaders,
@@ -87,6 +100,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
       participants: participants,
       type: type,
       segments: segments,
+      configuration: configuration,
     );
 
     _db.createBirdSurvey(survey);
@@ -116,6 +130,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
         'createdAt': createdAt.toIso8601String(),
         'type': type.name,
         'segments': List.from(segments.map((segment) => segment.toJson())),
+        'configuration': configuration.toJson(),
       };
 
   String toJson() => jsonEncode(attributes);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
@@ -31,7 +30,7 @@ class RemoveBirdTallyModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return RemoveTallyModal(
       sightings: sightings,
-      fields: defaultBirdSightingFields,
+      fields: survey.configuration.fields,
       onConfirm: () => _onConfirm(context),
     );
   }

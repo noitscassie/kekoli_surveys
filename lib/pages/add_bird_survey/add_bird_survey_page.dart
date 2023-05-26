@@ -5,6 +5,7 @@ import 'package:kekoldi_surveys/constants/default_bird_survey_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
+import 'package:kekoldi_surveys/models/survey_configuration.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
@@ -71,6 +72,11 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   }
 
   Future<void> _onFabPress() async {
+    final configuration =
+        BirdSurveyType.byTitle(surveyType) == BirdSurveyType.transect
+            ? defaultBirdTransectSurveyConfiguration
+            : defaultBirdPointCountSurveyConfiguration;
+
     await BirdSurvey.create(
       trail: trail,
       leaders: formattedLeaders,
@@ -78,6 +84,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       participants: formattedParticipants,
       type: BirdSurveyType.byTitle(surveyType),
       segments: segments,
+      configuration: configuration,
     );
 
     if (context.mounted) {

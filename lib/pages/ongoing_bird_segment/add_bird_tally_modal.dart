@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
@@ -32,7 +31,7 @@ class AddBirdTallyModal extends StatelessWidget {
     return AddTallyModal(
       sighting: sighting,
       onConfirm: _onConfirm,
-      fields: defaultBirdSightingFields,
+      fields: survey.configuration.fields,
     );
   }
 }

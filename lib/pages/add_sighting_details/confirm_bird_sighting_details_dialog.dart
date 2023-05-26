@@ -1,6 +1,5 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
@@ -43,7 +42,7 @@ class ConfirmBirdSightingDetailsDialog extends StatelessWidget {
           PrimaryCta(text: 'Add Sighting', onTap: () => _addSighting(context)),
       children: [
         ...sighting
-            .orderedData(defaultBirdSightingFields)
+            .orderedData(survey.configuration.fields)
             .entries
             .filter((entry) => entry.value.isNotEmpty)
             .mapIndexed(
