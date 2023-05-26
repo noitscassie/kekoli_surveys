@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/pages/add_sighting_details/add_bird_sighting_details.dart';
 import 'package:kekoldi_surveys/pages/choose_species/choose_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/edit_species/edit_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/add_bird_tally_modal.dart';
@@ -33,7 +34,8 @@ class OngoingBirdSegmentPage extends StatefulWidget {
 class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
   late BirdSurveySegment _statefulSegment = widget.segment;
   late Timer _timer;
-  Duration _timeElapsed = Duration.zero;
+  late Duration _timeElapsed =
+      DateTime.now().difference(widget.segment.startAt!);
 
   void _completeSegment() => showDialog(
       context: context,
@@ -68,6 +70,16 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (BuildContext context) => ChooseBirdSpeciesPage(
               survey: widget.survey, segment: widget.segment)));
+
+  void _navigateToAddSightingDetailsPage(String species) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => AddBirdSightingDetailsPage(
+              survey: widget.survey,
+              segment: _statefulSegment,
+              species: species),
+        ),
+      );
 
   void _onEdit(List<Sighting> sightings) => Navigator.of(context).push(
         MaterialPageRoute(
@@ -136,8 +148,8 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
                 .mapIndexed(
                   (index, entry) => ExpandableListItem(
                     title: entry.key,
-                    children: List.from(
-                      entry.value
+                    children: [
+                      ...entry.value
                           .groupBy((sighting) => sighting.attributesString)
                           .entries
                           .sortedBy((entry) => entry.key)
@@ -154,7 +166,16 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
                               ),
                             ),
                           ),
-                    ),
+                      ExpandableListItemChild(
+                        title: 'Add new ${entry.key} observation',
+                        trailing: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 12),
+                          child: Icon(Icons.add),
+                        ),
+                        onTap: () =>
+                            _navigateToAddSightingDetailsPage(entry.key),
+                      )
+                    ],
                   ),
                 ),
           ],
