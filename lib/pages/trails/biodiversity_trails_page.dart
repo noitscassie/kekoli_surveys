@@ -4,14 +4,14 @@ import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/removable_text_field_list.dart';
 
-class TrailsPage extends StatefulWidget {
-  const TrailsPage({super.key});
+class BiodiversityTrailsPage extends StatefulWidget {
+  const BiodiversityTrailsPage({super.key});
 
   @override
-  State<TrailsPage> createState() => _TrailsPageState();
+  State<BiodiversityTrailsPage> createState() => _BiodiversityTrailsPageState();
 }
 
-class _TrailsPageState extends State<TrailsPage> {
+class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   final Db _db = Db();
   List<String?> _trails = [];
 
