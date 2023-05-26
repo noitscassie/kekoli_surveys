@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
-import 'package:kekoldi_surveys/pages/add_weather_page.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
+import 'package:kekoldi_surveys/pages/add_weather/add_weather_page.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 
 class CompleteSurveyModal extends StatefulWidget {
-  final Survey survey;
-  final Function(Survey survey) onChangeSurvey;
+  final BiodiversitySurvey survey;
+  final Function(BiodiversitySurvey survey) onChangeSurvey;
 
   const CompleteSurveyModal(
       {super.key, required this.survey, required this.onChangeSurvey});
@@ -24,17 +24,19 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
     widget.onChangeSurvey(widget.survey);
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+        MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
         (route) => false);
   }
 
   void onComplete(BuildContext context) {
     widget.survey.end();
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(context).push(
+      MaterialPageRoute(
         builder: (BuildContext context) => AddWeatherPage(
-              survey: widget.survey,
-              onAddWeather: onAddWeather,
-            )));
+          onAddWeather: onAddWeather,
+        ),
+      ),
+    );
   }
 
   @override

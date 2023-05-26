@@ -7,20 +7,32 @@ class DateFormats {
 }
 
 class TimeFormats {
-  static hoursAndMinutesFromMinutes(int totalMinutes) {
+  static String hoursAndMinutesFromMinutes(int totalMinutes) {
     final hours = (totalMinutes ~/ Duration.minutesPerHour);
     final minutes = totalMinutes % Duration.minutesPerHour;
 
     return '${hours > 0 ? '$hours ${hours == 1 ? 'hour' : 'hours'} and ' : ''}$minutes ${minutes == 1 ? 'minute' : 'minutes'}';
   }
 
-  static hmFromMinutes(int totalMinutes) {
+  static String hmFromMinutes(int totalMinutes) {
     final hours = (totalMinutes ~/ Duration.minutesPerHour);
     final minutes = totalMinutes % Duration.minutesPerHour;
 
     return '${hours > 0 ? '$hours${hours == 1 ? 'hr' : 'hr'}' : ''} $minutes${minutes == 1 ? 'm' : 'm'}';
   }
 
-  static timeHoursAndMinutes(DateTime time) =>
-      '${time.hour}:${time.minute < 10 ? '0${time.minute}' : time.minute}';
+  static String timeHoursAndMinutes(DateTime time) =>
+      '${time.hour}:${_paddedTimePart(time.minute)}';
+
+  static String timeMinutesAndSeconds(Duration duration) {
+    final minutes =
+        _paddedTimePart(duration.inMinutes.remainder(Duration.minutesPerHour));
+
+    final seconds = _paddedTimePart(
+        duration.inSeconds.remainder(Duration.secondsPerMinute));
+
+    return '$minutes:$seconds';
+  }
+
+  static _paddedTimePart(int length) => length.toString().padLeft(2, '0');
 }

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
@@ -9,7 +9,7 @@ import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class EditSurveyPage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
 
   const EditSurveyPage({super.key, required this.survey});
 
@@ -53,7 +53,8 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (BuildContext context) => HomePage()),
+          MaterialPageRoute(
+              builder: (BuildContext context) => const HomePage()),
           (route) => false);
     }
   }

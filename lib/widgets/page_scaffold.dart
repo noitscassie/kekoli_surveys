@@ -7,6 +7,7 @@ class PageScaffold extends StatelessWidget {
   final VoidCallback? onFabPress;
   final bool isFabValid;
   final List<Widget> actions;
+  final Widget? bottomNavigationBar;
 
   const PageScaffold(
       {super.key,
@@ -15,7 +16,8 @@ class PageScaffold extends StatelessWidget {
       this.onFabPress,
       this.isFabValid = true,
       this.actions = const [],
-      required this.child});
+      required this.child,
+      this.bottomNavigationBar});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class PageScaffold extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: child,
       ),
+      bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: fabLabel == null
           ? null
           : FloatingActionButton.extended(

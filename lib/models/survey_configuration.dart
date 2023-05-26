@@ -1,13 +1,20 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:kekoldi_surveys/constants/default_biodiversity_sighting_fields.dart';
+import 'package:kekoldi_surveys/constants/default_bird_sighting_fields.dart';
 import 'package:kekoldi_surveys/constants/default_csv_columns.dart';
-import 'package:kekoldi_surveys/constants/default_survey_fields.dart';
 import 'package:kekoldi_surveys/models/csv_column.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 
-final defaultSurveyConfiguration =
-    SurveyConfiguration(defaultSurveyFields, defaultCsvColumns);
+final defaultBiodiversitySurveyConfiguration = SurveyConfiguration(
+    defaultBiodiversitySightingFields, defaultBiodiversityCsvColumns);
+
+final defaultBirdPointCountSurveyConfiguration = SurveyConfiguration(
+    defaultBirdSightingFields, defaultBirdPointCountColumns);
+
+final defaultBirdTransectSurveyConfiguration =
+    SurveyConfiguration(defaultBirdSightingFields, defaultBirdTransectColumns);
 
 class SurveyConfiguration with DiagnosticableTreeMixin {
   List<InputFieldConfig> fields;
@@ -34,6 +41,7 @@ class SurveyConfiguration with DiagnosticableTreeMixin {
 
   Map<String, String> get asAttributes =>
       {for (var config in fields) config.label: config.defaultValue};
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);

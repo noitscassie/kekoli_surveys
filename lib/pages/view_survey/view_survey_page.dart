@@ -1,17 +1,19 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/constants/csv_export_types.dart';
+import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
+import 'package:kekoldi_surveys/pages/export_survey/export_biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page.dart';
 import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
-import 'package:kekoldi_surveys/widgets/shared/survey_stats.dart';
+import 'package:kekoldi_surveys/widgets/shared/biodiversity_survey_stats.dart';
 
 class ViewSurveyPage extends StatefulWidget {
-  final Survey survey;
+  final BiodiversitySurvey survey;
   const ViewSurveyPage({super.key, required this.survey});
 
   @override
@@ -21,16 +23,22 @@ class ViewSurveyPage extends StatefulWidget {
 class _ViewSurveyPageState extends State<ViewSurveyPage> {
   bool _groupSightings = false;
 
-  String get participantsString => [
+  String get _participantsString => [
         ...widget.survey.leaders.map((String leader) => '$leader (leader)'),
         '${widget.survey.scribe} (scribe)',
         ...widget.survey.participants
       ].join(', ');
 
-  void onFabPress(BuildContext context) =>
+  void _onFabPress() => Navigator.of(context).push(MaterialPageRoute(
+      builder: (BuildContext context) =>
+          SelectExportTypePage(onContinue: _navigateToExportSurveyPage)));
+
+  void _navigateToExportSurveyPage(ExportType exportType) =>
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) =>
-              SelectExportTypePage(survey: widget.survey)));
+          builder: (BuildContext context) => ExportBiodiversitySurveyPage(
+                survey: widget.survey,
+                exportType: exportType,
+              )));
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +46,18 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
       title:
           '${widget.survey.trail} Survey ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
       fabLabel: const Row(
-        children: [Text('Export Data'), Icon(Icons.download)],
+        children: [
+          Text('Export Data'),
+          Icon(Icons.download),
+        ],
       ),
-      onFabPress: () => onFabPress(context),
+      onFabPress: _onFabPress,
       child: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SurveyStats(survey: widget.survey),
+            BiodiversitySurveyStats(survey: widget.survey),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -56,7 +67,7 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        participantsString,
+                        _participantsString,
                         style: Theme.of(context)
                             .textTheme
                             .bodyMedium

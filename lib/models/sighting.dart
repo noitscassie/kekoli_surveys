@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
-import 'package:kekoldi_surveys/models/survey.dart';
 import 'package:uuid/uuid.dart';
 
 class Sighting with DiagnosticableTreeMixin {
@@ -37,9 +36,8 @@ class Sighting with DiagnosticableTreeMixin {
       .filter((value) => value.isNotEmpty && value != Sighting.unknown)
       .join(', ');
 
-  Map<String, dynamic> orderedData(Survey survey) => {
-        for (var label in survey.configuration.fields
-            .map((InputFieldConfig field) => field.label))
+  Map<String, dynamic> orderedData(List<InputFieldConfig> fields) => {
+        for (var label in fields.map((InputFieldConfig field) => field.label))
           label: data[label]
       };
 
@@ -80,5 +78,6 @@ class Sighting with DiagnosticableTreeMixin {
     properties.add(StringProperty('id', id));
     properties.add(StringProperty('comments', data['comments']));
     properties.add(DiagnosticsProperty<DateTime?>('seenAt', seenAt));
+    properties.add(DiagnosticsProperty<Map<String, dynamic>>('data', data));
   }
 }

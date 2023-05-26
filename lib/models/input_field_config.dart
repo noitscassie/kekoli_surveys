@@ -4,6 +4,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/widgets/radio_buttons.dart';
+import 'package:kekoldi_surveys/widgets/shared/multifield_text_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/multiline_text_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/number_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/radio_buttons_input_field.dart';
@@ -17,16 +18,19 @@ enum FieldType {
   number,
   radioButtons,
   select,
+  multifieldText,
 }
 
-class InputFieldConfig with DiagnosticableTreeMixin {
+class InputFieldConfig<T> with DiagnosticableTreeMixin {
   final String id;
   String label;
   FieldType type;
-  String defaultValue;
+  dynamic defaultValue;
   List<String?> options;
   bool required;
   bool sortOptions;
+  String newItemText;
+  int? maxItems;
 
   static const typesRequiringOptions = [
     FieldType.radioButtons,
@@ -38,6 +42,7 @@ class InputFieldConfig with DiagnosticableTreeMixin {
       : type = FieldType.text,
         options = [],
         sortOptions = true,
+        newItemText = '',
         id = const Uuid().v4();
 
   InputFieldConfig.multilineText(
@@ -45,6 +50,7 @@ class InputFieldConfig with DiagnosticableTreeMixin {
       : type = FieldType.multilineText,
         options = [],
         sortOptions = true,
+        newItemText = '',
         id = const Uuid().v4();
 
   InputFieldConfig.number(
@@ -52,6 +58,7 @@ class InputFieldConfig with DiagnosticableTreeMixin {
       : type = FieldType.number,
         options = [],
         sortOptions = true,
+        newItemText = '',
         id = const Uuid().v4();
 
   InputFieldConfig.radioButtons(
@@ -61,6 +68,7 @@ class InputFieldConfig with DiagnosticableTreeMixin {
       this.required = false,
       this.sortOptions = true})
       : type = FieldType.radioButtons,
+        newItemText = '',
         id = const Uuid().v4();
 
   InputFieldConfig.select(
@@ -70,6 +78,18 @@ class InputFieldConfig with DiagnosticableTreeMixin {
       this.required = false,
       this.sortOptions = true})
       : type = FieldType.select,
+        newItemText = '',
+        id = const Uuid().v4();
+
+  InputFieldConfig.multifieldText({
+    required this.label,
+    required this.newItemText,
+    this.defaultValue = const [''],
+    this.required = false,
+    this.maxItems,
+  })  : type = FieldType.multifieldText,
+        options = [],
+        sortOptions = true,
         id = const Uuid().v4();
 
   InputFieldConfig.fromJson(Map<String, dynamic> json)
@@ -79,7 +99,8 @@ class InputFieldConfig with DiagnosticableTreeMixin {
         defaultValue = json['defaultValue'],
         options = List<String>.from(json['options']),
         required = json['required'],
-        sortOptions = json['sortOptions'] ?? true;
+        sortOptions = json['sortOptions'] ?? true,
+        newItemText = json['newItemText'] ?? '';
 
   bool get requiresOptions => typesRequiringOptions.contains(type);
 
@@ -93,9 +114,11 @@ class InputFieldConfig with DiagnosticableTreeMixin {
         'options': options,
         'required': required,
         'sortOptions': sortOptions,
+        'newItemText': newItemText,
       };
 
-  Widget inputField({required Function(String value) onChange, String? value}) {
+  Widget inputField(
+      {required Function(dynamic value) onChange, dynamic value}) {
     final fieldValue = value ?? defaultValue;
 
     switch (type) {
@@ -119,22 +142,33 @@ class InputFieldConfig with DiagnosticableTreeMixin {
         );
       case FieldType.radioButtons:
         return RadioButtonsInputField<String>(
-            label: label,
-            value: fieldValue,
-            options: (sortOptions ? options.sorted() : options)
-                .whereNotNull()
-                .map((String value) =>
-                    RadioButtonOption(value: value, label: value))
-                .toList(),
-            onChange: onChange);
+          label: label,
+          value: fieldValue,
+          options: (sortOptions ? options.sorted() : options)
+              .whereNotNull()
+              .map((value) => value.toString())
+              .map((String value) =>
+                  RadioButtonOption(value: value, label: value))
+              .toList(),
+          onChange: onChange,
+        );
       case FieldType.select:
         return SelectDropdownInputField(
-            label: label,
-            value: fieldValue,
-            options: (sortOptions ? options.sorted() : options)
-                .whereNotNull()
-                .toList(),
-            onChange: onChange);
+          label: label,
+          value: fieldValue,
+          options: (sortOptions ? options.sorted() : options)
+              .whereNotNull()
+              .toList(),
+          onChange: onChange,
+        );
+      case FieldType.multifieldText:
+        return MultifieldTextInputField(
+          label: label,
+          value: fieldValue,
+          onChange: onChange,
+          newItemText: newItemText,
+          maxItems: maxItems,
+        );
     }
   }
 

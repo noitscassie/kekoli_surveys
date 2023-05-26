@@ -47,7 +47,7 @@ class KekoldiSurveys extends StatelessWidget {
                 fontStyle: FontStyle.italic,
                 fontSize: 10)),
       ),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
