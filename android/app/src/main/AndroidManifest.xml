@@ -13,7 +13,7 @@
 
    <application
         android:label="kekoldi_surveys"
-        android:name="${applicationName}"
+        android:name="Kèköldi Surveys"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
