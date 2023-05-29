@@ -179,6 +179,10 @@ class Db {
 
       return defaultTrails;
     } else {
+      if (trails.runtimeType == List<BirdSurveyTrail>) {
+        return trails;
+      }
+
       return List<BirdSurveyTrail>.from(
         trails.map(
           (json) => BirdSurveyTrail.fromJson(
