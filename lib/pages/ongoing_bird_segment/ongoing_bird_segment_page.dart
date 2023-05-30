@@ -92,13 +92,14 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
       );
 
   void _showBottomSheet(List<Sighting> sightings) => showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) => SightingOptionsSheet(
-            onIncrement: () => _onIncrement(sightings.last),
-            onDecrement: () => _onDecrement(sightings),
-            onEditMostRecent: () => _onEdit([sightings.last]),
-            onEditAll: () => _onEdit(sightings),
-          ));
+        context: context,
+        builder: (BuildContext context) => SightingOptionsSheet(
+          onIncrement: () => _onIncrement(sightings.last),
+          onDecrement: () => _onDecrement(sightings),
+          onEditMostRecent: () => _onEdit([sightings.last]),
+          onEditAll: () => _onEdit(sightings),
+        ),
+      );
 
   void _updateSegmentDuration() => setState(() {
         _timeElapsed = DateTime.now().difference(_statefulSegment.startAt!);
@@ -174,7 +175,7 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
                         ),
                         onTap: () =>
                             _navigateToAddSightingDetailsPage(entry.key),
-                      )
+                      ),
                     ],
                   ),
                 ),
