@@ -40,10 +40,11 @@ class _SpeciesSightingsListState extends State<SpeciesSightingsList> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
+          Flexible(
+            flex: 1,
+            fit: FlexFit.tight,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
