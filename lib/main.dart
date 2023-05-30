@@ -16,7 +16,8 @@ class KekoldiSurveys extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Kekoldi Surveys',
+      debugShowCheckedModeBanner: false,
+      title: 'Kèköldi Surveys',
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
         inputDecorationTheme: InputDecorationTheme(
