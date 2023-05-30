@@ -8,19 +8,18 @@ class RemoveBiodiversityTallyModal extends StatelessWidget {
   final List<Sighting> sightings;
   final Function(BiodiversitySurvey survey) onChangeSurvey;
 
-  const RemoveBiodiversityTallyModal(
-      {super.key,
-      required this.survey,
-      required this.sightings,
-      required this.onChangeSurvey});
+  const RemoveBiodiversityTallyModal({
+    super.key,
+    required this.survey,
+    required this.sightings,
+    required this.onChangeSurvey,
+  });
 
   Sighting get sighting => sightings.last;
 
   void _onConfirm(BuildContext context) {
     survey.removeSighting(sighting);
     onChangeSurvey(survey);
-
-    Navigator.of(context).pop();
   }
 
   @override
