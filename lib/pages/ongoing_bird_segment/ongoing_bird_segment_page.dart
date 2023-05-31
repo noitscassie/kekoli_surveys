@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
@@ -13,10 +12,8 @@ import 'package:kekoldi_surveys/pages/ongoing_bird_segment/confirm_segment_compl
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
-import 'package:kekoldi_surveys/widgets/data_tile.dart';
-import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
-import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/editable_sightings_list.dart';
 
 class OngoingBirdSegmentPage extends StatefulWidget {
   static const name = 'OngoingBirdSegmentPage';
@@ -124,7 +121,7 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold.withScrollableChildren(
+    return PageScaffold(
       title:
           '${widget.survey.type.title} ${widget.segment.name} ${TimeFormats.timeMinutesAndSeconds(_timeElapsed)}',
       fabLabel: const Row(
@@ -140,59 +137,13 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
           icon: const Icon(Icons.check),
         )
       ],
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              DataTile(
-                data: _statefulSegment.totalObservations.toString(),
-                label: 'Total Observations',
-              ),
-              DataTile(
-                data: _statefulSegment.uniqueSpecies.toString(),
-                label: 'Unique Species',
-              ),
-            ],
-          ),
-        ),
-        ...widget.segment.sightings
-            .groupBy((sighting) => sighting.species)
-            .entries
-            .sortedBy((entry) => entry.key)
-            .mapIndexed(
-              (index, entry) => ExpandableListItem(
-                title: entry.key,
-                children: [
-                  ...entry.value
-                      .groupBy((sighting) => sighting.attributesString)
-                      .entries
-                      .sortedBy((entry) => entry.key)
-                      .map(
-                        (entry) => ExpandableListItemChild(
-                          title: entry.key,
-                          subtitle: 'Tap for options',
-                          onTap: () => _showBottomSheet(entry.value),
-                          trailing: SpeciesListCountAndTallies(
-                            count: entry.value.length.toString(),
-                            onIncrement: () => _onIncrement(entry.value.last),
-                            onDecrement: () => _onDecrement(entry.value),
-                          ),
-                        ),
-                      ),
-                  ExpandableListItemChild(
-                    title: 'Add new ${entry.key} observation',
-                    trailing: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      child: Icon(Icons.add),
-                    ),
-                    onTap: () => _navigateToAddSightingDetailsPage(entry.key),
-                  ),
-                ],
-              ),
-            ),
-      ],
+      child: EditableSightingsList(
+        sightings: _statefulSegment.sightings,
+        onOptionsTap: _showBottomSheet,
+        onIncrement: _onIncrement,
+        onDecrement: _onDecrement,
+        onAddNew: _navigateToAddSightingDetailsPage,
+      ),
     );
   }
 }

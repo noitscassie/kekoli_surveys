@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
@@ -13,9 +12,8 @@ import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
-import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
-import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/editable_sightings_list.dart';
 
 class OngoingBiodiversitySurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
@@ -155,7 +153,7 @@ class _OngoingBiodiversitySurveyPageState
         ),
       );
     } else {
-      return PageScaffold.withScrollableChildren(
+      return PageScaffold(
         title:
             '${_statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}',
         fabLabel: const Row(
@@ -171,43 +169,13 @@ class _OngoingBiodiversitySurveyPageState
             icon: const Icon(Icons.check),
           )
         ],
-        children: [
-          ...widget.survey.sightings
-              .groupBy((sighting) => sighting.species)
-              .entries
-              .sortedBy((entry) => entry.key)
-              .mapIndexed(
-                (index, entry) => ExpandableListItem(
-                  title: entry.key,
-                  children: [
-                    ...entry.value
-                        .groupBy((sighting) => sighting.attributesString)
-                        .entries
-                        .sortedBy((entry) => entry.key)
-                        .map(
-                          (entry) => ExpandableListItemChild(
-                            title: entry.key,
-                            subtitle: 'Tap for options',
-                            onTap: () => _showBottomSheet(entry.value),
-                            trailing: SpeciesListCountAndTallies(
-                              count: entry.value.length.toString(),
-                              onIncrement: () => _onIncrement(entry.value.last),
-                              onDecrement: () => _onDecrement(entry.value),
-                            ),
-                          ),
-                        ),
-                    ExpandableListItemChild(
-                      title: 'Add new ${entry.key} observation',
-                      trailing: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 12),
-                        child: Icon(Icons.add),
-                      ),
-                      onTap: () => _navigateToAddSightingDetailsPage(entry.key),
-                    ),
-                  ],
-                ),
-              ),
-        ],
+        child: EditableSightingsList(
+          sightings: _statefulSurvey.sightings,
+          onOptionsTap: _showBottomSheet,
+          onIncrement: _onIncrement,
+          onDecrement: _onDecrement,
+          onAddNew: _navigateToAddSightingDetailsPage,
+        ),
       );
     }
   }
