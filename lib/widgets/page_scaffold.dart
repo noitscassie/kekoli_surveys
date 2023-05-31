@@ -52,6 +52,7 @@ class PageScaffold extends StatelessWidget {
         ),
         child: child ??
             FadingListView(
+              scrollController: scrollController,
               children: children,
             ),
       ),
