@@ -87,8 +87,8 @@ class _SightingsListState extends State<SightingsList> {
                           title: entry.key,
                           subtitle: widget.editable ? 'Tap for options' : null,
                           onTap: () => widget.editable
-                              ? null
-                              : widget.onOptionsTap!(entry.value),
+                              ? widget.onOptionsTap!(entry.value)
+                              : null,
                           trailing: widget.editable
                               ? SpeciesListCountAndTallies(
                                   count: entry.value.length.toString(),

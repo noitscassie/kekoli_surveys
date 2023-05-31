@@ -56,7 +56,7 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
           ],
         ),
         sortSelectorSibling: Padding(
-          padding: EdgeInsets.only(right: 8),
+          padding: const EdgeInsets.only(right: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
