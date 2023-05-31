@@ -67,6 +67,7 @@ class _SightingsListState extends State<SightingsList> {
             .mapIndexed(
               (index, entry) => ExpandableListItem(
                 title: entry.key,
+                subtitle: '${entry.value.length} total observations',
                 children: [
                   ...entry.value
                       .groupBy((sighting) => sighting.attributesString)
