@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/pages/home/bird_survey_tile.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 
 class BirdSurveysTab extends StatelessWidget {
   final Db _db = Db();
@@ -21,7 +22,7 @@ class BirdSurveysTab extends StatelessWidget {
               .reversed;
 
           return Center(
-            child: ListView(
+            child: FadingListView(
               children: List.from(
                   surveys.map((survey) => BirdSurveyTile(survey: survey))),
             ),
