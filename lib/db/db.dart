@@ -47,8 +47,10 @@ class Db {
     await _ready;
 
     final surveys = await getBiodiversitySurveys();
-    final updatedSurveys = List.from(surveys.whereNot(
-        (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id));
+    final updatedSurveys = List.from(surveys
+        .whereNot(
+            (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id)
+        .map((survey) => survey.toJson()));
 
     _insert(_biodiversitySurveysKey, updatedSurveys);
   }
@@ -121,7 +123,8 @@ class Db {
 
     final surveys = await getBirdSurveys();
     final updatedSurveys = List.from(surveys
-        .whereNot((BirdSurvey loadedSurvey) => loadedSurvey.id == survey.id));
+        .whereNot((BirdSurvey loadedSurvey) => loadedSurvey.id == survey.id)
+        .map((survey) => survey.toJson()));
 
     _insert(_birdSurveysKey, updatedSurveys);
   }
