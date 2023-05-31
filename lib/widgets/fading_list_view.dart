@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class FadingListView extends StatelessWidget {
   final ScrollController? scrollController;
   final List<Widget> children;
+  final bool top;
+  final bool bottom;
 
   const FadingListView({
     super.key,
     this.scrollController,
     required this.children,
+    this.top = true,
+    this.bottom = true,
   });
 
   @override
@@ -22,21 +26,36 @@ class FadingListView extends StatelessWidget {
           ],
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Theme.of(context).colorScheme.background.withOpacity(1),
-                    Theme.of(context).colorScheme.background.withOpacity(0.4),
-                  ],
+            if (top)
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Theme.of(context).colorScheme.background.withOpacity(0.4),
+                      Theme.of(context).colorScheme.background.withOpacity(1),
+                    ],
+                  ),
                 ),
+                height: 20,
               ),
-              height: 50,
-            ),
+            if (bottom)
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      Theme.of(context).colorScheme.background.withOpacity(1),
+                      Theme.of(context).colorScheme.background.withOpacity(0.4),
+                    ],
+                  ),
+                ),
+                height: 50,
+              ),
           ],
         )
       ],
