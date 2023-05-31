@@ -14,6 +14,12 @@ class FadingListView extends StatelessWidget {
     this.bottom = true,
   });
 
+  MainAxisAlignment get _mainAxisAlignment => top && bottom
+      ? MainAxisAlignment.spaceBetween
+      : top
+          ? MainAxisAlignment.start
+          : MainAxisAlignment.end;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,7 +32,7 @@ class FadingListView extends StatelessWidget {
           ],
         ),
         Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: _mainAxisAlignment,
           children: [
             if (top)
               Container(
