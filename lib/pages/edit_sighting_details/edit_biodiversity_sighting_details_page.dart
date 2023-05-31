@@ -36,7 +36,7 @@ class _EditBiodiversitySightingDetailsPageState
           MaterialPageRoute(
               builder: (BuildContext context) =>
                   OngoingBiodiversitySurveyPage(survey: widget.survey)),
-          (route) => false);
+          (route) => route.settings.name == '/');
     }
   }
 

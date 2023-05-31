@@ -25,7 +25,7 @@ class ConfirmSegmentCompleteModal extends StatelessWidget {
           builder: (BuildContext context) =>
               OngoingBirdSurveyPage(survey: survey),
         ),
-        (_) => false,
+        (route) => route.settings.name == '/',
       );
     }
   }

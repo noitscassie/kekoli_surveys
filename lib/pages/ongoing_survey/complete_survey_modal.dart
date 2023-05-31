@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/add_weather/add_weather_page.dart';
-import 'package:kekoldi_surveys/pages/home/home_page.dart';
+import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 
 class CompleteSurveyModal extends StatefulWidget {
@@ -24,8 +24,11 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
     widget.onChangeSurvey(widget.survey);
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
-        (route) => false);
+        MaterialPageRoute(
+          builder: (BuildContext context) =>
+              ViewSurveyPage(survey: widget.survey),
+        ),
+        (route) => route.settings.name == '/');
   }
 
   void onComplete(BuildContext context) {

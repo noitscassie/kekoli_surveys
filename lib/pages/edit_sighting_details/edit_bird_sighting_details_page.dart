@@ -3,6 +3,7 @@ import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
+import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_bird_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
 class EditBirdSightingDetailsPage extends StatefulWidget {
@@ -45,7 +46,7 @@ class _EditBirdSightingDetailsPageState
                     survey: widget.survey,
                     segment: widget.segment,
                   )),
-          (route) => false);
+          (route) => route.settings.name == OngoingBirdSurveyPage.name);
     }
   }
 

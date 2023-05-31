@@ -26,9 +26,10 @@ class _ConfirmBiodiversitySightingDetailsDialogState
 
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-            builder: (BuildContext context) =>
-                OngoingBiodiversitySurveyPage(survey: widget.survey)),
-        (route) => false);
+          builder: (BuildContext context) =>
+              OngoingBiodiversitySurveyPage(survey: widget.survey),
+        ),
+        (route) => route.settings.name == '/');
   }
 
   @override
