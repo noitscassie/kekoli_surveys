@@ -45,7 +45,11 @@ class PageScaffold extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+        ),
         child: child ??
             FadingListView(
               children: children,
