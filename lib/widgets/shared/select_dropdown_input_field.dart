@@ -7,12 +7,13 @@ class SelectDropdownInputField extends StatelessWidget {
   final List<String> options;
   final Function(String value) onChange;
 
-  const SelectDropdownInputField(
-      {super.key,
-      required this.label,
-      required this.value,
-      required this.options,
-      required this.onChange});
+  const SelectDropdownInputField({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.options,
+    required this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {
