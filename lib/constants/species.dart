@@ -395,7 +395,6 @@ final List<String> biodiversitySpecies = [
   "Ruddy-tailed Flycatcher",
   "Rufescent Tiger-Heron",
   "Rufous Motmot",
-  "Rufous Motmot",
   "Rufous Mourner",
   "Rufous Piha",
   "Rufous Winged Tanager",
