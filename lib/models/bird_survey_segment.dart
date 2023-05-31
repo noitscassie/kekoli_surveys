@@ -46,6 +46,14 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
     return SurveyState.completed;
   }
 
+  List<Sighting> get orderedSightings =>
+      sightings.sortedBy((Sighting sighting) => sighting.seenAt).toList();
+
+  int get uniqueSpecies =>
+      sightings.map((sighting) => sighting.species).distinct().length;
+
+  int get totalObservations => sightings.length;
+
   String toJson() => jsonEncode(attributes);
 
   void start(BirdSurvey survey) {
