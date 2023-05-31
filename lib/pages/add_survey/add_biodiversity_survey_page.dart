@@ -13,7 +13,10 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 class AddBiodiversitySurveyPage extends StatefulWidget {
   final String? initialTrail;
 
-  const AddBiodiversitySurveyPage({super.key, this.initialTrail});
+  const AddBiodiversitySurveyPage({
+    super.key,
+    this.initialTrail,
+  });
 
   @override
   State<AddBiodiversitySurveyPage> createState() =>
@@ -30,12 +33,15 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
   String scribe = '';
   List<String?> participants = [''];
 
-  List<String> get formattedLeaders =>
-      List.from(leaders.map((leader) => leader.trim()));
-  List<String> get formattedParticipants => List.from(participants
-      .whereNotNull()
-      .where((participant) => participant.isNotEmpty)
-      .map((participant) => participant.trim()));
+  List<String> get formattedLeaders => List.from(
+        leaders.map((leader) => leader.trim()),
+      );
+  List<String> get formattedParticipants => List.from(
+        participants
+            .whereNotNull()
+            .where((participant) => participant.isNotEmpty)
+            .map((participant) => participant.trim()),
+      );
 
   final ScrollController _controller = ScrollController();
 
@@ -53,7 +59,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
 
   final Db _db = Db();
 
-  Future<void> createSurvey() async {
+  Future<void> _createSurvey() async {
     final configuration = await _db.getSurveyConfiguration();
 
     await BiodiversitySurvey.create(
@@ -78,46 +84,50 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
     return PageScaffold.withScrollableChildren(
       title: 'Add New Survey',
       fabLabel: const Row(
-        children: [Text('Add Survey'), Icon(Icons.add)],
+        children: [
+          Text('Add Survey'),
+          Icon(Icons.add),
+        ],
       ),
       isFabValid: valid,
-      onFabPress: createSurvey,
+      onFabPress: _createSurvey,
       scrollController: _controller,
       children: [
-          TrailInputField(
-              onChange: (value) {
-                setState(() {
-                  selectedTrail = value;
-                });
-              },
-              initialTrail: selectedTrail),
-          LeadersInputField(
-            onChange: (value) {
-              setState(() {
-                leaders = value;
-              });
-            },
-            value: leaders,
-          ),
-          ScribeInputField(
-            onChange: (value) {
-              setState(() {
-                scribe = value;
-              });
-            },
-            value: scribe,
-          ),
-          ParticipantsInputField(
-            onChange: (value) {
-              setState(() {
-                participants = value;
-              });
-              _scrollToBottom();
-            },
-            value: participants,
-            onAddNewParticipant: _scrollToBottom,
-          ),
-        ],
+        TrailInputField(
+          onChange: (value) {
+            setState(() {
+              selectedTrail = value;
+            });
+          },
+          initialTrail: selectedTrail,
+        ),
+        LeadersInputField(
+          onChange: (value) {
+            setState(() {
+              leaders = value;
+            });
+          },
+          value: leaders,
+        ),
+        ScribeInputField(
+          onChange: (value) {
+            setState(() {
+              scribe = value;
+            });
+          },
+          value: scribe,
+        ),
+        ParticipantsInputField(
+          onChange: (value) {
+            setState(() {
+              participants = value;
+            });
+            _scrollToBottom();
+          },
+          value: participants,
+          onAddNewParticipant: _scrollToBottom,
+        ),
+      ],
     );
   }
 }

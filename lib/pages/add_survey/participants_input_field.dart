@@ -26,18 +26,17 @@ class ParticipantsInputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormItem(
       label: 'Add participants',
-      child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: RemovableTextFieldList(
-              items: value,
-              optionLabel: 'Participant',
-              newItemText: 'Add new participant',
-              onAddItem: () {
-                onChange([...value, '']);
-                onAddNewParticipant();
-              },
-              onUpdateItem: updateParticipant,
-              onRemoveItem: removeParticipant)),
+      child: RemovableTextFieldList(
+        items: value,
+        optionLabel: 'Participant',
+        newItemText: 'Add new participant',
+        onAddItem: () {
+          onChange([...value, '']);
+          onAddNewParticipant();
+        },
+        onUpdateItem: updateParticipant,
+        onRemoveItem: removeParticipant,
+      ),
     );
   }
 }
