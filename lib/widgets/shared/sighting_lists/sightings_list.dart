@@ -7,12 +7,19 @@ import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
 
 enum ViewStyle {
-  chronological(label: 'Sort chronologically'),
-  groupedBySpecies(label: 'Sort by species');
+  chronological(
+    label: 'Chronological',
+    selectedLabel: 'Sorted chronologically',
+  ),
+  groupedBySpecies(
+    label: 'Species',
+    selectedLabel: 'Sorted by species',
+  );
 
-  const ViewStyle({required this.label});
+  const ViewStyle({required this.label, required this.selectedLabel});
 
   final String label;
+  final String selectedLabel;
 }
 
 class SightingsList extends StatefulWidget {
@@ -23,6 +30,7 @@ class SightingsList extends StatefulWidget {
   final Function(String species)? onAddNew;
   final bool editable;
   final Widget? header;
+  final Widget? sortSelectorSibling;
 
   const SightingsList.editable({
     super.key,
@@ -32,12 +40,14 @@ class SightingsList extends StatefulWidget {
     required this.onDecrement,
     required this.onAddNew,
     this.header,
+    this.sortSelectorSibling,
   }) : editable = true;
 
   const SightingsList.fixed({
     super.key,
     required this.sightings,
     this.header,
+    this.sortSelectorSibling,
   })  : onOptionsTap = null,
         onIncrement = null,
         onDecrement = null,
@@ -133,29 +143,47 @@ class _SightingsListState extends State<SightingsList> {
       children: [
         if (widget.header != null) widget.header!,
         if (widget.sightings.isNotEmpty)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              DropdownMenu<ViewStyle>(
-                initialSelection: _selectedViewStyle,
-                trailingIcon: const Icon(Icons.sort),
-                onSelected: _onSelectSort,
-                menuStyle:
-                    const MenuStyle(visualDensity: VisualDensity.standard),
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontStyle: FontStyle.italic),
-                dropdownMenuEntries: [
-                  ...ViewStyle.values.map(
-                    (ViewStyle viewStyle) => DropdownMenuEntry(
-                      value: viewStyle,
-                      label: viewStyle.label,
+          Padding(
+            padding: EdgeInsets.only(top: widget.header == null ? 0 : 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (widget.sortSelectorSibling != null)
+                  Expanded(child: widget.sortSelectorSibling!),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Sort by...',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(fontStyle: FontStyle.italic),
                     ),
-                  ),
-                ],
-              )
-            ],
+                    DropdownButton<ViewStyle>(
+                      value: _selectedViewStyle,
+                      icon: const Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Icon(Icons.sort),
+                      ),
+                      items: [
+                        ...ViewStyle.values.map(
+                          (ViewStyle viewStyle) => DropdownMenuItem(
+                            value: viewStyle,
+                            child: Text(
+                              viewStyle.label,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        ),
+                      ],
+                      onChanged: _onSelectSort,
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         Expanded(
           child: FadingListView(

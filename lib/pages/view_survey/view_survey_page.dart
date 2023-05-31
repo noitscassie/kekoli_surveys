@@ -53,25 +53,28 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             BiodiversitySurveyStats(survey: widget.survey),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _participantsString,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontStyle: FontStyle.italic),
-                ),
-                PartlyBoldedText(
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    textParts: [
-                      RawText('Weather was '),
-                      RawText(widget.survey.weather!.toLowerCase(), bold: true),
-                    ]),
-              ],
-            ),
           ],
+        ),
+        sortSelectorSibling: Padding(
+          padding: EdgeInsets.only(right: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _participantsString,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontStyle: FontStyle.italic),
+              ),
+              PartlyBoldedText(
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  textParts: [
+                    RawText('Weather was '),
+                    RawText(widget.survey.weather!.toLowerCase(), bold: true),
+                  ]),
+            ],
+          ),
         ),
       ),
     );
