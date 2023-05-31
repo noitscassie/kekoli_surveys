@@ -13,7 +13,8 @@ import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
-import 'package:kekoldi_surveys/widgets/shared/sighting_lists/editable_sightings_list.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_list.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_stats.dart';
 
 class OngoingBiodiversitySurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
@@ -169,8 +170,11 @@ class _OngoingBiodiversitySurveyPageState
             icon: const Icon(Icons.check),
           )
         ],
-        child: EditableSightingsList(
+        child: SightingsList.editable(
           sightings: _statefulSurvey.sightings,
+          header: SightingsStats(
+            sightings: _statefulSurvey.sightings,
+          ),
           onOptionsTap: _showBottomSheet,
           onIncrement: _onIncrement,
           onDecrement: _onDecrement,

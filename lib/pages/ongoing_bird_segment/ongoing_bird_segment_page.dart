@@ -13,7 +13,8 @@ import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_mod
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
-import 'package:kekoldi_surveys/widgets/shared/sighting_lists/editable_sightings_list.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_list.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_stats.dart';
 
 class OngoingBirdSegmentPage extends StatefulWidget {
   static const name = 'OngoingBirdSegmentPage';
@@ -137,8 +138,11 @@ class _OngoingBirdSegmentPageState extends State<OngoingBirdSegmentPage> {
           icon: const Icon(Icons.check),
         )
       ],
-      child: EditableSightingsList(
+      child: SightingsList.editable(
         sightings: _statefulSegment.sightings,
+        header: SightingsStats(
+          sightings: _statefulSegment.sightings,
+        ),
         onOptionsTap: _showBottomSheet,
         onIncrement: _onIncrement,
         onDecrement: _onDecrement,

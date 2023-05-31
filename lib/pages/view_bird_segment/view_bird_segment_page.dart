@@ -1,10 +1,9 @@
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
-import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
-import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_list.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_stats.dart';
 
 class ViewBirdSegmentPage extends StatelessWidget {
   final BirdSurvey survey;
@@ -18,33 +17,14 @@ class ViewBirdSegmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold.withScrollableChildren(
+    return PageScaffold(
       title: '${survey.type.segmentName} ${segment.name} Observations',
-      children: [
-          ...segment.sightings
-              .groupBy((sighting) => sighting.species)
-              .entries
-              .sortedBy((entry) => entry.key)
-              .mapIndexed(
-                (index, entry) => ExpandableListItem(
-                  title: entry.key,
-                  children: List.from(
-                    entry.value
-                        .groupBy((sighting) => sighting.attributesString)
-                        .entries
-                        .sortedBy((entry) => entry.key)
-                        .map(
-                          (entry) => ExpandableListItemChild(
-                            title: entry.key,
-                            trailing: HeroQuantity(
-                              quantity: entry.value.length.toString(),
-                            ),
-                          ),
-                        ),
-                  ),
-                ),
-              ),
-        ],
+      child: SightingsList.fixed(
+        sightings: segment.sightings,
+        header: SightingsStats(
+          sightings: segment.sightings,
+        ),
+      ),
     );
   }
 }

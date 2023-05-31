@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/widgets/data_tile.dart';
+import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
@@ -15,27 +15,40 @@ enum ViewStyle {
   final String label;
 }
 
-class EditableSightingsList extends StatefulWidget {
+class SightingsList extends StatefulWidget {
   final List<Sighting> sightings;
-  final Function(List<Sighting> sightings) onOptionsTap;
-  final Function(Sighting sighting) onIncrement;
-  final Function(List<Sighting> sightings) onDecrement;
-  final Function(String species) onAddNew;
+  final Function(List<Sighting> sightings)? onOptionsTap;
+  final Function(Sighting sighting)? onIncrement;
+  final Function(List<Sighting> sightings)? onDecrement;
+  final Function(String species)? onAddNew;
+  final bool editable;
+  final Widget? header;
 
-  const EditableSightingsList({
+  const SightingsList.editable({
     super.key,
     required this.sightings,
     required this.onOptionsTap,
     required this.onIncrement,
     required this.onDecrement,
     required this.onAddNew,
-  });
+    this.header,
+  }) : editable = true;
+
+  const SightingsList.fixed({
+    super.key,
+    required this.sightings,
+    this.header,
+  })  : onOptionsTap = null,
+        onIncrement = null,
+        onDecrement = null,
+        onAddNew = null,
+        editable = false;
 
   @override
-  State<EditableSightingsList> createState() => _EditableSightingsListState();
+  State<SightingsList> createState() => _SightingsListState();
 }
 
-class _EditableSightingsListState extends State<EditableSightingsList> {
+class _SightingsListState extends State<SightingsList> {
   ViewStyle _selectedViewStyle = ViewStyle.groupedBySpecies;
 
   void _onSelectSort(ViewStyle? viewStyle) {
@@ -62,24 +75,32 @@ class _EditableSightingsListState extends State<EditableSightingsList> {
                       .map(
                         (entry) => ExpandableListItemChild(
                           title: entry.key,
-                          subtitle: 'Tap for options',
-                          onTap: () => widget.onOptionsTap(entry.value),
-                          trailing: SpeciesListCountAndTallies(
-                            count: entry.value.length.toString(),
-                            onIncrement: () =>
-                                widget.onIncrement(entry.value.last),
-                            onDecrement: () => widget.onDecrement(entry.value),
-                          ),
+                          subtitle: widget.editable ? 'Tap for options' : null,
+                          onTap: () => widget.editable
+                              ? null
+                              : widget.onOptionsTap!(entry.value),
+                          trailing: widget.editable
+                              ? SpeciesListCountAndTallies(
+                                  count: entry.value.length.toString(),
+                                  onIncrement: () =>
+                                      widget.onIncrement!(entry.value.last),
+                                  onDecrement: () =>
+                                      widget.onDecrement!(entry.value),
+                                )
+                              : HeroQuantity(
+                                  quantity: entry.value.length.toString(),
+                                ),
                         ),
                       ),
-                  ExpandableListItemChild(
-                    title: 'Add new ${entry.key} observation',
-                    trailing: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                      child: Icon(Icons.add),
+                  if (widget.editable)
+                    ExpandableListItemChild(
+                      title: 'Add new ${entry.key} observation',
+                      trailing: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                        child: Icon(Icons.add),
+                      ),
+                      onTap: () => widget.onAddNew!(entry.key),
                     ),
-                    onTap: () => widget.onAddNew(entry.key),
-                  ),
                 ],
               ),
             )
@@ -109,23 +130,7 @@ class _EditableSightingsListState extends State<EditableSightingsList> {
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            DataTile(
-              data: widget.sightings.length.toString(),
-              label: 'Total Observations',
-            ),
-            DataTile(
-              data: widget.sightings
-                  .map((Sighting sighting) => sighting.species)
-                  .distinct()
-                  .length
-                  .toString(),
-              label: 'Unique Species',
-            ),
-          ],
-        ),
+        if (widget.header != null) widget.header!,
         if (widget.sightings.isNotEmpty)
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
