@@ -3,6 +3,5 @@ const heights = [
   'Low',
   'Mid',
   'High',
-  'Flying',
   'Unknown',
 ];
