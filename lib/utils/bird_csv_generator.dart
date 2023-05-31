@@ -94,9 +94,9 @@ class BirdCsvGenerator {
                   '',
                   '',
                   '',
-                  group.lessThan30Count.toString(),
-                  group.moreThan30Count.toString(),
-                  group.flyoverCount.toString(),
+                  _stringNumberOrEmpty(group.lessThan30Count),
+                  _stringNumberOrEmpty(group.moreThan30Count),
+                  _stringNumberOrEmpty(group.flyoverCount),
                 ],
               )
               .toList();
@@ -125,12 +125,12 @@ class BirdCsvGenerator {
                   '',
                   '',
                   '',
-                  group.lessThan30Under3MinsCount.toString(),
-                  group.moreThan30Under3MinsCount.toString(),
-                  group.flyoverUnder3MinsCount.toString(),
-                  group.lessThan30Over3MinsCount.toString(),
-                  group.moreThan30Over3MinsCount.toString(),
-                  group.flyoverOver3MinsCount.toString(),
+                  _stringNumberOrEmpty(group.lessThan30Under3MinsCount),
+                  _stringNumberOrEmpty(group.moreThan30Under3MinsCount),
+                  _stringNumberOrEmpty(group.flyoverUnder3MinsCount),
+                  _stringNumberOrEmpty(group.lessThan30Over3MinsCount),
+                  _stringNumberOrEmpty(group.moreThan30Over3MinsCount),
+                  _stringNumberOrEmpty(group.flyoverOver3MinsCount),
                 ],
               )
               .toList();
@@ -164,4 +164,6 @@ class BirdCsvGenerator {
   List<String> get _dataFields => survey.configuration.fields
       .map((InputFieldConfig field) => field.label)
       .toList();
+
+  String _stringNumberOrEmpty(int count) => count == 0 ? '' : count.toString();
 }
