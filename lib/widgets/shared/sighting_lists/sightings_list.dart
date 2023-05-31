@@ -9,17 +9,16 @@ import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.da
 enum ViewStyle {
   chronological(
     label: 'Chronological',
-    selectedLabel: 'Sorted chronologically',
   ),
+  species(label: 'Species'),
+
   groupedBySpecies(
-    label: 'Species',
-    selectedLabel: 'Sorted by species',
+    label: 'Grouped species',
   );
 
-  const ViewStyle({required this.label, required this.selectedLabel});
+  const ViewStyle({required this.label});
 
   final String label;
-  final String selectedLabel;
 }
 
 class SightingsList extends StatefulWidget {
@@ -117,6 +116,15 @@ class _SightingsListState extends State<SightingsList> {
             )
       ];
 
+  List<ExpandableListItem> get _species => [
+        ...widget.sightings.sortedBy((sighting) => sighting.species).mapIndexed(
+              (int index, Sighting sighting) => ExpandableListItem(
+                title: sighting.species,
+                subtitle: sighting.attributesString,
+              ),
+            )
+      ];
+
   List<ExpandableListItem> get _chronological => [
         ...widget.sightings.sortedBy((sighting) => sighting.seenAt).mapIndexed(
               (int index, Sighting sighting) => ExpandableListItem(
@@ -132,6 +140,8 @@ class _SightingsListState extends State<SightingsList> {
         return _chronological;
       case ViewStyle.groupedBySpecies:
         return _groupedBySpecies;
+      case ViewStyle.species:
+        return _species;
     }
   }
 
