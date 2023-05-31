@@ -20,6 +20,9 @@ class ConfirmStartBirdSegmentModal extends StatelessWidget {
 
     Navigator.of(context).push(
       MaterialPageRoute(
+        settings: const RouteSettings(
+          name: OngoingBirdSegmentPage.name,
+        ),
         builder: (BuildContext context) => OngoingBirdSegmentPage(
           survey: survey,
           segment: segment,

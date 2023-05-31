@@ -23,6 +23,7 @@ class BirdSurveyBottomSheet extends StatelessWidget {
             Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(
+                settings: const RouteSettings(name: OngoingBirdSurveyPage.name),
                 builder: (BuildContext context) =>
                     OngoingBirdSurveyPage(survey: survey),
               ),

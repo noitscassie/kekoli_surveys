@@ -18,6 +18,7 @@ import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
 class OngoingBirdSurveyPage extends StatefulWidget {
+  static const name = 'OngoingBirdSurveyPage';
   final BirdSurvey survey;
 
   const OngoingBirdSurveyPage({super.key, required this.survey});

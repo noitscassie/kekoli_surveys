@@ -13,11 +13,13 @@ import 'package:kekoldi_surveys/pages/ongoing_bird_segment/confirm_segment_compl
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
+import 'package:kekoldi_surveys/widgets/data_tile.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
 
 class OngoingBirdSegmentPage extends StatefulWidget {
+  static const name = 'OngoingBirdSegmentPage';
   final BirdSurvey survey;
   final BirdSurveySegment segment;
 
