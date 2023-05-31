@@ -42,19 +42,19 @@ class SettingsPage extends StatelessWidget {
     return PageScaffold.withScrollableChildren(
       title: 'Settings',
       children: [
-          SelectableListItem(
-              text: 'Biodiversity Trails',
-              onSelect: (String _) => _navigateToBiodiversityTrails(context)),
-          SelectableListItem(
-              text: 'Biodiversity Data Export Format',
-              onSelect: (String _) => _navigateToDataExportFormat(context)),
-          SelectableListItem(
-              text: 'Biodiversity Survey Format',
-              onSelect: (String _) => _navigateToSurveyFormat(context)),
-          SelectableListItem(
-              text: 'Bird Trails',
-              onSelect: (String _) => _navigateToBirdTrails(context)),
-        ],
+        SelectableListItem(
+            title: 'Biodiversity Trails',
+            onSelect: (String _) => _navigateToBiodiversityTrails(context)),
+        SelectableListItem(
+            title: 'Biodiversity Data Export Format',
+            onSelect: (String _) => _navigateToDataExportFormat(context)),
+        SelectableListItem(
+            title: 'Biodiversity Survey Format',
+            onSelect: (String _) => _navigateToSurveyFormat(context)),
+        SelectableListItem(
+            title: 'Bird Trails',
+            onSelect: (String _) => _navigateToBirdTrails(context)),
+      ],
     );
   }
 }

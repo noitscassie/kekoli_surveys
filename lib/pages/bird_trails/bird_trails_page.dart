@@ -140,7 +140,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
           children: [
             ..._trails.map(
               (BirdSurveyTrail trail) => SelectableListItem(
-                text: trail.name,
+                title: trail.name,
                 onSelect: (_) => _navigateToTrailPage(trail),
               ),
             ),

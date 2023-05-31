@@ -72,12 +72,12 @@ class _SpeciesSelectorState extends State<SpeciesSelector> {
               child: FadingListView(
                 children: [
                   ...visibleSpecies.map((String species) => SelectableListItem(
-                        text: species,
+                        title: species,
                         onSelect: widget.onSelect,
                       )),
                   if (visibleSpecies.isEmpty)
                     SelectableListItem(
-                      text: searchTerm,
+                      title: searchTerm,
                       onSelect: (String species) => widget.onSelect(searchTerm),
                       icon: Icons.add,
                     )

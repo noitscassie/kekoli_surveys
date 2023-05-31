@@ -240,8 +240,11 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
           ),
         ..._statefulSurvey.segments
             .mapIndexed((index, segment) => SelectableListItem(
-                  text:
+                  title:
                       '${_statefulSurvey.type.title} ${segment.name} - ${segment.state.prettyName}',
+                  subtitle: segment.state == SurveyState.completed
+                      ? '${segment.totalObservations} observations, ${segment.uniqueSpecies} unique species'
+                      : null,
                   onSelect: (String _) => _onSegmentTap(segment, index),
                   icon: _segmentIcon(segment, index),
                 ))
