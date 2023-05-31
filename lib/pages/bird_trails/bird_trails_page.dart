@@ -7,6 +7,7 @@ import 'package:kekoldi_surveys/pages/bird_trails/bird_trail_page.dart';
 import 'package:kekoldi_surveys/widgets/add_new_item.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
@@ -135,7 +136,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
       ],
       child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 100),
-        child: ListView(
+        child: FadingListView(
           children: [
             ..._trails.map(
               (BirdSurveyTrail trail) => SelectableListItem(

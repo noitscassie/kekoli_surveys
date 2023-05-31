@@ -8,6 +8,7 @@ import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page
 import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 import 'package:kekoldi_surveys/widgets/shared/biodiversity_survey_stats.dart';
@@ -104,9 +105,9 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
               ],
             ),
             Expanded(
-              child: ListView(
+              child: FadingListView(
                 children: _groupSightings
-                    ? List.from(widget.survey.sightings
+                    ? List.from(widget.survey.orderedSightings
                         .groupBy((Sighting sighting) => sighting.species)
                         .entries
                         .map((entry) => ExpandableListItem(

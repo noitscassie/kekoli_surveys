@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 
 class PageScaffold extends StatelessWidget {
   final String title;
@@ -44,11 +45,10 @@ class PageScaffold extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
-        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: child ??
-            ListView(
-              controller: scrollController,
-              children: [...children],
+            FadingListView(
+              children: children,
             ),
       ),
       bottomNavigationBar: bottomNavigationBar,
@@ -59,7 +59,8 @@ class PageScaffold extends StatelessWidget {
               label: fabLabel!,
               backgroundColor: isFabValid
                   ? Theme.of(context).colorScheme.primary
-                  : Theme.of(context).colorScheme.onError),
+                  : Theme.of(context).colorScheme.onError,
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }

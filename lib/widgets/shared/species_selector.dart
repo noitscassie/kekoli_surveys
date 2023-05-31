@@ -1,5 +1,6 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
@@ -68,7 +69,7 @@ class _SpeciesSelectorState extends State<SpeciesSelector> {
               ),
             ),
             Expanded(
-              child: ListView(
+              child: FadingListView(
                 children: [
                   ...visibleSpecies.map((String species) => SelectableListItem(
                         text: species,

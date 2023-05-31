@@ -4,6 +4,7 @@ import 'package:kekoldi_surveys/models/bird_survey_trail.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/danger_cta.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class BirdTrailPage extends StatefulWidget {
@@ -74,7 +75,7 @@ class _BirdTrailPageState extends State<BirdTrailPage> {
       onFabPress: _onFabPress,
       child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 100),
-        child: ListView(
+        child: FadingListView(
           children: [
             InputFieldConfig.text(
               label: 'Trail Name',

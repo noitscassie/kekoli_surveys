@@ -4,6 +4,7 @@ import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
+import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/removable_text_field_list.dart';
 
@@ -117,7 +118,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
       onFabPress: () => _saveTrails(context),
       child: Padding(
         padding: const EdgeInsets.only(top: 16, bottom: 100),
-        child: ListView(
+        child: FadingListView(
           children: [
             RemovableTextFieldList(
               items: _trails,
