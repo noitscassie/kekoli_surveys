@@ -39,10 +39,9 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: 'Settings',
-      child: ListView(
-        children: [
+      children: [
           SelectableListItem(
               text: 'Biodiversity Trails',
               onSelect: (String _) => _navigateToBiodiversityTrails(context)),
@@ -56,7 +55,6 @@ class SettingsPage extends StatelessWidget {
               text: 'Bird Trails',
               onSelect: (String _) => _navigateToBirdTrails(context)),
         ],
-      ),
     );
   }
 }

@@ -191,7 +191,7 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title:
           '${_statefulSurvey.type.title} ${_statefulSurvey.trail}${_statefulSurvey.startAt == null ? '' : ', ${DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}'}',
       fabLabel: Row(
@@ -201,54 +201,51 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
         ],
       ),
       onFabPress: _onFabPress,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
-        child: ListView(children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                DataTile(
-                  data: _statefulSurvey.totalObservations.toString(),
-                  label: 'Total Observations',
-                ),
-                DataTile(
-                  data: _statefulSurvey.uniqueSpecies.toString(),
-                  label: 'Unique Species',
-                ),
-              ],
-            ),
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              DataTile(
+                data: _statefulSurvey.totalObservations.toString(),
+                label: 'Total Observations',
+              ),
+              DataTile(
+                data: _statefulSurvey.uniqueSpecies.toString(),
+                label: 'Unique Species',
+              ),
+            ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Text(
-              participantsString,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontStyle: FontStyle.italic),
-            ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text(
+            participantsString,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontStyle: FontStyle.italic),
           ),
-          if (_statefulSurvey.weather != null)
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
-              child: PartlyBoldedText(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textParts: [
-                    RawText('Weather was '),
-                    RawText(_statefulSurvey.weather!.toLowerCase(), bold: true),
-                  ]),
-            ),
-          ..._statefulSurvey.segments
-              .mapIndexed((index, segment) => SelectableListItem(
-                    text:
-                        '${_statefulSurvey.type.title} ${segment.name} - ${segment.state.prettyName}',
-                    onSelect: (String _) => _onSegmentTap(segment, index),
-                    icon: _segmentIcon(segment, index),
-                  ))
-        ]),
-      ),
+        ),
+        if (_statefulSurvey.weather != null)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+            child: PartlyBoldedText(
+                style: Theme.of(context).textTheme.bodyMedium,
+                textParts: [
+                  RawText('Weather was '),
+                  RawText(_statefulSurvey.weather!.toLowerCase(), bold: true),
+                ]),
+          ),
+        ..._statefulSurvey.segments
+            .mapIndexed((index, segment) => SelectableListItem(
+                  text:
+                      '${_statefulSurvey.type.title} ${segment.name} - ${segment.state.prettyName}',
+                  onSelect: (String _) => _onSegmentTap(segment, index),
+                  icon: _segmentIcon(segment, index),
+                ))
+      ],
     );
   }
 }

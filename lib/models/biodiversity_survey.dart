@@ -24,17 +24,17 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
 
   static final Db _db = Db();
 
-  BiodiversitySurvey(
-      {required this.trail,
-      required this.leaders,
-      required this.scribe,
-      required this.participants,
-      required this.configuration,
-      this.startAt,
-      this.endAt,
-      this.weather,
-      this.sightings = const []})
-      : id = const Uuid().v4(),
+  BiodiversitySurvey({
+    required this.trail,
+    required this.leaders,
+    required this.scribe,
+    required this.participants,
+    required this.configuration,
+    this.startAt,
+    this.endAt,
+    this.weather,
+    this.sightings = const [],
+  })  : id = const Uuid().v4(),
         createdAt = DateTime.now();
 
   BiodiversitySurvey.fromJson(Map<String, dynamic> json)

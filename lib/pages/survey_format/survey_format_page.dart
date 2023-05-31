@@ -119,7 +119,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
         title: 'Survey Format',
         actions: [
           IconButton(
@@ -131,25 +131,21 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
           children: [Text('Save Survey Format'), Icon(Icons.save_alt)],
         ),
         onFabPress: _onFabPress,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 100),
-          child: ListView(
-            children: [
-              ...fields.mapIndexed(
-                (index, field) => ModifyInputField(
-                  key: Key(field.id),
-                  index: index,
-                  field: field,
-                  onChange: _updateField,
-                  onDelete: _deleteField,
-                ),
+        children: [
+            ...fields.mapIndexed(
+              (index, field) => ModifyInputField(
+                key: Key(field.id),
+                index: index,
+                field: field,
+                onChange: _updateField,
+                onDelete: _deleteField,
               ),
-              AddNewItem(
-                text: 'Add new field',
-                onTap: _addField,
-              ),
-            ],
-          ),
-        ));
+            ),
+            AddNewItem(
+              text: 'Add new field',
+              onTap: _addField,
+            ),
+          ],
+    );
   }
 }

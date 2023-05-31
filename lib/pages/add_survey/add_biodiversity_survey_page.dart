@@ -75,16 +75,15 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: 'Add New Survey',
       fabLabel: const Row(
         children: [Text('Add Survey'), Icon(Icons.add)],
       ),
       isFabValid: valid,
       onFabPress: createSurvey,
-      child: ListView(
-        controller: _controller,
-        children: [
+      scrollController: _controller,
+      children: [
           TrailInputField(
               onChange: (value) {
                 setState(() {
@@ -119,7 +118,6 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
             onAddNewParticipant: _scrollToBottom,
           ),
         ],
-      ),
     );
   }
 }

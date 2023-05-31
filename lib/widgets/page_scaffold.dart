@@ -2,22 +2,38 @@ import 'package:flutter/material.dart';
 
 class PageScaffold extends StatelessWidget {
   final String title;
-  final Widget child;
+  final Widget? child;
+  final List<Widget> children;
+  final ScrollController? scrollController;
   final Widget? fabLabel;
   final VoidCallback? onFabPress;
   final bool isFabValid;
   final List<Widget> actions;
   final Widget? bottomNavigationBar;
 
-  const PageScaffold(
-      {super.key,
-      required this.title,
-      this.fabLabel,
-      this.onFabPress,
-      this.isFabValid = true,
-      this.actions = const [],
-      required this.child,
-      this.bottomNavigationBar});
+  const PageScaffold({
+    super.key,
+    required this.title,
+    this.fabLabel,
+    this.onFabPress,
+    this.isFabValid = true,
+    this.actions = const [],
+    required this.child,
+    this.bottomNavigationBar,
+  })  : children = const [],
+        scrollController = null;
+
+  const PageScaffold.withScrollableChildren({
+    super.key,
+    required this.title,
+    this.fabLabel,
+    this.onFabPress,
+    this.isFabValid = true,
+    this.actions = const [],
+    this.bottomNavigationBar,
+    required this.children,
+    this.scrollController,
+  }) : child = null;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +44,12 @@ class PageScaffold extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: child,
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 100),
+        child: child ??
+            ListView(
+              controller: scrollController,
+              children: [...children],
+            ),
       ),
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: fabLabel == null

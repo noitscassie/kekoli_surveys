@@ -101,9 +101,9 @@ class _OngoingBiodiversitySurveyPageState
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title:
-          '${_statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}',
+          '${_statefulSurvey.trail} Survey, ${DateFormats.ddmmyyyy(_statefulSurvey.startAt ?? DateTime.now())}',
       fabLabel: const Row(
         children: [
           Text('Add New Sighting'),
@@ -117,50 +117,43 @@ class _OngoingBiodiversitySurveyPageState
           icon: const Icon(Icons.check),
         )
       ],
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
-        child: ListView(
-          children: [
-            ...widget.survey.sightings
-                .groupBy((sighting) => sighting.species)
-                .entries
-                .sortedBy((entry) => entry.key)
-                .mapIndexed(
-                  (index, entry) => ExpandableListItem(
-                    title: entry.key,
-                    children: [
-                      ...entry.value
-                          .groupBy((sighting) => sighting.attributesString)
-                          .entries
-                          .sortedBy((entry) => entry.key)
-                          .map(
-                            (entry) => ExpandableListItemChild(
-                              title: entry.key,
-                              subtitle: 'Tap for options',
-                              onTap: () => _showBottomSheet(entry.value),
-                              trailing: SpeciesListCountAndTallies(
-                                count: entry.value.length.toString(),
-                                onIncrement: () =>
-                                    _onIncrement(entry.value.last),
-                                onDecrement: () => _onDecrement(entry.value),
-                              ),
-                            ),
+      children: [
+        ...widget.survey.sightings
+            .groupBy((sighting) => sighting.species)
+            .entries
+            .sortedBy((entry) => entry.key)
+            .mapIndexed(
+              (index, entry) => ExpandableListItem(
+                title: entry.key,
+                children: [
+                  ...entry.value
+                      .groupBy((sighting) => sighting.attributesString)
+                      .entries
+                      .sortedBy((entry) => entry.key)
+                      .map(
+                        (entry) => ExpandableListItemChild(
+                          title: entry.key,
+                          subtitle: 'Tap for options',
+                          onTap: () => _showBottomSheet(entry.value),
+                          trailing: SpeciesListCountAndTallies(
+                            count: entry.value.length.toString(),
+                            onIncrement: () => _onIncrement(entry.value.last),
+                            onDecrement: () => _onDecrement(entry.value),
                           ),
-                      ExpandableListItemChild(
-                        title: 'Add new ${entry.key} observation',
-                        trailing: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 12),
-                          child: Icon(Icons.add),
                         ),
-                        onTap: () =>
-                            _navigateToAddSightingDetailsPage(entry.key),
-                      )
-                    ],
+                      ),
+                  ExpandableListItemChild(
+                    title: 'Add new ${entry.key} observation',
+                    trailing: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      child: Icon(Icons.add),
+                    ),
+                    onTap: () => _navigateToAddSightingDetailsPage(entry.key),
                   ),
-                ),
-          ],
-        ),
-      ),
+                ],
+              ),
+            ),
+      ],
     );
   }
 }

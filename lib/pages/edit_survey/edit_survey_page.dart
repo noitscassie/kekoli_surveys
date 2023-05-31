@@ -61,16 +61,15 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: 'Edit Survey',
       fabLabel: const Row(
         children: [Text('Save Changes'), Icon(Icons.save_alt)],
       ),
       isFabValid: valid,
       onFabPress: updateSurvey,
-      child: ListView(
-        controller: _controller,
-        children: [
+      scrollController: _controller,
+      children: [
           TrailInputField(
               onChange: (value) {
                 setState(() {
@@ -105,7 +104,6 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
             onAddNewParticipant: _scrollToBottom,
           ),
         ],
-      ),
     );
   }
 }

@@ -41,26 +41,21 @@ class BirdSurveyForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: title,
       fabLabel: fabLabel,
       isFabValid: isFabValid,
       onFabPress: onFabPress,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
-        child: ListView(
-          controller: _controller,
-          children: [
-            ...fields.mapIndexed(
-              (int index, InputFieldConfig field) => field.inputField(
-                value: attributes[field.label],
-                onChange: (dynamic value) =>
-                    _onFieldChange(index, field.label, value),
-              ),
+      scrollController: _controller,
+      children: [
+          ...fields.mapIndexed(
+            (int index, InputFieldConfig field) => field.inputField(
+              value: attributes[field.label],
+              onChange: (dynamic value) =>
+                  _onFieldChange(index, field.label, value),
             ),
-          ],
-        ),
-      ),
+          ),
+        ],
     );
   }
 }

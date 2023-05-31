@@ -18,38 +18,33 @@ class ViewBirdSegmentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: '${survey.type.segmentName} ${segment.name} Observations',
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 100),
-        child: ListView(
-          children: [
-            ...segment.sightings
-                .groupBy((sighting) => sighting.species)
-                .entries
-                .sortedBy((entry) => entry.key)
-                .mapIndexed(
-                  (index, entry) => ExpandableListItem(
-                    title: entry.key,
-                    children: List.from(
-                      entry.value
-                          .groupBy((sighting) => sighting.attributesString)
-                          .entries
-                          .sortedBy((entry) => entry.key)
-                          .map(
-                            (entry) => ExpandableListItemChild(
-                              title: entry.key,
-                              trailing: HeroQuantity(
-                                quantity: entry.value.length.toString(),
-                              ),
+      children: [
+          ...segment.sightings
+              .groupBy((sighting) => sighting.species)
+              .entries
+              .sortedBy((entry) => entry.key)
+              .mapIndexed(
+                (index, entry) => ExpandableListItem(
+                  title: entry.key,
+                  children: List.from(
+                    entry.value
+                        .groupBy((sighting) => sighting.attributesString)
+                        .entries
+                        .sortedBy((entry) => entry.key)
+                        .map(
+                          (entry) => ExpandableListItemChild(
+                            title: entry.key,
+                            trailing: HeroQuantity(
+                              quantity: entry.value.length.toString(),
                             ),
                           ),
-                    ),
+                        ),
                   ),
                 ),
-          ],
-        ),
-      ),
+              ),
+        ],
     );
   }
 }
