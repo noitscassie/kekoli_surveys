@@ -40,8 +40,9 @@ class BirdSurveySegmentGrouper {
   }
 
   List<BirdPointCountGroup> get groupsForPointCount {
-    final sightingsBySpecies =
-        segment.sightings.groupBy((Sighting sighting) => sighting.species);
+    final sightingsBySpecies = segment.sightings
+        .sortedBy((Sighting sighting) => sighting.seenAt)
+        .groupBy((Sighting sighting) => sighting.species);
 
     final groups = sightingsBySpecies.entries.map((entry) {
       final under3MinsSightingsByDistance = entry.value
