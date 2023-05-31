@@ -5,6 +5,7 @@ class PageScaffold extends StatelessWidget {
   final String title;
   final Widget? child;
   final List<Widget> children;
+  final Widget? header;
   final ScrollController? scrollController;
   final Widget? fabLabel;
   final VoidCallback? onFabPress;
@@ -22,7 +23,8 @@ class PageScaffold extends StatelessWidget {
     required this.child,
     this.bottomNavigationBar,
   })  : children = const [],
-        scrollController = null;
+        scrollController = null,
+        header = null;
 
   const PageScaffold.withScrollableChildren({
     super.key,
@@ -34,6 +36,7 @@ class PageScaffold extends StatelessWidget {
     this.bottomNavigationBar,
     required this.children,
     this.scrollController,
+    this.header,
   }) : child = null;
 
   @override
@@ -51,9 +54,18 @@ class PageScaffold extends StatelessWidget {
           top: 16,
         ),
         child: child ??
-            FadingListView(
-              scrollController: scrollController,
-              children: children,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                if (header != null) header!,
+                Expanded(
+                  child: FadingListView(
+                    scrollController: scrollController,
+                    children: children,
+                  ),
+                ),
+              ],
             ),
       ),
       bottomNavigationBar: bottomNavigationBar,
