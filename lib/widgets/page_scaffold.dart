@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 
 class PageScaffold extends StatelessWidget {
@@ -12,6 +15,10 @@ class PageScaffold extends StatelessWidget {
   final bool isFabValid;
   final List<Widget> actions;
   final Widget? bottomNavigationBar;
+  final bool topFade;
+  final bool bottomFade;
+  final bool? padTop;
+  final int? backButtonToHomeTab;
 
   const PageScaffold({
     super.key,
@@ -22,6 +29,7 @@ class PageScaffold extends StatelessWidget {
     this.actions = const [],
     required this.child,
     this.bottomNavigationBar,
+    this.backButtonToHomeTab,
   })  : children = const [],
         scrollController = null,
         header = null;
@@ -45,6 +53,20 @@ class PageScaffold extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         actions: actions,
+        leading: backButtonToHomeTab == null
+            ? null
+            : IconButton(
+                icon: Icon(Platform.isAndroid
+                    ? Icons.arrow_back
+                    : Icons.arrow_back_ios),
+                onPressed: () => Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (BuildContext context) => HomePage(
+                        initialTabIndex: backButtonToHomeTab!,
+                      ),
+                    ),
+                    (route) => false),
+              ),
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Padding(

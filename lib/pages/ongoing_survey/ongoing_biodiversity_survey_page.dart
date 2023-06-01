@@ -170,6 +170,7 @@ class _OngoingBiodiversitySurveyPageState
             icon: const Icon(Icons.check),
           )
         ],
+        backButtonToHomeTab: 0,
         child: SightingsList.editable(
           sightings: _statefulSurvey.sightings,
           header: SightingsStats(

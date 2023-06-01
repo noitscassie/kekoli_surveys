@@ -47,6 +47,7 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
         ],
       ),
       onFabPress: _onFabPress,
+      backButtonToHomeTab: 0,
       child: SightingsList.fixed(
         sightings: widget.survey.sightings,
         header: Column(

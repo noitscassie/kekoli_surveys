@@ -202,6 +202,7 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
         ],
       ),
       onFabPress: _onFabPress,
+      backButtonToHomeTab: 1,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16),
