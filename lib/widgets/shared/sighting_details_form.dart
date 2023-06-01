@@ -27,16 +27,19 @@ class SightingDetailsForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageScaffold.withScrollableChildren(
-        title: species,
-        fabLabel: fabLabel,
-        isFabValid: _valid,
-        onFabPress: onFabPress,
-        children: fields
-              .map((InputFieldConfig config) => config.inputField(
-                  value: attributes[config.label],
-                  onChange: (dynamic value) =>
-                      onAttributeChange(config.label, value)))
-              .toList(),
-        );
+      title: species,
+      fabLabel: fabLabel,
+      isFabValid: _valid,
+      onFabPress: onFabPress,
+      children: fields
+          .map(
+            (InputFieldConfig config) => config.inputField(
+              value: attributes[config.label],
+              onChange: (dynamic value) =>
+                  onAttributeChange(config.label, value),
+            ),
+          )
+          .toList(),
+    );
   }
 }

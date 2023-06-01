@@ -19,7 +19,7 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
   int get surveyLength =>
       DateTime.now().difference(widget.survey.startAt!).inMinutes;
 
-  void onAddWeather(String weather) {
+  void _onAddWeather(String weather) {
     widget.survey.setWeather(weather);
     widget.onChangeSurvey(widget.survey);
 
@@ -36,7 +36,7 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => AddWeatherPage(
-          onAddWeather: onAddWeather,
+          onAddWeather: _onAddWeather,
         ),
       ),
     );
