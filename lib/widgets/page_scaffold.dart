@@ -32,7 +32,10 @@ class PageScaffold extends StatelessWidget {
     this.backButtonToHomeTab,
   })  : children = const [],
         scrollController = null,
-        header = null;
+        header = null,
+        topFade = false,
+        bottomFade = false,
+        padTop = null;
 
   const PageScaffold.withScrollableChildren({
     super.key,
@@ -45,6 +48,10 @@ class PageScaffold extends StatelessWidget {
     required this.children,
     this.scrollController,
     this.header,
+    this.topFade = true,
+    this.bottomFade = true,
+    this.padTop = false,
+    this.backButtonToHomeTab,
   }) : child = null;
 
   @override
@@ -84,6 +91,9 @@ class PageScaffold extends StatelessWidget {
                 Expanded(
                   child: FadingListView(
                     scrollController: scrollController,
+                    top: topFade,
+                    bottom: bottomFade,
+                    padTop: padTop ?? header != null,
                     children: children,
                   ),
                 ),

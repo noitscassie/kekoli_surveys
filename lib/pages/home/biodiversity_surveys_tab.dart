@@ -25,6 +25,7 @@ class BiodiversitySurveysTab extends StatelessWidget {
             child: FadingListView(
               top: false,
               bottom: true,
+              padTop: false,
               children: List.from(surveys
                   .map((survey) => BiodiversitySurveyTile(survey: survey))),
             ),
