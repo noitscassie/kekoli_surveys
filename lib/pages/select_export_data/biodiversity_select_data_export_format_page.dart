@@ -8,18 +8,20 @@ import 'package:kekoldi_surveys/pages/select_export_data/column_field.dart';
 import 'package:kekoldi_surveys/widgets/add_new_item.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
+import 'package:kekoldi_surveys/widgets/fading_widget.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/text_header.dart';
 
-class BiodiversityDataExportPage extends StatefulWidget {
-  const BiodiversityDataExportPage({super.key});
+class BiodiversitySelectDataExportFormatPage extends StatefulWidget {
+  const BiodiversitySelectDataExportFormatPage({super.key});
 
   @override
-  State<BiodiversityDataExportPage> createState() =>
-      _BiodiversityDataExportPageState();
+  State<BiodiversitySelectDataExportFormatPage> createState() =>
+      _BiodiversitySelectDataExportFormatPageState();
 }
 
-class _BiodiversityDataExportPageState
-    extends State<BiodiversityDataExportPage> {
+class _BiodiversitySelectDataExportFormatPageState
+    extends State<BiodiversitySelectDataExportFormatPage> {
   List<String?> get _dataOptions => [
         null,
         speciesString,
@@ -153,31 +155,47 @@ class _BiodiversityDataExportPageState
           ],
         ),
         onFabPress: _onFabPress,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 100),
-            child: ReorderableListView(
-              onReorder: _onReorder,
-              footer: AddNewItem(
-                key: const Key('add_new_data_export_column_tile'),
-                text: 'Add new export field',
-                onTap: _addNewField,
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 100),
+          child: Column(
+            children: [
+              const TextHeader(
+                text:
+                    'Use this page to change the format of exported data for biodiversity surveys.\n'
+                    'Order each item to match the order of columns on your spreadsheet, and then choose which field you want that column to be populated with.\n'
+                    'Once you\'re done, hit the save button below, and the updated export format will be used for all future surveys. You can hit the refresh button in the top right corner to reset this to the default settings at any time.',
               ),
-              children: [
-                ..._columns.mapIndexed(
-                  (int index, CsvColumn column) => ColumnField(
-                    key: Key('data_export_format_tile_${column.id}'),
-                    column: column,
-                    index: index,
-                    options: _dataOptions,
-                    onChange: _updateColumn,
-                    onDelete: () => _onDelete(column),
-                    initiallyExpanded:
-                        _expandFinalField && (index + 1) == _columns.length,
+              Expanded(
+                child: FadingWidget(
+                  top: true,
+                  bottom: true,
+                  padTop: false,
+                  child: ReorderableListView(
+                    padding: const EdgeInsets.only(bottom: 50),
+                    onReorder: _onReorder,
+                    footer: AddNewItem(
+                      key: const Key('add_new_data_export_column_tile'),
+                      text: 'Add new export field',
+                      onTap: _addNewField,
+                    ),
+                    children: [
+                      ..._columns.mapIndexed(
+                        (int index, CsvColumn column) => ColumnField(
+                          key: Key('data_export_format_tile_${column.id}'),
+                          column: column,
+                          index: index,
+                          options: _dataOptions,
+                          onChange: _updateColumn,
+                          onDelete: () => _onDelete(column),
+                          initiallyExpanded: _expandFinalField &&
+                              (index + 1) == _columns.length,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ));
   }

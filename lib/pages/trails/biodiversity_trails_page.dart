@@ -4,9 +4,9 @@ import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
 import 'package:kekoldi_surveys/db/db.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
-import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/removable_text_field_list.dart';
+import 'package:kekoldi_surveys/widgets/text_header.dart';
 
 class BiodiversityTrailsPage extends StatefulWidget {
   const BiodiversityTrailsPage({super.key});
@@ -101,7 +101,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: 'Biodiversity Trails',
       actions: [
         IconButton(
@@ -116,21 +116,22 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
         ],
       ),
       onFabPress: () => _saveTrails(context),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 100),
-        child: FadingListView(
-          children: [
-            RemovableTextFieldList(
-              items: _trails,
-              optionLabel: 'Trail',
-              newItemText: 'Add new trail',
-              onAddItem: _addTrail,
-              onUpdateItem: _updateTrail,
-              onRemoveItem: _removeTrail,
-            )
-          ],
-        ),
+      padTop: true,
+      header: const TextHeader(
+        text:
+            'Use this page to rename, add, or remove trails for biodiversity surveys.\n'
+            'Once you\'re done, hit the save button below, and the updated set of trails will be available when setting up a new biodiversity survey or editing an existing one.',
       ),
+      children: [
+        RemovableTextFieldList(
+          items: _trails,
+          optionLabel: 'Trail',
+          newItemText: 'Add new trail',
+          onAddItem: _addTrail,
+          onUpdateItem: _updateTrail,
+          onRemoveItem: _removeTrail,
+        )
+      ],
     );
   }
 }

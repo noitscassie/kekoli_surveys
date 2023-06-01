@@ -8,6 +8,7 @@ import 'package:kekoldi_surveys/widgets/add_new_item.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
+import 'package:kekoldi_surveys/widgets/text_header.dart';
 
 class SurveyFormatPage extends StatefulWidget {
   const SurveyFormatPage({super.key});
@@ -120,32 +121,37 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
   @override
   Widget build(BuildContext context) {
     return PageScaffold.withScrollableChildren(
-        title: 'Survey Format',
-        actions: [
-          IconButton(
-            onPressed: _openResetToDefaultsDialog,
-            icon: const Icon(Icons.refresh),
-          ),
-        ],
-        fabLabel: const Row(
-          children: [Text('Save Survey Format'), Icon(Icons.save_alt)],
+      title: 'Survey Format',
+      actions: [
+        IconButton(
+          onPressed: _openResetToDefaultsDialog,
+          icon: const Icon(Icons.refresh),
         ),
-        onFabPress: _onFabPress,
-        children: [
-            ...fields.mapIndexed(
-              (index, field) => ModifyInputField(
-                key: Key(field.id),
-                index: index,
-                field: field,
-                onChange: _updateField,
-                onDelete: _deleteField,
-              ),
-            ),
-            AddNewItem(
-              text: 'Add new field',
-              onTap: _addField,
-            ),
-          ],
+      ],
+      fabLabel: const Row(
+        children: [Text('Save Survey Format'), Icon(Icons.save_alt)],
+      ),
+      onFabPress: _onFabPress,
+      header: const TextHeader(
+          text:
+              'Use this page to change the data that is collected on each species during a survey.\n'
+              'Once you\'re done, hit the save button below, and the updated format will be used for all future surveys.\n'
+              'You can hit the refresh button in the top right corner to reset this to the default settings at any time.'),
+      children: [
+        ...fields.mapIndexed(
+          (index, field) => ModifyInputField(
+            key: Key(field.id),
+            index: index,
+            field: field,
+            onChange: _updateField,
+            onDelete: _deleteField,
+          ),
+        ),
+        AddNewItem(
+          text: 'Add new field',
+          onTap: _addField,
+        ),
+      ],
     );
   }
 }

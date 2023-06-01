@@ -7,9 +7,9 @@ import 'package:kekoldi_surveys/pages/bird_trails/bird_trail_page.dart';
 import 'package:kekoldi_surveys/widgets/add_new_item.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
-import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
+import 'package:kekoldi_surveys/widgets/text_header.dart';
 
 class BirdTrailsPage extends StatefulWidget {
   const BirdTrailsPage({super.key});
@@ -126,7 +126,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return PageScaffold.withScrollableChildren(
       title: 'Bird Trails',
       actions: [
         IconButton(
@@ -134,23 +134,23 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
           icon: const Icon(Icons.refresh),
         ),
       ],
-      child: Padding(
-        padding: const EdgeInsets.only(top: 16, bottom: 100),
-        child: FadingListView(
-          children: [
-            ..._trails.map(
-              (BirdSurveyTrail trail) => SelectableListItem(
-                title: trail.name,
-                onSelect: (_) => _navigateToTrailPage(trail),
-              ),
-            ),
-            AddNewItem(
-              text: 'New bird survey trail',
-              onTap: _onAddTrail,
-            ),
-          ],
-        ),
+      header: const TextHeader(
+        text:
+            'Use this page to rename, add, or remove trails for bird surveys.\n'
+            'Once you\'re done, hit the save button below, and the updated set of trails will be available when setting up a new bird survey or editing an existing one.',
       ),
+      children: [
+        ..._trails.map(
+          (BirdSurveyTrail trail) => SelectableListItem(
+            title: trail.name,
+            onSelect: (_) => _navigateToTrailPage(trail),
+          ),
+        ),
+        AddNewItem(
+          text: 'New bird survey trail',
+          onTap: _onAddTrail,
+        ),
+      ],
     );
   }
 }

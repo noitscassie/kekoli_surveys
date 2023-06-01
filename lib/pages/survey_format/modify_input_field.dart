@@ -6,6 +6,8 @@ import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/removable_text_field_list.dart';
 
 class ModifyInputField extends StatelessWidget {
+  static const _quantityLabel = 'Quantity';
+
   final int index;
   final InputFieldConfig field;
   final Function(InputFieldConfig field) onChange;
@@ -101,7 +103,9 @@ class ModifyInputField extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: TextFormField(
               decoration: InputDecoration(
-                  labelText: 'Name', contentPadding: inputPadding),
+                labelText: 'Name',
+                contentPadding: inputPadding,
+              ),
               initialValue: field.label,
               onChanged: onLabelChange,
             ),
@@ -110,7 +114,9 @@ class ModifyInputField extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: DropdownButtonFormField<FieldType>(
                 decoration: InputDecoration(
-                    labelText: 'Field Type', contentPadding: inputPadding),
+                  labelText: 'Field Type',
+                  contentPadding: inputPadding,
+                ),
                 value: field.type,
                 items: List.from(FieldType.values.map((FieldType type) =>
                     DropdownMenuItem(
@@ -123,7 +129,9 @@ class ModifyInputField extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: TextFormField(
               decoration: InputDecoration(
-                  labelText: 'Default Value', contentPadding: inputPadding),
+                labelText: 'Default Value',
+                contentPadding: inputPadding,
+              ),
               initialValue: field.defaultValue,
               onChanged: onDefaultValueChange,
             ),
@@ -155,11 +163,12 @@ class ModifyInputField extends StatelessWidget {
                     subtitle: Padding(
                       padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
-                          'When selected, all options will be sorted alphabetically when inputting data',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(fontStyle: FontStyle.italic)),
+                        'When selected, all options will be sorted alphabetically when inputting data',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(fontStyle: FontStyle.italic),
+                      ),
                     ),
                     value: field.sortOptions,
                     onChanged: onSortOptionsChange)
@@ -178,7 +187,7 @@ class ModifyInputField extends StatelessWidget {
               ),
             ],
           ),
-          if (field.label != 'Quantity')
+          if (field.label != _quantityLabel)
             Padding(
               padding: const EdgeInsets.all(8),
               child: Row(
