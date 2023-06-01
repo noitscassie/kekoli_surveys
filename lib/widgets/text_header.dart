@@ -29,7 +29,7 @@ class TextHeader extends StatelessWidget {
               ),
             ],
           ),
-          Divider()
+          const Divider()
         ],
       ),
     );

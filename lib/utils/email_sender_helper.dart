@@ -10,8 +10,14 @@ class EmailSenderHelper {
       emailRegex.hasMatch(emailAddress);
 
   static String biodiversityBody({required BiodiversitySurvey survey}) =>
-      'The ${survey.trail} survey on ${DateFormats.ddmmyyyy(survey.startAt!)} started at ${TimeFormats.timeHoursAndMinutes(survey.startAt!)} and ended at ${TimeFormats.timeHoursAndMinutes(survey.endAt!)}, lasting ${TimeFormats.hmFromMinutes(survey.lengthInMinutes())}.\n\nThere were ${survey.allParticipants.length} participants: ${survey.allParticipants.join(', ')}\n\nThere were ${survey.totalObservations} observations in total, ${survey.uniqueSpecies} unique species, and a total abundance of ${survey.totalAbundance}.\n\nThe weather was ${survey.weather!.toLowerCase()}';
+      'The ${survey.trail} survey on ${DateFormats.ddmmyyyy(survey.startAt!)} started at ${TimeFormats.timeHoursAndMinutes(survey.startAt!)} and ended at ${TimeFormats.timeHoursAndMinutes(survey.endAt!)}, lasting ${TimeFormats.hmFromMinutes(survey.lengthInMinutes())}.\n\n'
+      'There were ${survey.allParticipants.length} participants: ${survey.allParticipants.join(', ')}.\n\n'
+      'There were ${survey.totalObservations} observations in total, ${survey.uniqueSpecies} unique species, and a total abundance of ${survey.totalAbundance}.\n\n'
+      'The weather was ${survey.weather!.toLowerCase()}.';
 
   static String birdSurveyBody(BirdSurvey survey) =>
-      'Bird ${survey.type.title} ${survey.trail} on ${DateFormats.ddmmyyyy(survey.startAt!)}.\n\nThere were ${survey.allParticipants.length} participants: ${survey.allParticipants.join(', ')}\n\nThere were ${survey.totalObservations} observations in total, with ${survey.uniqueSpecies} unique species.\n\nThe weather was ${survey.weather!.toLowerCase()}';
+      'Bird ${survey.type.title} ${survey.trail} on ${DateFormats.ddmmyyyy(survey.startAt!)}.\n\n'
+      'There were ${survey.allParticipants.length} participants: ${survey.allParticipants.join(', ')}.\n\n'
+      'There were ${survey.totalObservations} observations in total, with ${survey.uniqueSpecies} unique species.\n\n'
+      'The weather was ${survey.weather!.toLowerCase()}.';
 }
