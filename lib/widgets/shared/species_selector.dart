@@ -1,6 +1,5 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
 
@@ -49,42 +48,35 @@ class _SpeciesSelectorState extends State<SpeciesSelector> {
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
-        title: widget.pageTitle,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              child: TextFormField(
-                initialValue: searchTerm,
-                autofocus: true,
-                autocorrect: false,
-                decoration: const InputDecoration(
-                    hintText: 'Search by full name or initials...'),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    searchTerm = newValue ?? '';
-                  });
-                },
-              ),
-            ),
-            Expanded(
-              child: FadingListView(
-                children: [
-                  ...visibleSpecies.map((String species) => SelectableListItem(
-                        title: species,
-                        onSelect: widget.onSelect,
-                      )),
-                  if (visibleSpecies.isEmpty)
-                    SelectableListItem(
-                      title: searchTerm,
-                      onSelect: (String species) => widget.onSelect(searchTerm),
-                      icon: Icons.add,
-                    )
-                ],
-              ),
-            ),
-          ],
-        ));
+    return PageScaffold.withScrollableChildren(
+      title: widget.pageTitle,
+      header: Padding(
+        padding: const EdgeInsets.only(bottom: 16),
+        child: TextFormField(
+          initialValue: searchTerm,
+          autofocus: true,
+          autocorrect: false,
+          decoration: const InputDecoration(
+              hintText: 'Search by full name or initials...'),
+          onChanged: (String? newValue) {
+            setState(() {
+              searchTerm = newValue ?? '';
+            });
+          },
+        ),
+      ),
+      children: [
+        ...visibleSpecies.map((String species) => SelectableListItem(
+              title: species,
+              onSelect: widget.onSelect,
+            )),
+        if (visibleSpecies.isEmpty)
+          SelectableListItem(
+            title: searchTerm,
+            onSelect: (String species) => widget.onSelect(searchTerm),
+            icon: Icons.add,
+          )
+      ],
+    );
   }
 }
