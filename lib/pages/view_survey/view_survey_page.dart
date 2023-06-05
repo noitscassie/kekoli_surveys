@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/csv_export_types.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
+import 'package:kekoldi_surveys/pages/biodiversity_survey/biodiversity_survey_scaffold.dart';
+import 'package:kekoldi_surveys/pages/choose_species/choose_biodiversity_species_page.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
-import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
-import 'package:kekoldi_surveys/widgets/shared/biodiversity_survey_stats.dart';
-import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_list.dart';
 
 class ViewSurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
@@ -24,20 +23,38 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
         ...widget.survey.participants
       ].join(', ');
 
-  void _onFabPress() => Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) =>
-          SelectExportTypePage(onContinue: _navigateToExportSurveyPage)));
+  void _onFabPress() => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => SelectExportTypePage(
+            onContinue: _navigateToExportSurveyPage,
+          ),
+        ),
+      );
 
   void _navigateToExportSurveyPage(ExportType exportType) =>
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).push(
+        MaterialPageRoute(
           builder: (BuildContext context) => ExportBiodiversitySurveyPage(
-                survey: widget.survey,
-                exportType: exportType,
-              )));
+            survey: widget.survey,
+            exportType: exportType,
+          ),
+        ),
+      );
+
+  void _navigateToChooseSpeciesPage() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => ChooseBiodiversitySpeciesPage(
+          survey: widget.survey,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
+    return BiodiversitySurveyScaffold(
+      survey: widget.survey,
       title:
           '${widget.survey.trail} Survey ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
       fabLabel: const Row(
@@ -47,35 +64,40 @@ class _ViewSurveyPageState extends State<ViewSurveyPage> {
         ],
       ),
       onFabPress: _onFabPress,
-      backButtonToHomeTab: 0,
-      child: SightingsList.fixed(
-        sightings: widget.survey.sightings,
-        header: Column(
+      actions: [
+        PopupMenuButton<String>(
+          onSelected: (String thing) {
+            _navigateToChooseSpeciesPage();
+          },
+          itemBuilder: (BuildContext otherContext) => [
+            const PopupMenuItem(
+              value: 'hello everyone',
+              child: Text('Add Observation'),
+            )
+          ],
+        )
+      ],
+      sortSelectorSibling: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BiodiversitySurveyStats(survey: widget.survey),
-          ],
-        ),
-        sortSelectorSibling: Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _participantsString,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(fontStyle: FontStyle.italic),
-              ),
+            Text(
+              _participantsString,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontStyle: FontStyle.italic),
+            ),
+            if (widget.survey.weather != null)
               PartlyBoldedText(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  textParts: [
-                    RawText('Weather was '),
-                    RawText(widget.survey.weather!.toLowerCase(), bold: true),
-                  ]),
-            ],
-          ),
+                style: Theme.of(context).textTheme.bodyMedium,
+                textParts: [
+                  RawText('Weather was '),
+                  RawText(widget.survey.weather!.toLowerCase(), bold: true),
+                ],
+              ),
+          ],
         ),
       ),
     );
