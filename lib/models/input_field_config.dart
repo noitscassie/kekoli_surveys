@@ -9,16 +9,38 @@ import 'package:kekoldi_surveys/widgets/shared/multiline_text_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/number_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/radio_buttons_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/select_dropdown_input_field.dart';
+import 'package:kekoldi_surveys/widgets/shared/select_with_freeform_text_input_field.dart';
 import 'package:kekoldi_surveys/widgets/shared/text_input_field.dart';
 import 'package:uuid/uuid.dart';
 
 enum FieldType {
-  text,
-  multilineText,
-  number,
-  radioButtons,
-  select,
-  multifieldText,
+  text(
+    label: 'Text',
+  ),
+  multilineText(
+    label: 'Multiline Text',
+  ),
+  number(
+    label: 'Number',
+  ),
+  radioButtons(
+    label: 'Radio Buttons',
+  ),
+  select(
+    label: 'Dropdown Options',
+  ),
+  selectWithFreeformText(
+    label: 'Dropdown With Free Text Input',
+  ),
+  multifieldText(
+    label: 'Multiple Text Options',
+  );
+
+  const FieldType({
+    required this.label,
+  });
+
+  final String label;
 }
 
 class InputFieldConfig<T> with DiagnosticableTreeMixin {
@@ -78,6 +100,16 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
       this.required = false,
       this.sortOptions = true})
       : type = FieldType.select,
+        newItemText = '',
+        id = const Uuid().v4();
+
+  InputFieldConfig.selectWithFreeformInput(
+      {required this.label,
+      required this.options,
+      this.defaultValue = '',
+      this.required = false,
+      this.sortOptions = true})
+      : type = FieldType.selectWithFreeformText,
         newItemText = '',
         id = const Uuid().v4();
 
@@ -170,6 +202,21 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
           onChange: onChange,
           newItemText: newItemText,
           maxItems: maxItems,
+        );
+      case FieldType.selectWithFreeformText:
+        final allOptions = [
+          ...options,
+          SelectWithFreeformTextInputField.other,
+        ];
+
+        return SelectWithFreeformTextInputField(
+          label: label,
+          value: fieldValue,
+          options:
+              (sortOptions ? allOptions.whereNotNull().sorted() : allOptions)
+                  .whereNotNull()
+                  .toList(),
+          onChange: onChange,
         );
     }
   }

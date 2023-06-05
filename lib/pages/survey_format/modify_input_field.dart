@@ -13,24 +13,15 @@ class ModifyInputField extends StatelessWidget {
   final Function(InputFieldConfig field) onChange;
   final Function(InputFieldConfig field) onDelete;
 
-  const ModifyInputField(
-      {super.key,
-      required this.field,
-      required this.onChange,
-      required this.onDelete,
-      required this.index});
-
-  static const Map<FieldType, String> fieldNames = {
-    FieldType.text: 'Text',
-    FieldType.multilineText: 'Multiline Text',
-    FieldType.number: 'Number',
-    FieldType.radioButtons: 'Radio Buttons',
-    FieldType.select: 'Dropdown Options',
-  };
+  const ModifyInputField({
+    super.key,
+    required this.field,
+    required this.onChange,
+    required this.onDelete,
+    required this.index,
+  });
 
   final inputPadding = const EdgeInsets.symmetric(vertical: 16, horizontal: 12);
-
-  String getFieldName(FieldType type) => fieldNames[type] ?? '';
 
   void onLabelChange(String label) {
     field.label = label;
@@ -118,11 +109,15 @@ class ModifyInputField extends StatelessWidget {
                   contentPadding: inputPadding,
                 ),
                 value: field.type,
-                items: List.from(FieldType.values.map((FieldType type) =>
-                    DropdownMenuItem(
-                        key: Key(field.type.name),
-                        value: type,
-                        child: Text(getFieldName(type))))),
+                items: List.from(
+                  FieldType.values.map(
+                    (FieldType type) => DropdownMenuItem(
+                      key: Key(field.type.name),
+                      value: type,
+                      child: Text(type.label),
+                    ),
+                  ),
+                ),
                 onChanged: onTypeChange),
           ),
           Padding(
