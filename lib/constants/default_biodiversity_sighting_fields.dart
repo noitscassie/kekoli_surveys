@@ -11,7 +11,7 @@ final List<InputFieldConfig> defaultBiodiversitySightingFields = [
       defaultValue: Sighting.unknown,
       required: true,
       sortOptions: false),
-  InputFieldConfig.select(
+  InputFieldConfig.selectWithFreeformInput(
       label: 'Substrate',
       options: substrates,
       defaultValue: Sighting.unknown,
