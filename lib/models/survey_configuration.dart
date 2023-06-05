@@ -23,9 +23,13 @@ class SurveyConfiguration with DiagnosticableTreeMixin {
   SurveyConfiguration(this.fields, this.csvColumns);
 
   SurveyConfiguration.fromJson(Map<String, dynamic> json)
-      : fields = List<InputFieldConfig>.from(json['fields'].map((field) =>
-            InputFieldConfig.fromJson(
-                field.runtimeType == String ? jsonDecode(field) : field))),
+      : fields = List<InputFieldConfig>.from(
+          json['fields'].map(
+            (field) => InputFieldConfig.fromJson(
+              field.runtimeType == String ? jsonDecode(field) : field,
+            ),
+          ),
+        ),
         csvColumns = List<CsvColumn>.from(json['csvColumns'].map((column) =>
             CsvColumn.fromJson(
                 column.runtimeType == String ? jsonDecode(column) : column)));

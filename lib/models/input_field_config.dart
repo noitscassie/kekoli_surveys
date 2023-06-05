@@ -97,7 +97,9 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
         label = json['label'],
         type = FieldType.values.byName(json['type']),
         defaultValue = json['defaultValue'],
-        options = List<String>.from(json['options']),
+        options = List<String>.from(
+          (json['options'] ?? []).where((option) => option != null),
+        ),
         required = json['required'],
         sortOptions = json['sortOptions'] ?? true,
         newItemText = json['newItemText'] ?? '';
@@ -144,7 +146,7 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
         return RadioButtonsInputField<String>(
           label: label,
           value: fieldValue,
-          options: (sortOptions ? options.sorted() : options)
+          options: (sortOptions ? options.whereNotNull().sorted() : options)
               .whereNotNull()
               .map((value) => value.toString())
               .map((String value) =>
@@ -156,7 +158,7 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
         return SelectDropdownInputField(
           label: label,
           value: fieldValue,
-          options: (sortOptions ? options.sorted() : options)
+          options: (sortOptions ? options.whereNotNull().sorted() : options)
               .whereNotNull()
               .toList(),
           onChange: onChange,
