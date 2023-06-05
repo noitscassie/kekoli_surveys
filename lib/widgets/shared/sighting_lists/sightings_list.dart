@@ -10,7 +10,10 @@ enum ViewStyle {
   chronological(
     label: 'Chronological',
   ),
-  species(label: 'Species'),
+
+  species(
+    label: 'Species A-Z',
+  ),
 
   groupedBySpecies(
     label: 'Grouped species',
