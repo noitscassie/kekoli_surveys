@@ -20,8 +20,11 @@ class NestedListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    childData.title,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Text(
+                      childData.title,
+                    ),
                   ),
                   if (childData.subtitle != null)
                     Padding(

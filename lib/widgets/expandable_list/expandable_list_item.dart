@@ -7,8 +7,12 @@ class ExpandableListItemChild {
   final Widget? trailing;
   final VoidCallback? onTap;
 
-  ExpandableListItemChild(
-      {required this.title, this.subtitle, this.trailing, this.onTap});
+  ExpandableListItemChild({
+    required this.title,
+    this.subtitle,
+    this.trailing,
+    this.onTap,
+  });
 }
 
 class ExpandableListItem extends StatelessWidget {
@@ -17,12 +21,13 @@ class ExpandableListItem extends StatelessWidget {
   final List<ExpandableListItemChild> children;
   final Widget? trailing;
 
-  const ExpandableListItem(
-      {super.key,
-      required this.title,
-      this.subtitle,
-      this.children = const [],
-      this.trailing});
+  const ExpandableListItem({
+    super.key,
+    required this.title,
+    this.subtitle,
+    this.children = const [],
+    this.trailing,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +53,10 @@ class ExpandableListItem extends StatelessWidget {
       expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         ...children.map(
-            (ExpandableListItemChild child) => NestedListItem(childData: child))
+          (ExpandableListItemChild child) => NestedListItem(
+            childData: child,
+          ),
+        )
       ],
     );
   }
