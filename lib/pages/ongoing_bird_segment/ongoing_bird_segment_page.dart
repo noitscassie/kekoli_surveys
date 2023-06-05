@@ -10,11 +10,11 @@ import 'package:kekoldi_surveys/pages/edit_species/edit_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/add_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/confirm_segment_complete_modal.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/remove_bird_tally_modal.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/sighting_options_sheet.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_list.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_stats.dart';
+import 'package:kekoldi_surveys/widgets/shared/sighting_options_sheet.dart';
 
 class OngoingBirdSegmentPage extends StatefulWidget {
   static const name = 'OngoingBirdSegmentPage';

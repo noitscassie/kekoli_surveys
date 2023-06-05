@@ -33,12 +33,13 @@ class _EditBiodiversitySightingDetailsPageState
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (BuildContext context) => BiodiversitySurveyPage(
-              survey: widget.survey,
-            ),
+        MaterialPageRoute(
+          builder: (BuildContext context) => BiodiversitySurveyPage(
+            survey: widget.survey,
           ),
-          (route) => route.settings.name == '/');
+        ),
+        (route) => route.settings.name == '/',
+      );
     }
   }
 

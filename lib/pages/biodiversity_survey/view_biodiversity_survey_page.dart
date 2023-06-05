@@ -8,15 +8,20 @@ import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
-class ViewSurveyPage extends StatefulWidget {
+class ViewBiodiversitySurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
-  const ViewSurveyPage({super.key, required this.survey});
+  const ViewBiodiversitySurveyPage({
+    super.key,
+    required this.survey,
+  });
 
   @override
-  State<ViewSurveyPage> createState() => _ViewSurveyPageState();
+  State<ViewBiodiversitySurveyPage> createState() =>
+      _ViewBiodiversitySurveyPageState();
 }
 
-class _ViewSurveyPageState extends State<ViewSurveyPage> {
+class _ViewBiodiversitySurveyPageState
+    extends State<ViewBiodiversitySurveyPage> {
   String get _participantsString => [
         ...widget.survey.leaders.map((String leader) => '$leader (leader)'),
         '${widget.survey.scribe} (scribe)',

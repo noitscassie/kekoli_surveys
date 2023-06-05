@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
+import 'package:kekoldi_surveys/widgets/shared/hero_quantity.dart';
 import 'package:kekoldi_surveys/widgets/shared/modify_tally_icon.dart';
 
 class SpeciesListCountAndTallies extends StatelessWidget {

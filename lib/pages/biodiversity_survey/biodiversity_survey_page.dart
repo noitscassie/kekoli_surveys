@@ -3,7 +3,7 @@ import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/biodiversity_survey/ongoing_biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/pages/biodiversity_survey/unstarted_biodiversity_survey_page.dart';
-import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
+import 'package:kekoldi_surveys/pages/biodiversity_survey/view_biodiversity_survey_page.dart';
 
 class BiodiversitySurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
@@ -37,7 +37,7 @@ class _BiodiversitySurveyPageState extends State<BiodiversitySurveyPage> {
           survey: _statefulSurvey,
         );
       case SurveyState.completed:
-        return ViewSurveyPage(
+        return ViewBiodiversitySurveyPage(
           survey: _statefulSurvey,
         );
     }

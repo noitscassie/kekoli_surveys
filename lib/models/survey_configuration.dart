@@ -30,9 +30,13 @@ class SurveyConfiguration with DiagnosticableTreeMixin {
             ),
           ),
         ),
-        csvColumns = List<CsvColumn>.from(json['csvColumns'].map((column) =>
-            CsvColumn.fromJson(
-                column.runtimeType == String ? jsonDecode(column) : column)));
+        csvColumns = List<CsvColumn>.from(
+          json['csvColumns'].map(
+            (column) => CsvColumn.fromJson(
+              column.runtimeType == String ? jsonDecode(column) : column,
+            ),
+          ),
+        );
 
   String toJson() => jsonEncode(attributes);
 

@@ -1,9 +1,9 @@
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/pages/view_survey/hero_quantity.dart';
 import 'package:kekoldi_surveys/widgets/expandable_list/expandable_list_item.dart';
 import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
+import 'package:kekoldi_surveys/widgets/shared/hero_quantity.dart';
 import 'package:kekoldi_surveys/widgets/shared/species_list_count_and_tallies.dart';
 
 enum ViewStyle {
