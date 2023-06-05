@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
-import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
+import 'package:kekoldi_surveys/pages/bird_segment/bird_segment_page.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 
@@ -21,9 +21,9 @@ class ConfirmStartBirdSegmentModal extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         settings: const RouteSettings(
-          name: OngoingBirdSegmentPage.name,
+          name: BirdSegmentPage.name,
         ),
-        builder: (BuildContext context) => OngoingBirdSegmentPage(
+        builder: (BuildContext context) => BirdSegmentPage(
           survey: survey,
           segment: segment,
         ),

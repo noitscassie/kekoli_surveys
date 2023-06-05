@@ -20,11 +20,12 @@ class BirdSurveyTile extends StatelessWidget {
     }
   }
 
-  void onTap(BuildContext context) =>
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) => BirdSurveyBottomSheet(survey: survey),
-    );
+  void _onTap(BuildContext context) => showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) => BirdSurveyBottomSheet(
+          survey: survey,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class BirdSurveyTile extends StatelessWidget {
       leaders: survey.leaders,
       scribe: survey.scribe,
       participants: survey.participants,
-      onTap: () => onTap(context),
+      onTap: () => _onTap(context),
     );
   }
 }

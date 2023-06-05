@@ -6,11 +6,10 @@ import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/pages/add_weather/add_weather_page.dart';
 import 'package:kekoldi_surveys/pages/biodiversity_survey/confirm_start_bird_segment_modal.dart';
+import 'package:kekoldi_surveys/pages/bird_segment/bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_bird_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
-import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page.dart';
-import 'package:kekoldi_surveys/pages/view_bird_segment/view_bird_segment_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/data_tile.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -58,25 +57,18 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
     }
   }
 
-  void _navigateToAddWeatherPage() =>
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) =>
-              AddWeatherPage(onAddWeather: _onAddWeather)));
-
-  void _navigateToViewSegmentPage(BirdSurveySegment segment) =>
-      Navigator.of(context).push(
+  void _navigateToAddWeatherPage() => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) => ViewBirdSegmentPage(
-            survey: _statefulSurvey,
-            segment: segment,
+          builder: (BuildContext context) => AddWeatherPage(
+            onAddWeather: _onAddWeather,
           ),
         ),
       );
 
-  void _navigateToOngoingSegmentPage(BirdSurveySegment segment) =>
+  void _navigateToSegmentPage(BirdSurveySegment segment) =>
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) => OngoingBirdSegmentPage(
+          builder: (BuildContext context) => BirdSegmentPage(
             survey: _statefulSurvey,
             segment: segment,
           ),
@@ -98,9 +90,9 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
         case SurveyState.unstarted:
           return _startSegment(segment);
         case SurveyState.inProgress:
-          return _navigateToOngoingSegmentPage(segment);
+          return _navigateToSegmentPage(segment);
         case SurveyState.completed:
-          _navigateToViewSegmentPage(segment);
+          _navigateToSegmentPage(segment);
       }
     } else {
       final snackBar = SnackBar(
@@ -161,7 +153,7 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
 
   VoidCallback get _onFabPress {
     if (_inProgressSegment != null) {
-      return () => _navigateToOngoingSegmentPage(_inProgressSegment!);
+      return () => _navigateToSegmentPage(_inProgressSegment!);
     }
 
     if (_nextSegment != null) {
@@ -234,22 +226,24 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
             child: PartlyBoldedText(
-                style: Theme.of(context).textTheme.bodyMedium,
-                textParts: [
-                  RawText('Weather was '),
-                  RawText(_statefulSurvey.weather!.toLowerCase(), bold: true),
-                ]),
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Weather was '),
+                RawText(_statefulSurvey.weather!.toLowerCase(), bold: true),
+              ],
+            ),
           ),
-        ..._statefulSurvey.segments
-            .mapIndexed((index, segment) => SelectableListItem(
-                  title:
-                      '${_statefulSurvey.type.title} ${segment.name} - ${segment.state.prettyName}',
-                  subtitle: segment.state == SurveyState.completed
-                      ? '${segment.totalObservations} observations, ${segment.uniqueSpecies} unique species'
-                      : null,
-                  onSelect: (String _) => _onSegmentTap(segment, index),
-                  icon: _segmentIcon(segment, index),
-                ))
+        ..._statefulSurvey.segments.mapIndexed(
+          (index, segment) => SelectableListItem(
+            title:
+                '${_statefulSurvey.type.title} ${segment.name} - ${segment.state.prettyName}',
+            subtitle: segment.state == SurveyState.completed
+                ? '${segment.totalObservations} observations, ${segment.uniqueSpecies} unique species'
+                : null,
+            onSelect: (String _) => _onSegmentTap(segment, index),
+            icon: _segmentIcon(segment, index),
+          ),
+        )
       ],
     );
   }

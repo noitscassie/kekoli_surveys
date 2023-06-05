@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/pages/biodiversity_survey/ongoing_bird_survey_page.dart';
-import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
+import 'package:kekoldi_surveys/pages/bird_segment/bird_segment_page.dart';
+import 'package:kekoldi_surveys/pages/bird_survey/ongoing_bird_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_details_form.dart';
 
 class EditBirdSightingDetailsPage extends StatefulWidget {
@@ -42,10 +42,11 @@ class _EditBirdSightingDetailsPageState
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-              builder: (BuildContext context) => OngoingBirdSegmentPage(
-                    survey: widget.survey,
-                    segment: widget.segment,
-                  )),
+            builder: (BuildContext context) => BirdSegmentPage(
+              survey: widget.survey,
+              segment: widget.segment,
+            ),
+          ),
           (route) => route.settings.name == OngoingBirdSurveyPage.name);
     }
   }

@@ -8,6 +8,16 @@ import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 
+enum OverflowMenuOption {
+  addObservation(label: 'Add Observation');
+
+  const OverflowMenuOption({
+    required this.label,
+  });
+
+  final String label;
+}
+
 class ViewBiodiversitySurveyPage extends StatefulWidget {
   final BiodiversitySurvey survey;
   const ViewBiodiversitySurveyPage({
@@ -46,14 +56,18 @@ class _ViewBiodiversitySurveyPageState
         ),
       );
 
-  void _navigateToChooseSpeciesPage() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (BuildContext context) => ChooseBiodiversitySpeciesPage(
-          survey: widget.survey,
-        ),
-      ),
-    );
+  void _handleOverflowMenuOptionTap(OverflowMenuOption option) {
+    switch (option) {
+      case OverflowMenuOption.addObservation:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => ChooseBiodiversitySpeciesPage(
+              survey: widget.survey,
+            ),
+          ),
+        );
+        break;
+    }
   }
 
   @override
@@ -70,16 +84,16 @@ class _ViewBiodiversitySurveyPageState
       ),
       onFabPress: _onFabPress,
       actions: [
-        PopupMenuButton<String>(
-          onSelected: (String thing) {
-            _navigateToChooseSpeciesPage();
-          },
-          itemBuilder: (BuildContext otherContext) => [
-            const PopupMenuItem(
-              value: 'hello everyone',
-              child: Text('Add Observation'),
-            )
-          ],
+        PopupMenuButton<OverflowMenuOption>(
+          onSelected: _handleOverflowMenuOptionTap,
+          itemBuilder: (BuildContext otherContext) => OverflowMenuOption.values
+              .map(
+                (OverflowMenuOption option) => PopupMenuItem(
+                  value: option,
+                  child: Text(option.label),
+                ),
+              )
+              .toList(),
         )
       ],
       sortSelectorSibling: Padding(
