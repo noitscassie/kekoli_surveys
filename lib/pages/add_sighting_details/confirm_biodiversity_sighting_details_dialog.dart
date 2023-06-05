@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_biodiversity_survey_page.dart';
+import 'package:kekoldi_surveys/pages/biodiversity_survey/biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
@@ -26,8 +26,9 @@ class _ConfirmBiodiversitySightingDetailsDialogState
 
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (BuildContext context) =>
-              OngoingBiodiversitySurveyPage(survey: widget.survey),
+          builder: (BuildContext context) => BiodiversitySurveyPage(
+            survey: widget.survey,
+          ),
         ),
         (route) => route.settings.name == '/');
   }

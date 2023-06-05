@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
 import 'package:kekoldi_surveys/models/bird_survey_segment.dart';
 import 'package:kekoldi_surveys/models/sighting.dart';
+import 'package:kekoldi_surveys/pages/biodiversity_survey/ongoing_bird_survey_page.dart';
 import 'package:kekoldi_surveys/pages/ongoing_bird_segment/ongoing_bird_segment_page.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_bird_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/dialog_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/dialogs/primary_cta.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
@@ -31,9 +31,8 @@ class ConfirmBirdSightingDetailsDialog extends StatelessWidget {
             survey: survey,
             segment: segment,
           ),
-        ), (route)
-      => route.settings.name == OngoingBirdSurveyPage.name
-    );
+        ),
+        (route) => route.settings.name == OngoingBirdSurveyPage.name);
   }
 
   @override

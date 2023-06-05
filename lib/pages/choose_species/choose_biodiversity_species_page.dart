@@ -7,7 +7,10 @@ import 'package:kekoldi_surveys/widgets/shared/species_selector.dart';
 class ChooseBiodiversitySpeciesPage extends StatelessWidget {
   final BiodiversitySurvey survey;
 
-  const ChooseBiodiversitySpeciesPage({super.key, required this.survey});
+  const ChooseBiodiversitySpeciesPage({
+    super.key,
+    required this.survey,
+  });
 
   void navigateToAddDetails(BuildContext context, String species) =>
       Navigator.of(context).push(MaterialPageRoute(

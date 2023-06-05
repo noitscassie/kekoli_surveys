@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kekoldi_surveys/constants/survey_state.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
+import 'package:kekoldi_surveys/pages/biodiversity_survey/biodiversity_survey_page.dart';
 import 'package:kekoldi_surveys/pages/edit_survey/edit_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/delete_biodiversity_survey_modal.dart';
-import 'package:kekoldi_surveys/pages/ongoing_survey/ongoing_biodiversity_survey_page.dart';
-import 'package:kekoldi_surveys/pages/view_survey/view_survey_page.dart';
 import 'package:kekoldi_surveys/widgets/bottom_sheet_options.dart';
 
 class BiodiversitySurveyBottomSheet extends StatelessWidget {
@@ -19,18 +17,13 @@ class BiodiversitySurveyBottomSheet extends StatelessWidget {
         BottomSheetOption(
           text: 'View Survey',
           onPress: () {
-            final route = survey.state == SurveyState.completed
-                ? MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        ViewSurveyPage(survey: survey),
-                  )
-                : MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        OngoingBiodiversitySurveyPage(survey: survey));
-
             Navigator.of(context).pop();
             Navigator.of(context).push(
-              route,
+              MaterialPageRoute(
+                builder: (BuildContext context) => BiodiversitySurveyPage(
+                  survey: survey,
+                ),
+              ),
             );
           },
           leadingIcon: Icons.start,
@@ -39,9 +32,13 @@ class BiodiversitySurveyBottomSheet extends StatelessWidget {
           text: 'Edit Survey',
           onPress: () {
             Navigator.of(context).pop();
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    EditSurveyPage(survey: survey)));
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (BuildContext context) => EditSurveyPage(
+                  survey: survey,
+                ),
+              ),
+            );
           },
           leadingIcon: Icons.edit,
         ),
@@ -50,10 +47,12 @@ class BiodiversitySurveyBottomSheet extends StatelessWidget {
           onPress: () {
             Navigator.of(context).pop();
             showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) =>
-                    DeleteBiodiversitySurveyModal(survey: survey));
+              context: context,
+              barrierDismissible: false,
+              builder: (BuildContext context) => DeleteBiodiversitySurveyModal(
+                survey: survey,
+              ),
+            );
           },
           leadingIcon: Icons.delete_forever,
         ),
