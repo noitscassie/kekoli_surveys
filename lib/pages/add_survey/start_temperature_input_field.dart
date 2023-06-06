@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/widgets/form_item.dart';
 
-class ScribeInputField extends StatelessWidget {
+class StartTemperatureInputField extends StatelessWidget {
   final String value;
   final Function(String value) onChange;
 
-  const ScribeInputField({
+  const StartTemperatureInputField({
     super.key,
     required this.onChange,
     required this.value,
@@ -14,15 +14,15 @@ class ScribeInputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormItem(
-      label: 'Add a scribe',
+      label: 'Start Temperature (℃)',
       child: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: TextFormField(
           initialValue: value,
-          textCapitalization: TextCapitalization.words,
+          keyboardType: TextInputType.number,
           decoration: InputDecoration(
             border: const UnderlineInputBorder(),
-            labelText: 'Scribe',
+            labelText: 'Temperature',
             labelStyle: Theme.of(context).textTheme.bodySmall,
           ),
           onChanged: onChange,

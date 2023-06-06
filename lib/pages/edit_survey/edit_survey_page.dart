@@ -4,6 +4,7 @@ import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_survey/start_temperature_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -22,6 +23,7 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
   late List<String> leaders = widget.survey.leaders;
   late String scribe = widget.survey.scribe;
   late List<String?> participants = widget.survey.participants;
+  late String startTemperature = widget.survey.startTemperature ?? '';
 
   List<String> get formattedLeaders =>
       List.from(leaders.map((leader) => leader.trim()));
@@ -45,10 +47,12 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
 
   Future<void> updateSurvey() async {
     await widget.survey.update(
-        updatedTrail: selectedTrail,
-        updatedLeaders: leaders,
-        updatedScribe: scribe,
-        updatedParticipants: formattedParticipants);
+      updatedTrail: selectedTrail,
+      updatedLeaders: leaders,
+      updatedScribe: scribe,
+      updatedParticipants: formattedParticipants,
+      updatedStartTemperature: startTemperature,
+    );
 
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
@@ -70,40 +74,48 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
       onFabPress: updateSurvey,
       scrollController: _controller,
       children: [
-          TrailInputField(
-              onChange: (value) {
-                setState(() {
-                  selectedTrail = value;
-                });
-              },
-              initialTrail: selectedTrail),
-          LeadersInputField(
+        TrailInputField(
             onChange: (value) {
               setState(() {
-                leaders = value;
+                selectedTrail = value;
               });
             },
-            value: leaders,
-          ),
-          ScribeInputField(
-            onChange: (value) {
-              setState(() {
-                scribe = value;
-              });
-            },
-            value: scribe,
-          ),
-          ParticipantsInputField(
-            onChange: (value) {
-              setState(() {
-                participants = value;
-              });
-              _scrollToBottom();
-            },
-            value: participants,
-            onAddNewParticipant: _scrollToBottom,
-          ),
-        ],
+            initialTrail: selectedTrail),
+        LeadersInputField(
+          onChange: (value) {
+            setState(() {
+              leaders = value;
+            });
+          },
+          value: leaders,
+        ),
+        ScribeInputField(
+          onChange: (value) {
+            setState(() {
+              scribe = value;
+            });
+          },
+          value: scribe,
+        ),
+        ParticipantsInputField(
+          onChange: (value) {
+            setState(() {
+              participants = value;
+            });
+            _scrollToBottom();
+          },
+          value: participants,
+          onAddNewParticipant: _scrollToBottom,
+        ),
+        StartTemperatureInputField(
+          onChange: (value) {
+            setState(() {
+              startTemperature = value;
+            });
+          },
+          value: startTemperature,
+        ),
+      ],
     );
   }
 }

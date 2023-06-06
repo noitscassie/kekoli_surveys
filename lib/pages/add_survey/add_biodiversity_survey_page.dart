@@ -6,6 +6,7 @@ import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
 import 'package:kekoldi_surveys/pages/add_survey/leaders_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/participants_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/scribe_input_field.dart';
+import 'package:kekoldi_surveys/pages/add_survey/start_temperature_input_field.dart';
 import 'package:kekoldi_surveys/pages/add_survey/trail_input_field.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
@@ -32,6 +33,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
   ];
   String scribe = '';
   List<String?> participants = [''];
+  String startTemperature = '';
 
   List<String> get formattedLeaders => List.from(
         leaders.map((leader) => leader.trim()),
@@ -55,7 +57,9 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
       selectedTrail.isNotEmpty &&
       leaders.any((leader) => leader.isNotEmpty) &&
       scribe.isNotEmpty &&
-      participants.whereNotNull().any((participant) => participant.isNotEmpty);
+      participants.whereNotNull().any(
+            (participant) => participant.isNotEmpty,
+          );
 
   final Db _db = Db();
 
@@ -68,6 +72,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
       scribe: scribe,
       participants: formattedParticipants,
       configuration: configuration,
+      startTemperature: startTemperature,
     );
 
     if (context.mounted) {
@@ -126,6 +131,14 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
           },
           value: participants,
           onAddNewParticipant: _scrollToBottom,
+        ),
+        StartTemperatureInputField(
+          onChange: (value) {
+            setState(() {
+              startTemperature = value;
+            });
+          },
+          value: startTemperature,
         ),
       ],
     );
