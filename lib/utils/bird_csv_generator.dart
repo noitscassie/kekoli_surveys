@@ -93,7 +93,6 @@ class BirdCsvGenerator {
                   '',
                   '',
                   '',
-                  '',
                   _stringNumberOrEmpty(group.lessThan30Count),
                   _stringNumberOrEmpty(group.moreThan30Count),
                   _stringNumberOrEmpty(group.flyoverCount),
@@ -117,7 +116,6 @@ class BirdCsvGenerator {
                       ? TimeFormats.timeHoursAndMinutes(segment.startAt!)
                       : '',
                   group.species,
-                  '',
                   '',
                   '',
                   '',

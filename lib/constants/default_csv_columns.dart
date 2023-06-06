@@ -98,11 +98,7 @@ final List<CsvColumn> defaultBirdTransectColumns = [
     field: null,
   ),
   CsvColumn(
-    header: 'Preferred Habitat',
-    field: null,
-  ),
-  CsvColumn(
-    header: 'Category',
+    header: 'Preferred Habitat Category',
     field: null,
   ),
   CsvColumn(
@@ -157,11 +153,7 @@ final List<CsvColumn> defaultBirdPointCountColumns = [
     field: null,
   ),
   CsvColumn(
-    header: 'Preferred Habitat',
-    field: null,
-  ),
-  CsvColumn(
-    header: 'Category',
+    header: 'Preferred Habitat Category',
     field: null,
   ),
   CsvColumn(
