@@ -13,7 +13,10 @@ class EmailSenderHelper {
       'The ${survey.trail} survey on ${DateFormats.ddmmyyyy(survey.startAt!)} started at ${TimeFormats.timeHoursAndMinutes(survey.startAt!)} and ended at ${TimeFormats.timeHoursAndMinutes(survey.endAt!)}, lasting ${TimeFormats.hmFromMinutes(survey.lengthInMinutes())}.\n\n'
       'There were ${survey.allParticipants.length} participants: ${survey.allParticipants.join(', ')}.\n\n'
       'There were ${survey.totalObservations} observations in total, ${survey.uniqueSpecies} unique species, and a total abundance of ${survey.totalAbundance}.\n\n'
-      'The weather was ${survey.weather!.toLowerCase()}.';
+      'The weather was ${survey.weather!.toLowerCase()}.\n\n'
+      'The start temperature was ${survey.startTemperature?.isNotEmpty == true ? survey.startTemperature : 'not recorded'}.\n\n'
+      'The end temperature was ${survey.endTemperature?.isNotEmpty == true ? survey.endTemperature : 'not recorded'}.\n\n'
+      'The rainfall was ${survey.rainfall?.isNotEmpty == true ? survey.rainfall : 'not recorded'}.\n\n';
 
   static String birdSurveyBody(BirdSurvey survey) =>
       'Bird ${survey.type.title} ${survey.trail} on ${DateFormats.ddmmyyyy(survey.startAt!)}.\n\n'
