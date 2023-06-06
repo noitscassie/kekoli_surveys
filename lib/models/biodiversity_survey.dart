@@ -15,6 +15,9 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
   DateTime? startAt;
   DateTime? endAt;
   String? weather;
+  String? startTemperature;
+  String? endTemperature;
+  String? rainfall;
   List<String> leaders;
   String scribe;
   List<String> participants;
@@ -33,6 +36,9 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     this.startAt,
     this.endAt,
     this.weather,
+    this.startTemperature,
+    this.endTemperature,
+    this.rainfall,
     this.sightings = const [],
   })  : id = const Uuid().v4(),
         createdAt = DateTime.now();
@@ -51,24 +57,30 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
                 ? jsonDecode(sighting)
                 : sighting))),
         weather = json['weather'],
+        startTemperature = json['startTemperature'],
+        endTemperature = json['endTemperature'],
+        rainfall = json['rainfall'],
         configuration = SurveyConfiguration.fromJson(
             json['configuration'].runtimeType == String
                 ? jsonDecode(json['configuration'])
                 : json['configuration']),
         createdAt = DateTime.parse(json['createdAt']);
 
-  static Future<BiodiversitySurvey> create(
-      {required String trail,
-      required List<String> leaders,
-      required String scribe,
-      required List<String> participants,
-      required SurveyConfiguration configuration}) async {
+  static Future<BiodiversitySurvey> create({
+    required String trail,
+    required List<String> leaders,
+    required String scribe,
+    required List<String> participants,
+    required SurveyConfiguration configuration,
+    required String startTemperature,
+  }) async {
     final survey = BiodiversitySurvey(
       trail: trail,
       leaders: leaders,
       scribe: scribe,
       participants: participants,
       configuration: configuration,
+      startTemperature: startTemperature,
     );
 
     _db.createBiodiversitySurvey(survey);
@@ -83,6 +95,9 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
         'startAt': startAt?.toIso8601String(),
         'endAt': endAt?.toIso8601String(),
         'weather': weather,
+        'startTemperature': startTemperature,
+        'endTemperature': endTemperature,
+        'rainfall': rainfall,
         'leaders': leaders,
         'scribe': scribe,
         'participants': participants,
@@ -123,15 +138,18 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
           .difference(startAt!)
           .inMinutes;
 
-  Future<void> update(
-      {String? updatedTrail,
-      List<String>? updatedLeaders,
-      String? updatedScribe,
-      List<String>? updatedParticipants}) async {
+  Future<void> update({
+    String? updatedTrail,
+    List<String>? updatedLeaders,
+    String? updatedScribe,
+    List<String>? updatedParticipants,
+    String? updatedStartTemperature,
+  }) async {
     trail = updatedTrail ?? trail;
     leaders = updatedLeaders ?? leaders;
     scribe = updatedScribe ?? scribe;
     participants = updatedParticipants ?? participants;
+    startTemperature = updatedStartTemperature ?? startTemperature;
 
     _db.updateBiodiversitySurvey(this);
   }
@@ -174,8 +192,14 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> setWeather(String newWeather) async {
-    weather = newWeather;
+  Future<void> setWeather({
+    String? newWeather,
+    String? newEndTemperature,
+    String? newRainfall,
+  }) async {
+    weather = newWeather ?? weather;
+    endTemperature = newEndTemperature ?? endTemperature;
+    rainfall = newRainfall ?? rainfall;
 
     _db.updateBiodiversitySurvey(this);
   }
@@ -213,5 +237,8 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     properties.add(EnumProperty<SurveyState>('state', state));
     properties.add(DiagnosticsProperty<SurveyConfiguration>(
         'configuration', configuration));
+    properties.add(StringProperty('startTemperature', startTemperature));
+    properties.add(StringProperty('endTemperature', endTemperature));
+    properties.add(StringProperty('rainfall', rainfall));
   }
 }
