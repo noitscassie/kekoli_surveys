@@ -18,7 +18,7 @@ class TimeFormats {
     final hours = (totalMinutes ~/ Duration.minutesPerHour);
     final minutes = totalMinutes % Duration.minutesPerHour;
 
-    return '${hours > 0 ? '$hours${hours == 1 ? 'hr' : 'hr'}' : ''} $minutes${minutes == 1 ? 'm' : 'm'}';
+    return '${hours > 0 ? '$hours${hours == 1 ? 'hr ' : 'hrs '}' : ''}$minutes${minutes == 1 ? 'm' : 'm'}';
   }
 
   static String timeHoursAndMinutes(DateTime time) =>
