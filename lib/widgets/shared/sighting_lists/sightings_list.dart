@@ -160,7 +160,7 @@ class _SightingsListState extends State<SightingsList> {
             padding: EdgeInsets.only(top: widget.header == null ? 0 : 8.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 if (widget.sortSelectorSibling != null)
                   Expanded(child: widget.sortSelectorSibling!),

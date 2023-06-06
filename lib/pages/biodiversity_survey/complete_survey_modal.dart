@@ -19,16 +19,26 @@ class _CompleteSurveyModalState extends State<CompleteSurveyModal> {
   int get surveyLength =>
       DateTime.now().difference(widget.survey.startAt!).inMinutes;
 
-  void _onAddWeather(String weather) {
-    widget.survey.setWeather(weather);
+  void _onAddWeather(
+    String weather,
+    String endTemperature,
+    String rainfall,
+  ) {
+    widget.survey.setWeather(
+      newWeather: weather,
+      newEndTemperature: endTemperature,
+      newRainfall: rainfall,
+    );
     widget.onChangeSurvey(widget.survey);
 
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (BuildContext context) =>
-              BiodiversitySurveyPage(survey: widget.survey),
+      MaterialPageRoute(
+        builder: (BuildContext context) => BiodiversitySurveyPage(
+          survey: widget.survey,
         ),
-        (route) => route.settings.name == '/');
+      ),
+      (route) => route.settings.name == '/',
+    );
   }
 
   void onComplete(BuildContext context) {

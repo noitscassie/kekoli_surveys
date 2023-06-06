@@ -39,6 +39,7 @@ class _BiodiversitySurveyPageState extends State<BiodiversitySurveyPage> {
       case SurveyState.completed:
         return ViewBiodiversitySurveyPage(
           survey: _statefulSurvey,
+          onSurveyChange: _updateSurvey,
         );
     }
   }

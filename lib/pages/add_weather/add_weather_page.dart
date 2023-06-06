@@ -1,12 +1,25 @@
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:kekoldi_surveys/models/input_field_config.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 
 class AddWeatherPage extends StatefulWidget {
-  final Function(String weather) onAddWeather;
+  final Function(
+    String description,
+    String endTemperature,
+    String rainfall,
+  ) onAddWeather;
+
+  final String? description;
+  final String? endTemperature;
+  final String? rainfall;
 
   const AddWeatherPage({
     super.key,
     required this.onAddWeather,
+    this.description,
+    this.endTemperature,
+    this.rainfall,
   });
 
   @override
@@ -14,41 +27,66 @@ class AddWeatherPage extends StatefulWidget {
 }
 
 class _AddWeatherPageState extends State<AddWeatherPage> {
-  String weather = '';
+  late final _descriptionField = InputFieldConfig.text(
+    label: 'Description',
+    required: true,
+    defaultValue: widget.description ?? '',
+  );
+
+  late final _endTemperatureField = InputFieldConfig.number(
+    label: 'End Temperature (℃)',
+    required: false,
+    defaultValue: widget.endTemperature ?? '',
+  );
+
+  late final _rainfallField = InputFieldConfig.number(
+    label: 'Rainfall (cm)',
+    required: false,
+    defaultValue: widget.rainfall ?? '0',
+  );
+
+  late final List<InputFieldConfig> _fields = [
+    _descriptionField,
+    _endTemperatureField,
+    _rainfallField,
+  ];
+
+  late final Map<String, String> _data = {
+    for (var config in _fields) config.label: config.defaultValue
+  };
+
+  void _onFieldChange(String key, dynamic value) => setState(
+        () => _data[key] = value,
+      );
+
+  bool get _isFabValid => _fields.all(
+        (field) =>
+            field.required ? _data[field.label]?.isNotEmpty == true : true,
+      );
 
   @override
   Widget build(BuildContext context) {
-    return PageScaffold(
-      title: 'Add Weather',
+    return PageScaffold.withScrollableChildren(
+      title: 'Weather Information',
       fabLabel: const Row(
         children: [
-          Text('Finish Survey'),
-          Icon(Icons.check),
+          Text('Save Weather'),
+          Icon(Icons.sunny),
         ],
       ),
-      isFabValid: weather.isNotEmpty,
-      onFabPress: () => widget.onAddWeather(weather),
-      child: Column(children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: TextFormField(
-                autofocus: true,
-                textCapitalization: TextCapitalization.sentences,
-                decoration: InputDecoration(
-                  border: const UnderlineInputBorder(),
-                  labelText: 'Weather',
-                  labelStyle: Theme.of(context).textTheme.bodySmall,
-                ),
-                onChanged: (String value) {
-                  setState(() {
-                    weather = value;
-                  });
-                },
-              ),
-            ))
-      ]),
+      isFabValid: _isFabValid,
+      onFabPress: () => widget.onAddWeather(
+        _data[_descriptionField.label]!,
+        _data[_endTemperatureField.label]!,
+        _data[_rainfallField.label]!,
+      ),
+      children: [
+        ..._fields.map(
+          (field) => field.inputField(
+            onChange: (dynamic value) => _onFieldChange(field.label, value),
+          ),
+        ),
+      ],
     );
   }
 }

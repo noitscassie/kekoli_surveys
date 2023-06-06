@@ -39,11 +39,15 @@ class _OngoingBiodiversitySurveyPageState
         ),
       );
 
-  void _updateSurvey(BiodiversitySurvey survey) => setState(
+  void _updateSurvey(BiodiversitySurvey survey) {
+    if (context.mounted) {
+      setState(
         () {
           _statefulSurvey = survey;
         },
       );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
