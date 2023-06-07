@@ -31,6 +31,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
     leadersField: widget.survey.leaders,
     scribeField: widget.survey.scribe,
     participantsField: widget.survey.participants,
+    startTemperatureField: widget.survey.startTemperature ?? '',
   };
 
   void onAttributeChange(String key, dynamic value) => setState(() {

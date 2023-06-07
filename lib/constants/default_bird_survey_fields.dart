@@ -8,6 +8,7 @@ const surveyTypeField = 'Survey Type';
 const leadersField = 'Add Leader(s)';
 const scribeField = 'Add Scribe';
 const participantsField = 'Add Participants';
+const startTemperatureField = 'Start Temperature (℃)';
 
 List<InputFieldConfig> defaultBirdSurveyFields(List<BirdSurveyTrail> trails) {
   final trailsToUse = trails.isEmpty ? defaultBirdSurveyTrails : trails;
@@ -45,5 +46,10 @@ List<InputFieldConfig> defaultBirdSurveyFields(List<BirdSurveyTrail> trails) {
       required: true,
       newItemText: 'Add New Participant',
     ),
+    InputFieldConfig.number(
+      label: startTemperatureField,
+      required: false,
+      defaultValue: '',
+    )
   ];
 }

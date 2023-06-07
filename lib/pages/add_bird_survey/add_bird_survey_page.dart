@@ -34,6 +34,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   List<String?> get leaders => attributes[leadersField];
   String get scribe => attributes[scribeField];
   List<String?> get participants => attributes[participantsField];
+  String get startTemperature => attributes[startTemperatureField];
 
   List<BirdSurveySegment> get segments => (_trails
               .firstOrNullWhere((loadedTrail) => loadedTrail.name == trail)
@@ -74,6 +75,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       type: BirdSurveyType.byTitle(surveyType),
       segments: segments,
       configuration: configuration,
+      startTemperature: startTemperature,
     );
 
     if (context.mounted) {

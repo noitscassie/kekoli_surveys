@@ -44,21 +44,27 @@ class BirdSurvey with DiagnosticableTreeMixin {
   String trail;
   BirdSurveyType type;
   String? weather;
+  String? startTemperature;
+  String? endTemperature;
+  String? rainfall;
   List<BirdSurveySegment> segments;
   final SurveyConfiguration configuration;
 
   static final Db _db = Db();
 
-  BirdSurvey(
-      {required this.trail,
-      required this.leaders,
-      required this.scribe,
-      required this.participants,
-      required this.type,
-      required this.segments,
-      required this.configuration,
-      this.weather})
-      : id = const Uuid().v4(),
+  BirdSurvey({
+    required this.trail,
+    required this.leaders,
+    required this.scribe,
+    required this.participants,
+    required this.type,
+    required this.segments,
+    required this.configuration,
+    this.weather,
+    this.startTemperature,
+    this.endTemperature,
+    this.rainfall,
+  })  : id = const Uuid().v4(),
         createdAt = DateTime.now();
 
   BirdSurvey.fromJson(Map<String, dynamic> json)
@@ -69,6 +75,9 @@ class BirdSurvey with DiagnosticableTreeMixin {
         participants = List<String>.from(json['participants']),
         type = BirdSurveyType.values.byName(json['type']),
         weather = json['weather'],
+        startTemperature = json['startTemperature'],
+        endTemperature = json['endTemperature'],
+        rainfall = json['rainfall'],
         createdAt = DateTime.parse(json['createdAt']),
         segments = List<BirdSurveySegment>.from(
             (json['segments'] ?? []).map((segment) {
@@ -85,14 +94,16 @@ class BirdSurvey with DiagnosticableTreeMixin {
                     ? jsonDecode(json['configuration'])
                     : json['configuration']);
 
-  static Future<BirdSurvey> create(
-      {required String trail,
-      required List<String> leaders,
-      required String scribe,
-      required List<String> participants,
-      required BirdSurveyType type,
-      required List<BirdSurveySegment> segments,
-      required SurveyConfiguration configuration}) async {
+  static Future<BirdSurvey> create({
+    required String trail,
+    required List<String> leaders,
+    required String scribe,
+    required List<String> participants,
+    required BirdSurveyType type,
+    required List<BirdSurveySegment> segments,
+    required SurveyConfiguration configuration,
+    required String startTemperature,
+  }) async {
     final survey = BirdSurvey(
       trail: trail,
       leaders: leaders,
@@ -101,6 +112,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
       type: type,
       segments: segments,
       configuration: configuration,
+      startTemperature: startTemperature,
     );
 
     _db.createBirdSurvey(survey);
@@ -123,6 +135,9 @@ class BirdSurvey with DiagnosticableTreeMixin {
   Map<String, dynamic> get attributes => {
         'id': id,
         'weather': weather,
+        'startTemperature': startTemperature,
+        'endTemperature': endTemperature,
+        'rainfall': rainfall,
         'leaders': leaders,
         'scribe': scribe,
         'participants': participants,
@@ -165,17 +180,20 @@ class BirdSurvey with DiagnosticableTreeMixin {
         ...participants,
       ];
 
-  Future<void> update(
-      {String? updatedTrail,
-      BirdSurveyType? updatedType,
-      List<String>? updatedLeaders,
-      String? updatedScribe,
-      List<String>? updatedParticipants}) async {
+  Future<void> update({
+    String? updatedTrail,
+    BirdSurveyType? updatedType,
+    List<String>? updatedLeaders,
+    String? updatedScribe,
+    List<String>? updatedParticipants,
+    String? updatedStartTemperature,
+  }) async {
     trail = updatedTrail ?? trail;
     type = updatedType ?? type;
     leaders = updatedLeaders ?? leaders;
     scribe = updatedScribe ?? scribe;
     participants = updatedParticipants ?? participants;
+    startTemperature = updatedStartTemperature ?? startTemperature;
 
     _db.updateBirdSurvey(this);
   }
@@ -187,8 +205,14 @@ class BirdSurvey with DiagnosticableTreeMixin {
     _db.updateBirdSurvey(this);
   }
 
-  Future<void> setWeather(String newWeather) async {
-    weather = newWeather;
+  Future<void> setWeather({
+    String? newWeather,
+    String? newEndTemperature,
+    String? newRainfall,
+  }) async {
+    weather = newWeather ?? weather;
+    endTemperature = newEndTemperature ?? endTemperature;
+    rainfall = newRainfall ?? rainfall;
 
     _db.updateBirdSurvey(this);
   }
@@ -206,6 +230,9 @@ class BirdSurvey with DiagnosticableTreeMixin {
     properties.add(StringProperty('weather', weather));
     properties.add(DiagnosticsProperty<DateTime?>('startAt', startAt));
     properties.add(DiagnosticsProperty<DateTime?>('endAt', endAt));
+    properties.add(StringProperty('startTemperature', startTemperature));
+    properties.add(StringProperty('endTemperature', endTemperature));
+    properties.add(StringProperty('rainfall', rainfall));
     properties.add(IterableProperty<BirdSurveySegment>('segments', segments));
   }
 }

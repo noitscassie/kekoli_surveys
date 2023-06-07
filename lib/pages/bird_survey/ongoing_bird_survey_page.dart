@@ -44,7 +44,11 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
     String endTemperature,
     String rainfall,
   ) async {
-    await _statefulSurvey.setWeather(weather);
+    await _statefulSurvey.setWeather(
+      newWeather: weather,
+      newEndTemperature: endTemperature,
+      newRainfall: rainfall,
+    );
 
     setState(() {
       _statefulSurvey = _statefulSurvey;
