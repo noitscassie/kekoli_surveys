@@ -8,13 +8,24 @@ import 'package:kekoldi_surveys/pages/add_weather/add_weather_page.dart';
 import 'package:kekoldi_surveys/pages/biodiversity_survey/confirm_start_bird_segment_modal.dart';
 import 'package:kekoldi_surveys/pages/bird_segment/bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_bird_survey_page.dart';
-import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/pages/select_export_type/select_export_type_page.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
 import 'package:kekoldi_surveys/widgets/data_tile.dart';
 import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 import 'package:kekoldi_surveys/widgets/partly_bolded_text.dart';
 import 'package:kekoldi_surveys/widgets/selectable_list_item.dart';
+
+enum OverflowMenuOption {
+  editWeatherData(
+    label: 'Edit Weather Data',
+  );
+
+  const OverflowMenuOption({
+    required this.label,
+  });
+
+  final String label;
+}
 
 class OngoingBirdSurveyPage extends StatefulWidget {
   static const name = 'OngoingBirdSurveyPage';
@@ -57,8 +68,8 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
     if (context.mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (BuildContext context) => const HomePage(
-            initialTabIndex: 1,
+          builder: (BuildContext context) => OngoingBirdSurveyPage(
+            survey: _statefulSurvey,
           ),
         ),
       );
@@ -190,11 +201,44 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
     };
   }
 
+  void _handleOverflowMenuOptionTap(OverflowMenuOption option) {
+    switch (option) {
+      case OverflowMenuOption.editWeatherData:
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => AddWeatherPage(
+              onAddWeather: _onAddWeather,
+              description: _statefulSurvey.weather,
+              endTemperature: _statefulSurvey.endTemperature,
+              rainfall: _statefulSurvey.rainfall,
+            ),
+          ),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageScaffold.withScrollableChildren(
       title:
           '${_statefulSurvey.type.title} ${_statefulSurvey.trail}${_statefulSurvey.startAt == null ? '' : ', ${DateFormats.ddmmyyyy(_statefulSurvey.startAt!)}'}',
+      actions: _statefulSurvey.state == SurveyState.completed
+          ? [
+              PopupMenuButton<OverflowMenuOption>(
+                onSelected: _handleOverflowMenuOptionTap,
+                itemBuilder: (BuildContext otherContext) =>
+                    OverflowMenuOption.values
+                        .map(
+                          (OverflowMenuOption option) => PopupMenuItem(
+                            value: option,
+                            child: Text(option.label),
+                          ),
+                        )
+                        .toList(),
+              )
+            ]
+          : [],
       fabLabel: Row(
         children: [
           Text(_fabText),
@@ -230,14 +274,47 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
                 ?.copyWith(fontStyle: FontStyle.italic),
           ),
         ),
-        if (_statefulSurvey.weather != null)
+        if (_statefulSurvey.weather?.isNotEmpty == true)
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
             child: PartlyBoldedText(
               style: Theme.of(context).textTheme.bodyMedium,
               textParts: [
-                RawText('Weather was '),
-                RawText(_statefulSurvey.weather!.toLowerCase(), bold: true),
+                RawText('Weather: '),
+                RawText(_statefulSurvey.weather!, bold: true),
+              ],
+            ),
+          ),
+        if (_statefulSurvey.startTemperature?.isNotEmpty == true)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Start temperature: '),
+                RawText('${_statefulSurvey.startTemperature!}℃', bold: true),
+              ],
+            ),
+          ),
+        if (_statefulSurvey.endTemperature?.isNotEmpty == true)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('End temperature: '),
+                RawText('${_statefulSurvey.endTemperature!}℃', bold: true),
+              ],
+            ),
+          ),
+        if (_statefulSurvey.rainfall?.isNotEmpty == true)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: PartlyBoldedText(
+              style: Theme.of(context).textTheme.bodyMedium,
+              textParts: [
+                RawText('Rainfall: '),
+                RawText('${_statefulSurvey.rainfall!}cm', bold: true),
               ],
             ),
           ),

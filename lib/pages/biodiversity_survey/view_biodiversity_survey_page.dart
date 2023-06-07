@@ -130,7 +130,7 @@ class _ViewBiodiversitySurveyPageState
                 ),
               )
               .toList(),
-        )
+        ),
       ],
       sortSelectorSibling: Padding(
         padding: const EdgeInsets.only(right: 8),

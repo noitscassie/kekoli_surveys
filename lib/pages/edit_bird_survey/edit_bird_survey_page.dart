@@ -43,6 +43,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
   List<String?> get leaders => attributes[leadersField];
   String get scribe => attributes[scribeField];
   List<String?> get participants => attributes[participantsField];
+  String get startTemperature => attributes[startTemperatureField];
 
   List<BirdSurveySegment> get segments => (_trails
               .firstOrNullWhere((loadedTrail) => loadedTrail.name == trail)
@@ -65,18 +66,20 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
       surveyType.isNotEmpty &&
       leaders.whereNotNull().any((leader) => leader.isNotEmpty) &&
       scribe.isNotEmpty &&
-      participants.whereNotNull().any((participant) => participant.isNotEmpty);
+      participants.whereNotNull().any(
+            (participant) => participant.isNotEmpty,
+          );
 
   List<InputFieldConfig> get _fields => defaultBirdSurveyFields(_trails);
 
   Future<void> _onFabPress() async {
     await widget.survey.update(
-      updatedTrail: trail,
-      updatedLeaders: formattedLeaders,
-      updatedScribe: scribe,
-      updatedParticipants: formattedParticipants,
-      updatedType: BirdSurveyType.byTitle(surveyType),
-    );
+        updatedTrail: trail,
+        updatedLeaders: formattedLeaders,
+        updatedScribe: scribe,
+        updatedParticipants: formattedParticipants,
+        updatedType: BirdSurveyType.byTitle(surveyType),
+        updatedStartTemperature: startTemperature);
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(
