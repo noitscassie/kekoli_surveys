@@ -8,14 +8,12 @@ import 'package:kekoldi_surveys/models/sighting.dart';
 import 'package:kekoldi_surveys/pages/add_sighting_details/add_bird_sighting_details.dart';
 import 'package:kekoldi_surveys/pages/bird_segment/add_bird_tally_modal.dart';
 import 'package:kekoldi_surveys/pages/bird_segment/confirm_segment_complete_modal.dart';
+import 'package:kekoldi_surveys/pages/bird_segment/ongoing_bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/bird_segment/remove_bird_tally_modal.dart';
+import 'package:kekoldi_surveys/pages/bird_segment/unstarted_bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/bird_segment/view_bird_segment_page.dart';
 import 'package:kekoldi_surveys/pages/choose_species/choose_bird_species_page.dart';
 import 'package:kekoldi_surveys/pages/edit_species/edit_bird_species_page.dart';
-import 'package:kekoldi_surveys/utils/time_utils.dart';
-import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
-import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_list.dart';
-import 'package:kekoldi_surveys/widgets/shared/sighting_lists/sightings_stats.dart';
 import 'package:kekoldi_surveys/widgets/shared/sighting_options_sheet.dart';
 
 class BirdSegmentPage extends StatefulWidget {
@@ -140,10 +138,12 @@ class _BirdSegmentPageState extends State<BirdSegmentPage> {
   Widget build(BuildContext context) {
     switch (widget.segment.state) {
       case SurveyState.unstarted:
-        // TODO: Handle this case.
-        break;
+        return UnstartedBirdSegmentPage(
+          survey: widget.survey,
+          segment: widget.segment,
+        );
       case SurveyState.inProgress:
-        return BirdSegmentPage(
+        return OngoingBirdSegmentPage(
           survey: widget.survey,
           segment: widget.segment,
         );
@@ -153,32 +153,5 @@ class _BirdSegmentPageState extends State<BirdSegmentPage> {
           segment: widget.segment,
         );
     }
-    return PageScaffold(
-      title:
-          '${widget.survey.type.title} ${widget.segment.name} ${TimeFormats.timeMinutesAndSeconds(_timeElapsed)}',
-      fabLabel: const Row(
-        children: [
-          Text('Add New Bird'),
-          Icon(Icons.add),
-        ],
-      ),
-      onFabPress: _navigateToChooseSpeciesPage,
-      actions: [
-        IconButton(
-          onPressed: _completeSegment,
-          icon: const Icon(Icons.check),
-        )
-      ],
-      child: SightingsList.editable(
-        sightings: _statefulSegment.sightings,
-        header: SightingsStats(
-          sightings: _statefulSegment.sightings,
-        ),
-        onOptionsTap: _showBottomSheet,
-        onIncrement: _onIncrement,
-        onDecrement: _onDecrement,
-        onAddNew: _navigateToAddSightingDetailsPage,
-      ),
-    );
   }
 }
