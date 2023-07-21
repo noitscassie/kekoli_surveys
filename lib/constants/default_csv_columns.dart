@@ -59,6 +59,10 @@ final List<CsvColumn> defaultBiodiversityCsvColumns = [
     header: 'Type of Obs',
     field: 'Type Of Observation',
   ),
+  CsvColumn(
+    header: 'Comments',
+    field: 'Comments',
+  ),
 ];
 
 final List<CsvColumn> defaultBirdTransectColumns = [
