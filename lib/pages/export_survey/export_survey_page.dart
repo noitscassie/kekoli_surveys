@@ -24,7 +24,10 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
     return PageScaffold(
       title: widget.title,
       fabLabel: const Row(
-        children: [Text('Send Email'), Icon(Icons.email)],
+        children: [
+          Text('Send Email'),
+          Icon(Icons.email),
+        ],
       ),
       isFabValid: EmailSenderHelper.isEmailValid(emailAddress),
       onFabPress: () => widget.onSendEmail(emailAddress),
