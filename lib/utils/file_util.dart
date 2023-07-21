@@ -5,11 +5,11 @@ import 'package:path_provider/path_provider.dart';
 class FileUtil {
   Future<String> writeFileToDocuments(
       {required String csv, required String filename}) async {
-    final Directory directory = await getApplicationDocumentsDirectory();
+    final directory = Platform.isAndroid
+        ? Directory("/storage/emulated/0/Download")
+        : await getDownloadsDirectory();
 
-    final directoryPath = directory.path;
-
-    final filepath = '$directoryPath/$filename.csv';
+    final filepath = '${directory!.path}/$filename.csv';
 
     final file = File(filepath);
 
