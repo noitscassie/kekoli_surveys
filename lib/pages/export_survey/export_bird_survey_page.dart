@@ -32,7 +32,7 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
     final csv = _csvGenerator.generate();
 
     final filename =
-        'bird_${widget.survey.type.snakeCaseName}_${widget.survey.trail}_${DateFormats.ddmmyyyyNoBreaks(widget.survey.startAt!)}.csv';
+        'bird_${widget.survey.type.snakeCaseName}_${widget.survey.trail}_${DateFormats.ddmmyyyyNoBreaks(widget.survey.startAt!)}';
 
     final filepath =
         await _fileUtil.writeFileToDocuments(csv: csv, filename: filename);

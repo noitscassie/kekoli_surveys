@@ -34,7 +34,7 @@ class _ExportBiodiversitySurveyPageState
     final csv = _csvGenerator.generate();
 
     final filename =
-        '${widget.survey.trail.toLowerCase()}_survey_${DateFormats.ddmmyyyyNoBreaks(widget.survey.startAt!)}.csv';
+        '${widget.survey.trail.toLowerCase()}_survey_${DateFormats.ddmmyyyyNoBreaks(widget.survey.startAt!)}';
 
     final filepath =
         await _fileUtil.writeFileToDocuments(csv: csv, filename: filename);
