@@ -8,6 +8,7 @@ import 'package:kekoldi_surveys/utils/bird_csv_generator.dart';
 import 'package:kekoldi_surveys/utils/email_sender_helper.dart';
 import 'package:kekoldi_surveys/utils/file_util.dart';
 import 'package:kekoldi_surveys/utils/time_utils.dart';
+import 'package:open_file/open_file.dart';
 
 class ExportBirdSurveyPage extends StatefulWidget {
   final ExportType exportType;
@@ -28,7 +29,7 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
       BirdCsvGenerator(exportType: widget.exportType, survey: widget.survey);
   late final FileUtil _fileUtil = FileUtil();
 
-  Future<void> generateAndEmailCsv(String emailAddress) async {
+  Future<String> _generateFile() async {
     final csv = _csvGenerator.generate();
 
     final filename =
@@ -36,6 +37,12 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
 
     final filepath =
         await _fileUtil.writeFileToDocuments(csv: csv, filename: filename);
+
+    return filepath;
+  }
+
+  Future<void> generateAndEmailCsv(String emailAddress) async {
+    final filepath = await _generateFile();
 
     final Email email = Email(
       body: EmailSenderHelper.birdSurveyBody(widget.survey),
@@ -59,11 +66,18 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
     }
   }
 
+  Future<void> _openFile() async {
+    final filepath = await _generateFile();
+
+    OpenFile.open(filepath);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ExportSurveyPage(
       title: 'Export Survey Data',
       onSendEmail: generateAndEmailCsv,
+      onDownload: _openFile,
     );
   }
 }

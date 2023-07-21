@@ -5,11 +5,13 @@ import 'package:kekoldi_surveys/widgets/page_scaffold.dart';
 class ExportSurveyPage extends StatefulWidget {
   final String title;
   final Function(String email) onSendEmail;
+  final VoidCallback onDownload;
 
   const ExportSurveyPage({
     super.key,
     required this.title,
     required this.onSendEmail,
+    required this.onDownload,
   });
 
   @override
@@ -30,6 +32,22 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
         ],
       ),
       isFabValid: EmailSenderHelper.isEmailValid(emailAddress),
+      actions: [
+        PopupMenuButton<String>(
+          onSelected: (String option) {
+            switch (option) {
+              case 'download':
+                widget.onDownload();
+            }
+          },
+          itemBuilder: (BuildContext otherContext) => [
+            const PopupMenuItem(
+              value: 'download',
+              child: Text('Download CSV File'),
+            ),
+          ],
+        )
+      ],
       onFabPress: () => widget.onSendEmail(emailAddress),
       child: Column(children: [
         Padding(
