@@ -70,6 +70,15 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
     final filepath = await _generateFile();
 
     OpenFile.open(filepath);
+
+    if (context.mounted) {
+      final snackBar = SnackBar(
+        duration: const Duration(seconds: 2),
+        content: Text('CSV downloaded to Files app'),
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
   }
 
   @override
