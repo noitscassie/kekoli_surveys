@@ -72,8 +72,8 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
     OpenFile.open(filepath);
 
     if (context.mounted) {
-      final snackBar = SnackBar(
-        duration: const Duration(seconds: 2),
+      const snackBar = SnackBar(
+        duration: Duration(seconds: 2),
         content: Text('CSV downloaded to Files app'),
       );
 
