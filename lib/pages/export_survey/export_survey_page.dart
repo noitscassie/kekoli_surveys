@@ -49,8 +49,9 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
         )
       ],
       onFabPress: () => widget.onSendEmail(emailAddress),
-      child: Column(children: [
-        Padding(
+      child: Column(
+        children: [
+          Padding(
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),
@@ -68,8 +69,10 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
                   });
                 },
               ),
-            ))
-      ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
