@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:kekoldi_surveys/constants/csv_export_types.dart';
 import 'package:kekoldi_surveys/models/bird_survey.dart';
+import 'package:kekoldi_surveys/pages/error_details/error_details_page.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/utils/bird_csv_generator.dart';
@@ -42,26 +43,37 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
   }
 
   Future<void> generateAndEmailCsv(String emailAddress) async {
-    final filepath = await _generateFile();
+    try {
+      final filepath = await _generateFile();
 
-    final Email email = Email(
-      body: EmailSenderHelper.birdSurveyBody(widget.survey),
-      subject:
-          'Bird ${widget.survey.type.title} ${widget.survey.trail} ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
-      recipients: [emailAddress],
-      attachmentPaths: [filepath],
-    );
+      final Email email = Email(
+        body: EmailSenderHelper.birdSurveyBody(widget.survey),
+        subject:
+            'Bird ${widget.survey.type.title} ${widget.survey.trail} ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
+        recipients: [emailAddress],
+        attachmentPaths: [filepath],
+      );
 
-    FlutterEmailSender.send(email);
+      FlutterEmailSender.send(email);
 
-    if (context.mounted) {
-      Navigator.of(context).pushAndRemoveUntil(
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const HomePage(
+              initialTabIndex: 1,
+            ),
+          ),
+          (route) => false,
+        );
+      }
+    } catch (e, s) {
+      Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) => const HomePage(
-            initialTabIndex: 1,
+          builder: (BuildContext context) => ErrorDetailsPage(
+            exception: e,
+            stacktrace: s,
           ),
         ),
-        (route) => false,
       );
     }
   }

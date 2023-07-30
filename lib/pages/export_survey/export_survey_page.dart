@@ -46,7 +46,7 @@ class _ExportSurveyPageState extends State<ExportSurveyPage> {
               child: Text('Download CSV File'),
             ),
           ],
-        )
+        ),
       ],
       onFabPress: () => widget.onSendEmail(emailAddress),
       child: Column(

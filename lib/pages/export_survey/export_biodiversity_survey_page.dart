@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:kekoldi_surveys/constants/csv_export_types.dart';
 import 'package:kekoldi_surveys/models/biodiversity_survey.dart';
+import 'package:kekoldi_surveys/pages/error_details/error_details_page.dart';
 import 'package:kekoldi_surveys/pages/export_survey/export_survey_page.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
 import 'package:kekoldi_surveys/utils/biodiversity_csv_generator.dart';
@@ -44,24 +45,35 @@ class _ExportBiodiversitySurveyPageState
   }
 
   Future<void> _emailFile(String emailAddress) async {
-    final filepath = await _generateFile();
+    try {
+      final filepath = await _generateFile();
 
-    final Email email = Email(
-      body: EmailSenderHelper.biodiversityBody(survey: widget.survey),
-      subject:
-          '${widget.survey.trail} Survey ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
-      recipients: [emailAddress],
-      attachmentPaths: [filepath],
-    );
+      final Email email = Email(
+        body: EmailSenderHelper.biodiversityBody(survey: widget.survey),
+        subject:
+            '${widget.survey.trail} Survey ${DateFormats.ddmmyyyy(widget.survey.startAt!)}',
+        recipients: [emailAddress],
+        attachmentPaths: [filepath],
+      );
 
-    FlutterEmailSender.send(email);
+      FlutterEmailSender.send(email);
 
-    if (context.mounted) {
-      Navigator.of(context).pushAndRemoveUntil(
+      if (context.mounted) {
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (BuildContext context) => const HomePage(),
+          ),
+          (route) => false,
+        );
+      }
+    } catch (e, s) {
+      Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) => const HomePage(),
+          builder: (BuildContext context) => ErrorDetailsPage(
+            exception: e,
+            stacktrace: s,
+          ),
         ),
-        (route) => false,
       );
     }
   }
