@@ -7,9 +7,9 @@ class FileUtil {
       {required String csv, required String filename}) async {
     final directory = Platform.isAndroid
         ? Directory("/storage/emulated/0/Download")
-        : await getDownloadsDirectory();
+        : await getApplicationDocumentsDirectory();
 
-    final filepath = '${directory!.path}/$filename.csv';
+    final filepath = '${directory.path}/$filename.csv';
 
     final file = File(filepath);
 
