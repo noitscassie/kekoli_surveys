@@ -25,11 +25,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
 
 SPEC CHECKSUMS:
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_email_sender: 02d7443217d8c41483223627972bfdc09f74276b
-  open_file: 02eb5cb6b21264bd3a696876f5afbfb7ca4f4b7d
-  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_email_sender: 10a22605f92809a11ef52b2f412db806c6082d40
+  open_file: 2b95472e6ba492308fc6f297d9588286d40b22f2
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
 
-PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
+PODFILE CHECKSUM: c4c93c5f6502fe2754f48404d3594bf779584011
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.15.2
