@@ -18,22 +18,17 @@ class Db {
   static const _birdSurveysKey = 'birdSurveys';
   static const _birdTrailsKey = 'birdTrails';
 
-  final _storage = LocalStorage(filePath);
-
-  Future<bool> get _ready => _storage.ready;
+  final _storage = localStorage;
 
   Future<void> createBiodiversitySurvey(BiodiversitySurvey survey) async {
-    await _ready;
-
-    final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
+    final rawData = _storage.getItem(_biodiversitySurveysKey);
+    final surveysData = rawData == null ? [] : jsonDecode(rawData);
     final surveys = [...surveysData, survey.toJson()];
 
     _insert(_biodiversitySurveysKey, surveys);
   }
 
   Future<void> updateBiodiversitySurvey(BiodiversitySurvey survey) async {
-    await _ready;
-
     final surveys = await getBiodiversitySurveys();
     final updatedSurveys = List.from(surveys.map(
         (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id
@@ -44,8 +39,6 @@ class Db {
   }
 
   Future<void> deleteBiodiversitySurvey(BiodiversitySurvey survey) async {
-    await _ready;
-
     final surveys = await getBiodiversitySurveys();
     final updatedSurveys = List.from(surveys
         .whereNot(
@@ -56,8 +49,8 @@ class Db {
   }
 
   Future<List<BiodiversitySurvey>> getBiodiversitySurveys() async {
-    await _ready;
-    final surveysData = _storage.getItem(_biodiversitySurveysKey) ?? [];
+    final rawData = _storage.getItem(_biodiversitySurveysKey);
+    final surveysData = rawData == null ? [] : jsonDecode(rawData);
 
     final surveysJson = List.from(surveysData
         .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
@@ -67,8 +60,6 @@ class Db {
   }
 
   Future<BiodiversitySurvey> getBiodiversitySurvey(String id) async {
-    await _ready;
-
     final surveys = await getBiodiversitySurveys();
     final BiodiversitySurvey survey =
         surveys.firstWhere((BiodiversitySurvey survey) => survey.id == id);
@@ -77,9 +68,8 @@ class Db {
   }
 
   Future<List<BirdSurvey>> getBirdSurveys() async {
-    await _ready;
-
-    final surveysData = _storage.getItem(_birdSurveysKey) ?? [];
+    final rawData = _storage.getItem(_birdSurveysKey);
+    final surveysData = rawData == null ? [] : jsonDecode(rawData);
 
     final surveysJson = List.from(surveysData
         .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
@@ -88,8 +78,6 @@ class Db {
   }
 
   Future<BirdSurvey> getBirdSurvey(String id) async {
-    await _ready;
-
     final surveys = await getBirdSurveys();
     final BirdSurvey survey =
         surveys.firstWhere((BirdSurvey survey) => survey.id == id);
@@ -98,17 +86,14 @@ class Db {
   }
 
   Future<void> createBirdSurvey(BirdSurvey survey) async {
-    await _ready;
-
-    final surveysData = _storage.getItem(_birdSurveysKey) ?? [];
+    final rawData = _storage.getItem(_birdSurveysKey);
+    final surveysData = rawData == null ? [] : jsonDecode(rawData);
     final surveys = [...surveysData, survey.toJson()];
 
     _insert(_birdSurveysKey, surveys);
   }
 
   Future<void> updateBirdSurvey(BirdSurvey survey) async {
-    await _ready;
-
     final surveys = await getBirdSurveys();
     final updatedSurveys = List.from(surveys.map((BirdSurvey loadedSurvey) =>
         loadedSurvey.id == survey.id
@@ -119,8 +104,6 @@ class Db {
   }
 
   Future<void> deleteBirdSurvey(BirdSurvey survey) async {
-    await _ready;
-
     final surveys = await getBirdSurveys();
     final updatedSurveys = List.from(surveys
         .whereNot((BirdSurvey loadedSurvey) => loadedSurvey.id == survey.id)
@@ -130,8 +113,6 @@ class Db {
   }
 
   Future<SurveyConfiguration> getSurveyConfiguration() async {
-    await _ready;
-
     final configData = _storage.getItem(_biodiversitySurveyConfigurationKey);
 
     if (configData == null) {
@@ -146,42 +127,36 @@ class Db {
 
   Future<void> updateSurveyConfiguration(
       SurveyConfiguration configuration) async {
-    await _ready;
-
     _insert(_biodiversitySurveyConfigurationKey, configuration.toJson());
   }
 
   Future<List<String>> getBiodiversityTrails() async {
-    await _ready;
+    final rawData = _storage.getItem(_biodiversityTrailsKey);
 
-    final trails = _storage.getItem(_biodiversityTrailsKey);
-
-    if (trails == null) {
+    if (rawData == null) {
       _insert(_biodiversityTrailsKey, defaultBiodiversityTrails);
 
       return defaultBiodiversityTrails;
     } else {
-      return List<String>.from(trails);
+      return List<String>.from(jsonDecode(rawData));
     }
   }
 
   Future<void> updateBiodiversityTrails(List<String> trails) async {
-    await _ready;
-
     _insert(_biodiversityTrailsKey, trails);
   }
 
   Future<List<BirdSurveyTrail>> getBirdTrails() async {
-    await _ready;
+    final rawData = _storage.getItem(_birdTrailsKey);
 
-    final trails = _storage.getItem(_birdTrailsKey);
-
-    if (trails == null) {
+    if (rawData == null) {
       final defaultTrails = defaultBirdSurveyTrails;
       _insert(_birdTrailsKey, defaultTrails);
 
       return defaultTrails;
     } else {
+      final trails = jsonDecode(rawData);
+
       if (trails.runtimeType == List<BirdSurveyTrail>) {
         return trails;
       }
@@ -197,10 +172,9 @@ class Db {
   }
 
   Future<void> updateBirdTrails(List<BirdSurveyTrail> trails) async {
-    await _ready;
-
     _insert(_birdTrailsKey, trails.map((trail) => trail.toJson()).toList());
   }
 
-  void _insert(String key, dynamic data) => _storage.setItem(key, data);
+  void _insert(String key, dynamic data) =>
+      _storage.setItem(key, jsonEncode(data));
 }

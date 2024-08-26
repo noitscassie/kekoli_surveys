@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/pages/home/home_page.dart';
+import 'package:localstorage/localstorage.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initLocalStorage();
+
   runApp(const KekoldiSurveys());
 }
 

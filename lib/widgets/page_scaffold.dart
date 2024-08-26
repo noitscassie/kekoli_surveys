@@ -82,23 +82,25 @@ class PageScaffold extends StatelessWidget {
           right: 16,
           top: 16,
         ),
-        child: child ??
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                if (header != null) header!,
-                Expanded(
-                  child: FadingListView(
-                    scrollController: scrollController,
-                    top: topFade,
-                    bottom: bottomFade,
-                    padTop: padTop ?? header != null,
-                    children: children,
+        child: Center(
+          child: child ??
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  if (header != null) header!,
+                  Expanded(
+                    child: FadingListView(
+                      scrollController: scrollController,
+                      top: topFade,
+                      bottom: bottomFade,
+                      padTop: padTop ?? header != null,
+                      children: children,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+        ),
       ),
       bottomNavigationBar: bottomNavigationBar,
       floatingActionButton: fabLabel == null
