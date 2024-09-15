@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/pages/bird_trails/bird_trails_page.dart';
+import 'package:kekoldi_surveys/pages/export_all/export_all_page.dart';
 import 'package:kekoldi_surveys/pages/select_export_data/biodiversity_select_data_export_format_page.dart';
 import 'package:kekoldi_surveys/pages/survey_format/survey_format_page.dart';
 import 'package:kekoldi_surveys/pages/trails/biodiversity_trails_page.dart';
@@ -31,6 +32,13 @@ class SettingsPage extends StatelessWidget {
         ),
       );
 
+  void _navigateToExportAllData(BuildContext context) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const ExportAllPage(),
+        ),
+      );
+
   void _navigateToBirdTrails(BuildContext context) =>
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -55,6 +63,9 @@ class SettingsPage extends StatelessWidget {
         SelectableListItem(
             title: 'Bird Trails',
             onSelect: (String _) => _navigateToBirdTrails(context)),
+        SelectableListItem(
+            title: 'Export All Data',
+            onSelect: (String _) => _navigateToExportAllData(context)),
       ],
     );
   }
