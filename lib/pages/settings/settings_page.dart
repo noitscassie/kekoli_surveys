@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/pages/bird_trails/bird_trails_page.dart';
+import 'package:kekoldi_surveys/pages/clear_data/clear_data_page.dart';
 import 'package:kekoldi_surveys/pages/export_all/export_all_page.dart';
 import 'package:kekoldi_surveys/pages/select_export_data/biodiversity_select_data_export_format_page.dart';
 import 'package:kekoldi_surveys/pages/survey_format/survey_format_page.dart';
@@ -32,6 +33,13 @@ class SettingsPage extends StatelessWidget {
         ),
       );
 
+  void _navigateToBirdTrails(BuildContext context) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => const BirdTrailsPage(),
+        ),
+      );
+
   void _navigateToExportAllData(BuildContext context) =>
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -39,10 +47,10 @@ class SettingsPage extends StatelessWidget {
         ),
       );
 
-  void _navigateToBirdTrails(BuildContext context) =>
+  void _navigateToClearAllData(BuildContext context) =>
       Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (BuildContext context) => const BirdTrailsPage(),
+          builder: (BuildContext context) => const ClearDataPage(),
         ),
       );
 
@@ -66,6 +74,9 @@ class SettingsPage extends StatelessWidget {
         SelectableListItem(
             title: 'Export All Data',
             onSelect: (String _) => _navigateToExportAllData(context)),
+        SelectableListItem(
+            title: 'Clear All Data',
+            onSelect: (String _) => _navigateToClearAllData(context)),
       ],
     );
   }
