@@ -97,7 +97,7 @@ class _BirdTrailPageState extends State<BirdTrailPage> {
                 children: [
                   ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
+                        backgroundColor: WidgetStateProperty.all(
                             Theme.of(context).colorScheme.error)),
                     onPressed: _onDeletePress,
                     child: Text(

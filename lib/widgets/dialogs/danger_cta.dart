@@ -11,7 +11,7 @@ class DangerCta extends StatelessWidget {
     return ElevatedButton(
       style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.all(Theme.of(context).colorScheme.error)),
+              WidgetStateProperty.all(Theme.of(context).colorScheme.error)),
       onPressed: onTap,
       child: Text(
         text,
