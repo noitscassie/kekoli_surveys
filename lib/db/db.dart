@@ -20,6 +20,8 @@ class Db {
 
   final _storage = localStorage;
 
+  void reset() => _storage.clear();
+
   Future<void> createBiodiversitySurvey(BiodiversitySurvey survey) async {
     final rawData = _storage.getItem(_biodiversitySurveysKey);
     final surveysData = rawData == null ? [] : jsonDecode(rawData);
