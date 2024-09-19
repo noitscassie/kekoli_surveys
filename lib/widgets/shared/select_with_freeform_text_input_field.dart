@@ -50,7 +50,9 @@ class _SelectWithFreeformTextInputFieldState
       child: Column(
         children: [
           DropdownButtonFormField<String>(
-            value: widget.options.contains(widget.value) ? widget.value : SelectWithFreeformTextInputField.other,
+            value: widget.options.contains(widget.value)
+                ? widget.value
+                : SelectWithFreeformTextInputField.other,
             items: widget.options
                 .map(
                   (String option) => DropdownMenuItem(

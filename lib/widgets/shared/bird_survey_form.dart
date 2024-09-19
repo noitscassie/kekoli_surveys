@@ -48,14 +48,14 @@ class BirdSurveyForm extends StatelessWidget {
       onFabPress: onFabPress,
       scrollController: _controller,
       children: [
-          ...fields.mapIndexed(
-            (int index, InputFieldConfig field) => field.inputField(
-              value: attributes[field.label],
-              onChange: (dynamic value) =>
-                  _onFieldChange(index, field.label, value),
-            ),
+        ...fields.mapIndexed(
+          (int index, InputFieldConfig field) => field.inputField(
+            value: attributes[field.label],
+            onChange: (dynamic value) =>
+                _onFieldChange(index, field.label, value),
           ),
-        ],
+        ),
+      ],
     );
   }
 }
