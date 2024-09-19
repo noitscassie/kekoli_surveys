@@ -81,7 +81,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
         updatedType: BirdSurveyType.byTitle(surveyType),
         updatedStartTemperature: startTemperature);
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => const HomePage(

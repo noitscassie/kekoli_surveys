@@ -65,7 +65,7 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       _statefulSurvey = _statefulSurvey;
     });
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (BuildContext context) => OngoingBirdSurveyPage(

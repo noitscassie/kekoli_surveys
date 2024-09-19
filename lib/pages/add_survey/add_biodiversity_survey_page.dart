@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
@@ -77,7 +75,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
       startTemperature: startTemperature,
     );
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

@@ -56,7 +56,7 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
 
       FlutterEmailSender.send(email);
 
-      if (context.mounted) {
+      if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (BuildContext context) => const HomePage(
@@ -67,14 +67,16 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
         );
       }
     } catch (e, s) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (BuildContext context) => ErrorDetailsPage(
-            exception: e,
-            stacktrace: s,
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => ErrorDetailsPage(
+              exception: e,
+              stacktrace: s,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 
@@ -83,7 +85,7 @@ class _ExportBirdSurveyPageState extends State<ExportBirdSurveyPage> {
 
     OpenFile.open(filepath);
 
-    if (context.mounted) {
+    if (mounted) {
       const snackBar = SnackBar(
         duration: Duration(seconds: 2),
         content: Text('CSV downloaded to Files app'),

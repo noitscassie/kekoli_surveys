@@ -78,7 +78,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       startTemperature: startTemperature,
     );
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => const HomePage(
