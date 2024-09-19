@@ -22,161 +22,153 @@ class Db {
 
   void reset() => _storage.clear();
 
-  Future<void> createBiodiversitySurvey(BiodiversitySurvey survey) async {
-    final rawData = _storage.getItem(_biodiversitySurveysKey);
-    final surveysData = rawData == null ? [] : jsonDecode(rawData);
-    final surveys = [...surveysData, survey.toJson()];
+  void createBiodiversitySurvey(BiodiversitySurvey survey) {
+    final existingSurveys = getBiodiversitySurveys();
+    final surveys = [...existingSurveys, survey];
 
     _insert(_biodiversitySurveysKey, surveys);
   }
 
-  Future<void> updateBiodiversitySurvey(BiodiversitySurvey survey) async {
-    final surveys = await getBiodiversitySurveys();
-    final updatedSurveys = List.from(surveys.map(
-        (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id
-            ? survey.toJson()
-            : loadedSurvey.toJson()));
+  void updateBiodiversitySurvey(BiodiversitySurvey survey) {
+    final surveys = getBiodiversitySurveys();
+    final updatedSurveys = List.from(
+      surveys.map(
+        (BiodiversitySurvey loadedSurvey) =>
+            loadedSurvey.id == survey.id ? survey : loadedSurvey,
+      ),
+    );
 
     _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
-  Future<void> deleteBiodiversitySurvey(BiodiversitySurvey survey) async {
-    final surveys = await getBiodiversitySurveys();
-    final updatedSurveys = List.from(surveys
-        .whereNot(
-            (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id)
-        .map((survey) => survey.toJson()));
+  void deleteBiodiversitySurvey(BiodiversitySurvey survey) {
+    final surveys = getBiodiversitySurveys();
+    final updatedSurveys = List.from(surveys.whereNot(
+        (BiodiversitySurvey loadedSurvey) => loadedSurvey.id == survey.id));
 
     _insert(_biodiversitySurveysKey, updatedSurveys);
   }
 
-  Future<List<BiodiversitySurvey>> getBiodiversitySurveys() async {
-    final rawData = _storage.getItem(_biodiversitySurveysKey);
-    final surveysData = rawData == null ? [] : jsonDecode(rawData);
+  List<BiodiversitySurvey> getBiodiversitySurveys() {
+    final surveys = _fetch(_biodiversitySurveysKey) ?? [];
 
-    final surveysJson = List.from(surveysData
-        .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
-
-    return List.from(
-        surveysJson.map((json) => BiodiversitySurvey.fromJson(json)));
+    return List.from(surveys.map((json) => BiodiversitySurvey.fromJson(json)));
   }
 
-  Future<BiodiversitySurvey> getBiodiversitySurvey(String id) async {
-    final surveys = await getBiodiversitySurveys();
+  BiodiversitySurvey getBiodiversitySurvey(String id) {
+    final surveys = getBiodiversitySurveys();
     final BiodiversitySurvey survey =
         surveys.firstWhere((BiodiversitySurvey survey) => survey.id == id);
 
     return survey;
   }
 
-  Future<List<BirdSurvey>> getBirdSurveys() async {
-    final rawData = _storage.getItem(_birdSurveysKey);
-    final surveysData = rawData == null ? [] : jsonDecode(rawData);
+  List<BirdSurvey> getBirdSurveys() {
+    final surveys = _fetch(_birdSurveysKey) ?? [];
 
-    final surveysJson = List.from(surveysData
-        .map((json) => json.runtimeType == String ? jsonDecode(json) : json));
-
-    return List.from(surveysJson.map((json) => BirdSurvey.fromJson(json)));
+    return List.from(surveys.map((json) => BirdSurvey.fromJson(json)));
   }
 
-  Future<BirdSurvey> getBirdSurvey(String id) async {
-    final surveys = await getBirdSurveys();
+  BirdSurvey getBirdSurvey(String id) {
+    final surveys = getBirdSurveys();
     final BirdSurvey survey =
         surveys.firstWhere((BirdSurvey survey) => survey.id == id);
 
     return survey;
   }
 
-  Future<void> createBirdSurvey(BirdSurvey survey) async {
-    final rawData = _storage.getItem(_birdSurveysKey);
-    final surveysData = rawData == null ? [] : jsonDecode(rawData);
-    final surveys = [...surveysData, survey.toJson()];
+  void createBirdSurvey(BirdSurvey survey) {
+    final existingSurveys = getBirdSurveys();
+    final surveys = [...existingSurveys, survey];
 
     _insert(_birdSurveysKey, surveys);
   }
 
-  Future<void> updateBirdSurvey(BirdSurvey survey) async {
-    final surveys = await getBirdSurveys();
+  void updateBirdSurvey(BirdSurvey survey) {
+    final surveys = getBirdSurveys();
     final updatedSurveys = List.from(surveys.map((BirdSurvey loadedSurvey) =>
-        loadedSurvey.id == survey.id
-            ? survey.toJson()
-            : loadedSurvey.toJson()));
+        loadedSurvey.id == survey.id ? survey : loadedSurvey));
 
     _insert(_birdSurveysKey, updatedSurveys);
   }
 
-  Future<void> deleteBirdSurvey(BirdSurvey survey) async {
-    final surveys = await getBirdSurveys();
+  void deleteBirdSurvey(BirdSurvey survey) {
+    final surveys = getBirdSurveys();
     final updatedSurveys = List.from(surveys
-        .whereNot((BirdSurvey loadedSurvey) => loadedSurvey.id == survey.id)
-        .map((survey) => survey.toJson()));
+        .whereNot((BirdSurvey loadedSurvey) => loadedSurvey.id == survey.id));
 
     _insert(_birdSurveysKey, updatedSurveys);
   }
 
-  Future<SurveyConfiguration> getSurveyConfiguration() async {
-    final configData = _storage.getItem(_biodiversitySurveyConfigurationKey);
+  SurveyConfiguration getSurveyConfiguration() {
+    final configData = _fetch(_biodiversitySurveyConfigurationKey);
 
     if (configData == null) {
       final config = defaultBiodiversitySurveyConfiguration;
-      _insert(_biodiversitySurveyConfigurationKey, config.toJson());
+      _insert(_biodiversitySurveyConfigurationKey, config);
 
       return config;
     } else {
-      return SurveyConfiguration.fromJson(jsonDecode(configData));
+      return SurveyConfiguration.fromJson(configData);
     }
   }
 
-  Future<void> updateSurveyConfiguration(
-      SurveyConfiguration configuration) async {
-    _insert(_biodiversitySurveyConfigurationKey, configuration.toJson());
+  void updateSurveyConfiguration(SurveyConfiguration configuration) {
+    _insert(_biodiversitySurveyConfigurationKey, configuration);
   }
 
-  Future<List<String>> getBiodiversityTrails() async {
-    final rawData = _storage.getItem(_biodiversityTrailsKey);
+  List<String> getBiodiversityTrails() {
+    final trails = _fetch(_biodiversityTrailsKey);
 
-    if (rawData == null) {
+    if (trails == null) {
       _insert(_biodiversityTrailsKey, defaultBiodiversityTrails);
 
       return defaultBiodiversityTrails;
     } else {
-      return List<String>.from(jsonDecode(rawData));
+      return List<String>.from(trails);
     }
   }
 
-  Future<void> updateBiodiversityTrails(List<String> trails) async {
-    _insert(_biodiversityTrailsKey, trails);
-  }
+  void updateBiodiversityTrails(List<String> trails) =>
+      _insert(_biodiversityTrailsKey, trails);
 
-  Future<List<BirdSurveyTrail>> getBirdTrails() async {
-    final rawData = _storage.getItem(_birdTrailsKey);
+  List<BirdSurveyTrail> getBirdTrails() {
+    final trails = _fetch(_birdTrailsKey);
 
-    if (rawData == null) {
+    if (trails == null) {
       final defaultTrails = defaultBirdSurveyTrails;
       _insert(_birdTrailsKey, defaultTrails);
 
       return defaultTrails;
     } else {
-      final trails = jsonDecode(rawData);
-
-      if (trails.runtimeType == List<BirdSurveyTrail>) {
-        return trails;
-      }
-
       return List<BirdSurveyTrail>.from(
-        trails.map(
-          (json) => BirdSurveyTrail.fromJson(
-            jsonDecode(json),
-          ),
-        ),
+        trails.map((json) => BirdSurveyTrail.fromJson(json)),
       );
     }
   }
 
-  Future<void> updateBirdTrails(List<BirdSurveyTrail> trails) async {
-    _insert(_birdTrailsKey, trails.map((trail) => trail.toJson()).toList());
-  }
+  void updateBirdTrails(List<BirdSurveyTrail> trails) =>
+      _insert(_birdTrailsKey, trails);
 
   void _insert(String key, dynamic data) =>
       _storage.setItem(key, jsonEncode(data));
+
+  dynamic _fetch(String key) {
+    final data = _storage.getItem(key);
+    if (data == null) {
+      return null;
+    } else {
+      final decoded = jsonDecode(data);
+
+      if (decoded.runtimeType == List) {
+        try {
+          return List.from(decoded.map((json) => jsonDecode(json)));
+        } catch (_) {
+          return decoded;
+        }
+      } else {
+        return decoded;
+      }
+    }
+  }
 }
