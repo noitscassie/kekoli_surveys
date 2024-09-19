@@ -8,32 +8,24 @@ import 'package:kekoldi_surveys/widgets/fading_list_view.dart';
 class BirdSurveysTab extends StatelessWidget {
   final Db _db = Db();
 
+  List<BirdSurvey> get _surveys => _db
+      .getBirdSurveys()
+      .sortedBy((BirdSurvey survey) => survey.createdAt)
+      .reversed
+      .toList();
+
   BirdSurveysTab({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<BirdSurvey>>(
-      future: _db.getBirdSurveys(),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<BirdSurvey>> snapshot) {
-        if (snapshot.hasData) {
-          final surveys = snapshot.data!
-              .sortedBy((BirdSurvey survey) => survey.createdAt)
-              .reversed;
-
-          return Center(
-            child: FadingListView(
-              top: false,
-              bottom: true,
-              padTop: false,
-              children: List.from(
-                  surveys.map((survey) => BirdSurveyTile(survey: survey))),
-            ),
-          );
-        } else {
-          return const Center(child: CircularProgressIndicator());
-        }
-      },
+    return Center(
+      child: FadingListView(
+        top: false,
+        bottom: true,
+        padTop: false,
+        children:
+            List.from(_surveys.map((survey) => BirdSurveyTile(survey: survey))),
+      ),
     );
   }
 }

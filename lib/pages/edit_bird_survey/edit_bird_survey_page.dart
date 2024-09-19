@@ -92,7 +92,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
   }
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getBirdTrails();
+    final trails = _db.getBirdTrails();
 
     setState(() {
       _trails = trails;

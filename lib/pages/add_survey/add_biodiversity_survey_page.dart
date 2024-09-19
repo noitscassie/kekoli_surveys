@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:kekoldi_surveys/constants/biodiversity_trails.dart';
@@ -64,7 +66,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
   final Db _db = Db();
 
   Future<void> _createSurvey() async {
-    final configuration = await _db.getSurveyConfiguration();
+    final configuration = _db.getSurveyConfiguration();
 
     await BiodiversitySurvey.create(
       trail: selectedTrail,

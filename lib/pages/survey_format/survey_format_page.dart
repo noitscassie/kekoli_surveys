@@ -36,10 +36,10 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
       );
 
   Future<void> _resetFieldsToDefaults() async {
-    final config = await _db.getSurveyConfiguration();
+    final config = _db.getSurveyConfiguration();
     config.fields = defaultBiodiversitySightingFields;
 
-    await _db.updateSurveyConfiguration(config);
+    _db.updateSurveyConfiguration(config);
 
     if (context.mounted) {
       const snackBar = SnackBar(
@@ -55,7 +55,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
   }
 
   Future<void> _loadFields() async {
-    final config = await _db.getSurveyConfiguration();
+    final config = _db.getSurveyConfiguration();
     setState(() {
       fields = config.fields;
     });
@@ -96,9 +96,9 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
   }
 
   Future<void> _onFabPress() async {
-    final config = await _db.getSurveyConfiguration();
+    final config = _db.getSurveyConfiguration();
     config.fields = fields;
-    await _db.updateSurveyConfiguration(config);
+    _db.updateSurveyConfiguration(config);
 
     if (context.mounted) {
       const snackBar = SnackBar(
