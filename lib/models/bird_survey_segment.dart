@@ -33,8 +33,7 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
   Map<String, dynamic> get attributes => {
         'id': id,
         'name': name,
-        'sightings':
-            List.from(sightings.map((Sighting sighting) => sighting.toJson())),
+        'sightings': sightings,
         'startAt': startAt?.toIso8601String(),
         'endAt': endAt?.toIso8601String(),
       };
@@ -54,7 +53,7 @@ class BirdSurveySegment with DiagnosticableTreeMixin {
 
   int get totalObservations => sightings.length;
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   void start(BirdSurvey survey) {
     startAt = DateTime.now();

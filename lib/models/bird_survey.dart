@@ -144,11 +144,11 @@ class BirdSurvey with DiagnosticableTreeMixin {
         'trail': trail,
         'createdAt': createdAt.toIso8601String(),
         'type': type.name,
-        'segments': List.from(segments.map((segment) => segment.toJson())),
-        'configuration': configuration.toJson(),
+        'segments': segments,
+        'configuration': configuration,
       };
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   List<Sighting> get allSightings =>
       segments.map((segment) => segment.sightings).flatten().toList();

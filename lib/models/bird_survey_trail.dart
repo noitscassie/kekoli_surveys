@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -24,5 +22,5 @@ class BirdSurveyTrail with DiagnosticableTreeMixin {
         'segments': segments,
       };
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 }

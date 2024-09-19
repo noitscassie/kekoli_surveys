@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:kekoldi_surveys/models/input_field_config.dart';
@@ -23,7 +21,7 @@ class Sighting with DiagnosticableTreeMixin {
         data = map['data'],
         seenAt = DateTime.parse(map['seenAt']);
 
-  String toJson() => json.encode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   Map<String, dynamic> get attributes => {
         'id': id,

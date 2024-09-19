@@ -38,13 +38,11 @@ class SurveyConfiguration with DiagnosticableTreeMixin {
           ),
         );
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   Map<String, dynamic> get attributes => {
-        'fields':
-            fields.map((InputFieldConfig field) => field.toJson()).toList(),
-        'csvColumns':
-            csvColumns.map((CsvColumn column) => column.toJson()).toList(),
+        'fields': fields,
+        'csvColumns': csvColumns,
       };
 
   Map<String, String> get asAttributes =>
