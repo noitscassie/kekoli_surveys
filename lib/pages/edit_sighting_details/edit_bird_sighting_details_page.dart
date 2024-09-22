@@ -39,7 +39,7 @@ class _EditBirdSightingDetailsPageState
     widget.segment.updateSightings(widget.sightings);
     await widget.survey.updateSegment(widget.segment);
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (BuildContext context) => BirdSegmentPage(

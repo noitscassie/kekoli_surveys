@@ -33,7 +33,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
       );
 
   Future<void> _resetTrailsToDefaults() async {
-    await _db.updateBiodiversityTrails(defaultBiodiversityTrails);
+    _db.updateBiodiversityTrails(defaultBiodiversityTrails);
 
     if (context.mounted) {
       const snackBar = SnackBar(
@@ -72,7 +72,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   }
 
   Future<void> _saveTrails(BuildContext context) async {
-    await _db.updateBiodiversityTrails(_trails.whereNotNull().toList());
+    _db.updateBiodiversityTrails(_trails.whereNotNull().toList());
 
     if (context.mounted) {
       const snackBar = SnackBar(
@@ -87,7 +87,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   }
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getBiodiversityTrails();
+    final trails = _db.getBiodiversityTrails();
     setState(() {
       _trails = trails;
     });

@@ -31,7 +31,7 @@ class _EditBiodiversitySightingDetailsPageState
 
     await widget.survey.updateSightings(widget.sightings);
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (BuildContext context) => BiodiversitySurveyPage(

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 
@@ -18,7 +16,7 @@ class CsvColumn with DiagnosticableTreeMixin {
         header = json['header'],
         field = json['field'];
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   Map<String, dynamic> get attributes => {
         'id': id,

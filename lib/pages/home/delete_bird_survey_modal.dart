@@ -13,7 +13,7 @@ class DeleteBirdSurveyModal extends StatelessWidget {
   DeleteBirdSurveyModal({super.key, required this.survey});
 
   Future<void> _deleteSurvey(BuildContext context) async {
-    await _db.deleteBirdSurvey(survey);
+    _db.deleteBirdSurvey(survey);
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(

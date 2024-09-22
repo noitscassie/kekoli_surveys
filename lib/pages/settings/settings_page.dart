@@ -79,7 +79,6 @@ class SettingsPage extends StatelessWidget {
         SelectableListItem(
             title: 'Biodiversity Survey Format',
             onSelect: (String _) => _navigateToSurveyFormat(context)),
-
         SelectableListItem(
             title: 'Export All Data',
             onSelect: (String _) => _navigateToExportAllData(context)),

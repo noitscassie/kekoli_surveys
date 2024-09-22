@@ -48,10 +48,10 @@ class _BiodiversitySelectDataExportFormatPageState
       );
 
   Future<void> _resetFieldsToDefaults() async {
-    final config = await _db.getSurveyConfiguration();
+    final config = _db.getSurveyConfiguration();
     config.csvColumns = defaultBiodiversityCsvColumns;
 
-    await _db.updateSurveyConfiguration(config);
+    _db.updateSurveyConfiguration(config);
 
     if (context.mounted) {
       const snackBar = SnackBar(
@@ -67,7 +67,7 @@ class _BiodiversitySelectDataExportFormatPageState
   }
 
   Future<void> _loadData() async {
-    final config = await _db.getSurveyConfiguration();
+    final config = _db.getSurveyConfiguration();
 
     setState(() {
       _columns = config.csvColumns;
@@ -88,9 +88,9 @@ class _BiodiversitySelectDataExportFormatPageState
   }
 
   Future<void> _onFabPress() async {
-    final config = await _db.getSurveyConfiguration();
+    final config = _db.getSurveyConfiguration();
     config.csvColumns = _columns;
-    await _db.updateSurveyConfiguration(config);
+    _db.updateSurveyConfiguration(config);
 
     if (context.mounted) {
       const snackBar = SnackBar(

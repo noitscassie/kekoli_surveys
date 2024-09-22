@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dartx/dartx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -138,7 +136,7 @@ class InputFieldConfig<T> with DiagnosticableTreeMixin {
 
   bool get requiresOptions => typesRequiringOptions.contains(type);
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   Map<String, dynamic> get attributes => {
         'id': id,

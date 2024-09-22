@@ -31,7 +31,7 @@ class _ExportAllPageState extends State<ExportAllPage> {
 
       FlutterEmailSender.send(email);
 
-      if (context.mounted) {
+      if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
             builder: (BuildContext context) => const HomePage(),
@@ -40,14 +40,16 @@ class _ExportAllPageState extends State<ExportAllPage> {
         );
       }
     } catch (e, s) {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (BuildContext context) => ErrorDetailsPage(
-            exception: e,
-            stacktrace: s,
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (BuildContext context) => ErrorDetailsPage(
+              exception: e,
+              stacktrace: s,
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 

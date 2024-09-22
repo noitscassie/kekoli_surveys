@@ -54,7 +54,7 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
       updatedStartTemperature: startTemperature,
     );
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

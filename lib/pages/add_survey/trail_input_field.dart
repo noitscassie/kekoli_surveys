@@ -22,7 +22,7 @@ class _TrailInputFieldState extends State<TrailInputField> {
   List<String> _trails = [];
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getBiodiversityTrails();
+    final trails = _db.getBiodiversityTrails();
     setState(() {
       _trails = trails;
     });

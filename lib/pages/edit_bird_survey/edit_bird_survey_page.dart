@@ -81,7 +81,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
         updatedType: BirdSurveyType.byTitle(surveyType),
         updatedStartTemperature: startTemperature);
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => const HomePage(
@@ -92,7 +92,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
   }
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getBirdTrails();
+    final trails = _db.getBirdTrails();
 
     setState(() {
       _trails = trails;

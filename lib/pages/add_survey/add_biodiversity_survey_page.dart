@@ -64,7 +64,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
   final Db _db = Db();
 
   Future<void> _createSurvey() async {
-    final configuration = await _db.getSurveyConfiguration();
+    final configuration = _db.getSurveyConfiguration();
 
     await BiodiversitySurvey.create(
       trail: selectedTrail,
@@ -75,7 +75,7 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
       startTemperature: startTemperature,
     );
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

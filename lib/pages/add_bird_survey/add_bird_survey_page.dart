@@ -78,7 +78,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       startTemperature: startTemperature,
     );
 
-    if (context.mounted) {
+    if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
               builder: (BuildContext context) => const HomePage(
@@ -89,7 +89,7 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   }
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getBirdTrails();
+    final trails = _db.getBirdTrails();
 
     setState(() {
       _trails = trails;

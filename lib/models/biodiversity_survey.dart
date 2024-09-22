@@ -88,7 +88,7 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     return survey;
   }
 
-  String toJson() => jsonEncode(attributes);
+  Map<String, dynamic> toJson() => attributes;
 
   Map<String, dynamic> get attributes => {
         'id': id,
@@ -102,9 +102,8 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
         'scribe': scribe,
         'participants': participants,
         'trail': trail,
-        'sightings':
-            List.from(sightings.map((Sighting sighting) => sighting.toJson())),
-        'configuration': configuration.toJson(),
+        'sightings': sightings,
+        'configuration': configuration,
         'createdAt': createdAt.toIso8601String(),
       };
 

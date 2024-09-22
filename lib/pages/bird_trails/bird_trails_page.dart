@@ -37,7 +37,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
       );
 
   Future<void> _resetTrailsToDefaults() async {
-    await _db.updateBirdTrails(defaultBirdSurveyTrails);
+    _db.updateBirdTrails(defaultBirdSurveyTrails);
 
     if (context.mounted) {
       const snackBar = SnackBar(
@@ -53,7 +53,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
   }
 
   Future<void> _loadTrails() async {
-    final trails = await _db.getBirdTrails();
+    final trails = _db.getBirdTrails();
     setState(() {
       _trails = trails;
     });
@@ -68,7 +68,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
       _trails = allTrails;
     });
 
-    await _db.updateBirdTrails(allTrails);
+    _db.updateBirdTrails(allTrails);
 
     if (context.mounted) {
       Navigator.of(context).pop();
@@ -87,7 +87,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
       _trails = allTrails;
     });
 
-    await _db.updateBirdTrails(allTrails);
+    _db.updateBirdTrails(allTrails);
 
     if (context.mounted) {
       _navigateToTrailPage(trail);
@@ -104,7 +104,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
 
     Navigator.of(context).pop();
 
-    await _db.updateBirdTrails(allTrails);
+    _db.updateBirdTrails(allTrails);
   }
 
   void _navigateToTrailPage(BirdSurveyTrail trail) =>
