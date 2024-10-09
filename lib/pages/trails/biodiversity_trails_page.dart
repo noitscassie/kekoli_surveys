@@ -17,7 +17,7 @@ class BiodiversityTrailsPage extends StatefulWidget {
 
 class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
   final Db _db = Db();
-  List<String?> _trails = [];
+  late List<String?> _trails = _db.getBiodiversityTrails();
 
   void _openResetToDefaultsDialog() => showDialog(
         context: context,
@@ -32,7 +32,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
         ),
       );
 
-  Future<void> _resetTrailsToDefaults() async {
+  void _resetTrailsToDefaults() {
     _db.updateBiodiversityTrails(defaultBiodiversityTrails);
 
     if (context.mounted) {
@@ -71,7 +71,7 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
     });
   }
 
-  Future<void> _saveTrails(BuildContext context) async {
+  void _saveTrails(BuildContext context) {
     _db.updateBiodiversityTrails(_trails.whereNotNull().toList());
 
     if (context.mounted) {
@@ -84,19 +84,6 @@ class _BiodiversityTrailsPageState extends State<BiodiversityTrailsPage> {
 
       Navigator.of(context).pop();
     }
-  }
-
-  Future<void> _loadTrails() async {
-    final trails = _db.getBiodiversityTrails();
-    setState(() {
-      _trails = trails;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadTrails();
   }
 
   @override

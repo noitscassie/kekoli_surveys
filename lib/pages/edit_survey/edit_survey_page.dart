@@ -45,8 +45,8 @@ class _EditSurveyPageState extends State<EditSurveyPage> {
       scribe.isNotEmpty &&
       participants.whereNotNull().any((participant) => participant.isNotEmpty);
 
-  Future<void> updateSurvey() async {
-    await widget.survey.update(
+  void updateSurvey() {
+    widget.survey.update(
       updatedTrail: selectedTrail,
       updatedLeaders: leaders,
       updatedScribe: scribe,

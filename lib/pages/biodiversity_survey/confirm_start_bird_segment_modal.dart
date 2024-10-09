@@ -15,7 +15,7 @@ class ConfirmStartBirdSegmentModal extends StatelessWidget {
     required this.segment,
   });
 
-  Future<void> _startSegment(BuildContext context) async {
+  void _startSegment(BuildContext context) {
     segment.start(survey);
 
     Navigator.of(context).push(

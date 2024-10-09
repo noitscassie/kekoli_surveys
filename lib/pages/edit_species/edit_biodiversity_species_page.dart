@@ -15,12 +15,12 @@ class EditBiodiversitySpeciesPage extends StatelessWidget {
     required this.sightings,
   });
 
-  void navigateToEditDetails(BuildContext context, String species) async {
+  void navigateToEditDetails(BuildContext context, String species) {
     for (var sighting in sightings) {
       sighting.update({'species': species});
     }
 
-    await survey.updateSightings(sightings);
+    survey.updateSightings(sightings);
 
     if (context.mounted) {
       Navigator.of(context).push(MaterialPageRoute(

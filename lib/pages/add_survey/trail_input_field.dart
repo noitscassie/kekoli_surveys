@@ -19,20 +19,7 @@ class TrailInputField extends StatefulWidget {
 
 class _TrailInputFieldState extends State<TrailInputField> {
   final Db _db = Db();
-  List<String> _trails = [];
-
-  Future<void> _loadTrails() async {
-    final trails = _db.getBiodiversityTrails();
-    setState(() {
-      _trails = trails;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadTrails();
-  }
+  late final List<String> _trails = _db.getBiodiversityTrails();
 
   @override
   Widget build(BuildContext context) {

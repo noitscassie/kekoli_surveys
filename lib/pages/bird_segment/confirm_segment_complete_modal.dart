@@ -15,9 +15,9 @@ class ConfirmSegmentCompleteModal extends StatelessWidget {
     required this.segment,
   });
 
-  Future<void> _completeSegment(BuildContext context) async {
+  void _completeSegment(BuildContext context) {
     segment.end(survey);
-    await survey.updateSegment(segment);
+    survey.updateSegment(segment);
 
     if (context.mounted) {
       Navigator.of(context).pushAndRemoveUntil(

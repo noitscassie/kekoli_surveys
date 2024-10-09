@@ -52,7 +52,7 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
       .map((String segment) => BirdSurveySegment(name: segment))
       .toList();
 
-  List<BirdSurveyTrail> _trails = [];
+  late final List<BirdSurveyTrail> _trails = _db.getBirdTrails();
 
   List<String> get formattedLeaders =>
       List.from(leaders.whereNotNull().map((leader) => leader.trim()));
@@ -72,8 +72,8 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
 
   List<InputFieldConfig> get _fields => defaultBirdSurveyFields(_trails);
 
-  Future<void> _onFabPress() async {
-    await widget.survey.update(
+  void _onFabPress() {
+    widget.survey.update(
         updatedTrail: trail,
         updatedLeaders: formattedLeaders,
         updatedScribe: scribe,
@@ -89,20 +89,6 @@ class _EditBirdSurveyPageState extends State<EditBirdSurveyPage> {
                   )),
           (route) => false);
     }
-  }
-
-  Future<void> _loadTrails() async {
-    final trails = _db.getBirdTrails();
-
-    setState(() {
-      _trails = trails;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadTrails();
   }
 
   @override

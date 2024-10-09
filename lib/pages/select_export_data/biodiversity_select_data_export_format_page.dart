@@ -47,7 +47,7 @@ class _BiodiversitySelectDataExportFormatPageState
         ),
       );
 
-  Future<void> _resetFieldsToDefaults() async {
+  void _resetFieldsToDefaults() {
     final config = _db.getSurveyConfiguration();
     config.csvColumns = defaultBiodiversityCsvColumns;
 
@@ -66,7 +66,7 @@ class _BiodiversitySelectDataExportFormatPageState
     }
   }
 
-  Future<void> _loadData() async {
+  void _loadData() {
     final config = _db.getSurveyConfiguration();
 
     setState(() {
@@ -87,7 +87,7 @@ class _BiodiversitySelectDataExportFormatPageState
     });
   }
 
-  Future<void> _onFabPress() async {
+  void _onFabPress() {
     final config = _db.getSurveyConfiguration();
     config.csvColumns = _columns;
     _db.updateSurveyConfiguration(config);

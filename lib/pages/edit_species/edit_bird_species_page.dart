@@ -18,21 +18,24 @@ class EditBirdSpeciesPage extends StatelessWidget {
     required this.segment,
   });
 
-  void _navigateToEditDetails(BuildContext context, String species) async {
+  void _navigateToEditDetails(BuildContext context, String species) {
     for (var sighting in sightings) {
       sighting.update({'species': species});
     }
 
     segment.updateSightings(sightings);
-    await survey.updateSegment(segment);
+    survey.updateSegment(segment);
 
     if (context.mounted) {
-      Navigator.of(context).push(MaterialPageRoute(
+      Navigator.of(context).push(
+        MaterialPageRoute(
           builder: (BuildContext context) => EditBirdSightingDetailsPage(
-                survey: survey,
-                sightings: sightings,
-                segment: segment,
-              )));
+            survey: survey,
+            sightings: sightings,
+            segment: segment,
+          ),
+        ),
+      );
     }
   }
 

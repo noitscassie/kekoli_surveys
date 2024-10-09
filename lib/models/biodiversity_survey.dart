@@ -66,14 +66,14 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
                 : json['configuration']),
         createdAt = DateTime.parse(json['createdAt']);
 
-  static Future<BiodiversitySurvey> create({
+  static BiodiversitySurvey create({
     required String trail,
     required List<String> leaders,
     required String scribe,
     required List<String> participants,
     required SurveyConfiguration configuration,
     required String startTemperature,
-  }) async {
+  }) {
     final survey = BiodiversitySurvey(
       trail: trail,
       leaders: leaders,
@@ -137,13 +137,13 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
           .difference(startAt!)
           .inMinutes;
 
-  Future<void> update({
+  void update({
     String? updatedTrail,
     List<String>? updatedLeaders,
     String? updatedScribe,
     List<String>? updatedParticipants,
     String? updatedStartTemperature,
-  }) async {
+  }) {
     trail = updatedTrail ?? trail;
     leaders = updatedLeaders ?? leaders;
     scribe = updatedScribe ?? scribe;
@@ -153,7 +153,7 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> updateSighting(Sighting updatedSighting) async {
+  void updateSighting(Sighting updatedSighting) {
     final updatedSightings = List<Sighting>.from(sightings.map(
         (Sighting sighting) =>
             sighting.id == updatedSighting.id ? updatedSighting : sighting));
@@ -163,7 +163,7 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> updateSightings(List<Sighting> updatedSightings) async {
+  void updateSightings(List<Sighting> updatedSightings) {
     final idsToUpdate =
         updatedSightings.map((Sighting sighting) => sighting.id);
 
@@ -179,23 +179,23 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> start() async {
+  void start() {
     startAt = DateTime.now();
 
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> end() async {
+  void end() {
     endAt = DateTime.now();
 
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> setWeather({
+  void setWeather({
     String? newWeather,
     String? newEndTemperature,
     String? newRainfall,
-  }) async {
+  }) {
     weather = newWeather ?? weather;
     endTemperature = newEndTemperature ?? endTemperature;
     rainfall = newRainfall ?? rainfall;
@@ -203,19 +203,19 @@ class BiodiversitySurvey with DiagnosticableTreeMixin {
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> addSighting(Sighting sighting) async {
+  void addSighting(Sighting sighting) {
     sightings = [sighting, ...sightings];
 
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> addSightings(List<Sighting> newSightings) async {
+  void addSightings(List<Sighting> newSightings) {
     sightings = [...newSightings, ...sightings];
 
     _db.updateBiodiversitySurvey(this);
   }
 
-  Future<void> removeSighting(Sighting sightingToRemove) async {
+  void removeSighting(Sighting sightingToRemove) {
     sightings = List.from(sightings
         .whereNot((Sighting sighting) => sighting.id == sightingToRemove.id));
 

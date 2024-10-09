@@ -30,9 +30,9 @@ class UnstartedBiodiversitySurveyPage extends StatelessWidget {
             ],
           ));
 
-  Future<void> _startSurvey(BuildContext context) async {
+  void _startSurvey(BuildContext context) {
     Navigator.of(context).pop();
-    await survey.start();
+    survey.start();
 
     onSurveyChange(survey);
   }
