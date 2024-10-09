@@ -24,12 +24,12 @@ class _EditBiodiversitySightingDetailsPageState
         attributes[key] = value;
       });
 
-  Future<void> updateSighting() async {
+  void updateSighting() {
     for (var sighting in widget.sightings) {
       sighting.update(attributes);
     }
 
-    await widget.survey.updateSightings(widget.sightings);
+    widget.survey.updateSightings(widget.sightings);
 
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(

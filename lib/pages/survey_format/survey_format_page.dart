@@ -19,7 +19,7 @@ class SurveyFormatPage extends StatefulWidget {
 
 class _SurveyFormatPageState extends State<SurveyFormatPage> {
   final Db _db = Db();
-  List<InputFieldConfig> fields = [];
+  late List<InputFieldConfig> fields = _db.getSurveyConfiguration().fields;
 
   void _openResetToDefaultsDialog() => showDialog(
         context: context,
@@ -35,7 +35,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
         ),
       );
 
-  Future<void> _resetFieldsToDefaults() async {
+  void _resetFieldsToDefaults() {
     final config = _db.getSurveyConfiguration();
     config.fields = defaultBiodiversitySightingFields;
 
@@ -52,13 +52,6 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
       Navigator.of(context).pop();
       Navigator.of(context).pop();
     }
-  }
-
-  Future<void> _loadFields() async {
-    final config = _db.getSurveyConfiguration();
-    setState(() {
-      fields = config.fields;
-    });
   }
 
   void _addField() {
@@ -95,7 +88,7 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _onFabPress() async {
+  void _onFabPress() {
     final config = _db.getSurveyConfiguration();
     config.fields = fields;
     _db.updateSurveyConfiguration(config);
@@ -110,12 +103,6 @@ class _SurveyFormatPageState extends State<SurveyFormatPage> {
 
       Navigator.of(context).pop();
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadFields();
   }
 
   @override

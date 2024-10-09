@@ -31,13 +31,13 @@ class _EditBirdSightingDetailsPageState
         attributes[key] = value;
       });
 
-  Future<void> updateSighting() async {
+  void updateSighting() {
     for (var sighting in widget.sightings) {
       sighting.update(attributes);
     }
 
     widget.segment.updateSightings(widget.sightings);
-    await widget.survey.updateSegment(widget.segment);
+    widget.survey.updateSegment(widget.segment);
 
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(

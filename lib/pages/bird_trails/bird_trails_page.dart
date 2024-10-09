@@ -21,7 +21,7 @@ class BirdTrailsPage extends StatefulWidget {
 class _BirdTrailsPageState extends State<BirdTrailsPage> {
   final Db _db = Db();
 
-  List<BirdSurveyTrail> _trails = [];
+  late List<BirdSurveyTrail> _trails = _db.getBirdTrails();
 
   void _openResetToDefaultsDialog() => showDialog(
         context: context,
@@ -36,7 +36,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
         ),
       );
 
-  Future<void> _resetTrailsToDefaults() async {
+  void _resetTrailsToDefaults() {
     _db.updateBirdTrails(defaultBirdSurveyTrails);
 
     if (context.mounted) {
@@ -52,14 +52,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
     }
   }
 
-  Future<void> _loadTrails() async {
-    final trails = _db.getBirdTrails();
-    setState(() {
-      _trails = trails;
-    });
-  }
-
-  Future<void> _onSaveTrail(BirdSurveyTrail newTrail) async {
+  void _onSaveTrail(BirdSurveyTrail newTrail) {
     final allTrails = [
       ..._trails.map((trail) => trail.id == newTrail.id ? newTrail : trail)
     ];
@@ -75,7 +68,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
     }
   }
 
-  Future<void> _onAddTrail() async {
+  void _onAddTrail() {
     final trail = BirdSurveyTrail(
       name: 'New Bird Survey Trail',
       segments: [''],
@@ -94,7 +87,7 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
     }
   }
 
-  Future<void> _onDeleteTrail(BirdSurveyTrail trailToDelete) async {
+  void _onDeleteTrail(BirdSurveyTrail trailToDelete) {
     final allTrails =
         _trails.whereNot((trail) => trail.id == trailToDelete.id).toList();
 
@@ -117,12 +110,6 @@ class _BirdTrailsPageState extends State<BirdTrailsPage> {
           ),
         ),
       );
-
-  @override
-  void initState() {
-    super.initState();
-    _loadTrails();
-  }
 
   @override
   Widget build(BuildContext context) {

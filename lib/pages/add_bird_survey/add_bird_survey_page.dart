@@ -20,6 +20,7 @@ class AddBirdSurveyPage extends StatefulWidget {
 
 class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
   final _db = Db();
+  List<BirdSurveyTrail> get _trails => _db.getBirdTrails();
 
   late Map<String, dynamic> attributes = {
     for (var config in _fields) config.label: config.defaultValue
@@ -43,8 +44,6 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
       .map((String segment) => BirdSurveySegment(name: segment))
       .toList();
 
-  List<BirdSurveyTrail> _trails = [];
-
   List<String> get formattedLeaders =>
       List.from(leaders.whereNotNull().map((leader) => leader.trim()));
   List<String> get formattedParticipants => List.from(participants
@@ -61,13 +60,13 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
 
   List<InputFieldConfig> get _fields => defaultBirdSurveyFields(_trails);
 
-  Future<void> _onFabPress() async {
+  void _onFabPress() {
     final configuration =
         BirdSurveyType.byTitle(surveyType) == BirdSurveyType.transect
             ? defaultBirdTransectSurveyConfiguration
             : defaultBirdPointCountSurveyConfiguration;
 
-    await BirdSurvey.create(
+    BirdSurvey.create(
       trail: trail,
       leaders: formattedLeaders,
       scribe: scribe,
@@ -81,25 +80,12 @@ class _AddBirdSurveyPageState extends State<AddBirdSurveyPage> {
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(
-              builder: (BuildContext context) => const HomePage(
-                    initialTabIndex: 1,
-                  )),
+            builder: (BuildContext context) => const HomePage(
+              initialTabIndex: 1,
+            ),
+          ),
           (route) => false);
     }
-  }
-
-  Future<void> _loadTrails() async {
-    final trails = _db.getBirdTrails();
-
-    setState(() {
-      _trails = trails;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadTrails();
   }
 
   @override

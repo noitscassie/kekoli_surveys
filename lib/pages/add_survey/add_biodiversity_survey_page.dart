@@ -63,10 +63,10 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
 
   final Db _db = Db();
 
-  Future<void> _createSurvey() async {
+  void _createSurvey() {
     final configuration = _db.getSurveyConfiguration();
 
-    await BiodiversitySurvey.create(
+    BiodiversitySurvey.create(
       trail: selectedTrail,
       leaders: leaders,
       scribe: scribe,
@@ -79,7 +79,8 @@ class _AddBiodiversitySurveyPageState extends State<AddBiodiversitySurveyPage> {
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (BuildContext context) => const HomePage()),
+            builder: (BuildContext context) => const HomePage(),
+          ),
           (route) => false);
     }
   }

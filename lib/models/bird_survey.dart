@@ -94,7 +94,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
                     ? jsonDecode(json['configuration'])
                     : json['configuration']);
 
-  static Future<BirdSurvey> create({
+  static BirdSurvey create({
     required String trail,
     required List<String> leaders,
     required String scribe,
@@ -103,7 +103,7 @@ class BirdSurvey with DiagnosticableTreeMixin {
     required List<BirdSurveySegment> segments,
     required SurveyConfiguration configuration,
     required String startTemperature,
-  }) async {
+  }) {
     final survey = BirdSurvey(
       trail: trail,
       leaders: leaders,
@@ -180,14 +180,14 @@ class BirdSurvey with DiagnosticableTreeMixin {
         ...participants,
       ];
 
-  Future<void> update({
+  void update({
     String? updatedTrail,
     BirdSurveyType? updatedType,
     List<String>? updatedLeaders,
     String? updatedScribe,
     List<String>? updatedParticipants,
     String? updatedStartTemperature,
-  }) async {
+  }) {
     trail = updatedTrail ?? trail;
     type = updatedType ?? type;
     leaders = updatedLeaders ?? leaders;
@@ -198,18 +198,18 @@ class BirdSurvey with DiagnosticableTreeMixin {
     _db.updateBirdSurvey(this);
   }
 
-  Future<void> updateSegment(BirdSurveySegment updatedSegment) async {
+  void updateSegment(BirdSurveySegment updatedSegment) {
     segments = List.from(segments.map((segment) =>
         segment.id == updatedSegment.id ? updatedSegment : segment));
 
     _db.updateBirdSurvey(this);
   }
 
-  Future<void> setWeather({
+  void setWeather({
     String? newWeather,
     String? newEndTemperature,
     String? newRainfall,
-  }) async {
+  }) {
     weather = newWeather ?? weather;
     endTemperature = newEndTemperature ?? endTemperature;
     rainfall = newRainfall ?? rainfall;

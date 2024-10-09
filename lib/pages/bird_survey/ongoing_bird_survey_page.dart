@@ -50,12 +50,12 @@ class _OngoingBirdSurveyPageState extends State<OngoingBirdSurveyPage> {
       index == 0 ||
       _statefulSurvey.segments[index - 1].state == SurveyState.completed;
 
-  Future<void> _onAddWeather(
+  void _onAddWeather(
     String weather,
     String endTemperature,
     String rainfall,
-  ) async {
-    await _statefulSurvey.setWeather(
+  ) {
+    _statefulSurvey.setWeather(
       newWeather: weather,
       newEndTemperature: endTemperature,
       newRainfall: rainfall,
